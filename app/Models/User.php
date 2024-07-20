@@ -12,6 +12,8 @@ class User extends Model
 
     protected $fillab = [
         'name',
+        'phone_number',
+        'date_of_birth',
         'email',
         'password',
     ];
