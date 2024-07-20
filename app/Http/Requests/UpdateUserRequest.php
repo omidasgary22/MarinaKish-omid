@@ -32,4 +32,37 @@ class UpdateUserRequest extends FormRequest
             'password' => 'nullable|string|min:8|confirmed',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'نام الزامی است.',
+            'name.string' => 'نام باید یک رشته متنی باشد.',
+            'name.max' => 'نام نباید بیشتر از ۲۵۵ کاراکتر باشد.',
+
+            'phone_number.required' => 'شماره تلفن الزامی است.',
+            'phone_number.string' => 'شماره تلفن باید یک رشته متنی باشد.',
+            'phone_number.regex' => 'فرمت شماره تلفن معتبر نیست.',
+
+            'date_of_birth.required' => 'تاریخ تولد الزامی است.',
+            'date_of_birth.date' => 'تاریخ تولد باید یک تاریخ معتبر باشد.',
+            'date_of_birth.before' => 'تاریخ تولد باید قبل از امروز باشد.',
+
+            'national_code.required' => 'کد ملی الزامی است.',
+            'national_code.string' => 'کد ملی باید یک رشته متنی باشد.',
+            'national_code.size' => 'کد ملی باید ۱۰ کاراکتر باشد.',
+            'national_code.regex' => 'کد ملی باید تنها شامل اعداد باشد.',
+
+            'email.required' => 'ایمیل الزامی است.',
+            'email.string' => 'ایمیل باید یک رشته متنی باشد.',
+            'email.email' => 'ایمیل وارد شده معتبر نیست.',
+            'email.max' => 'ایمیل نباید بیشتر از ۲۵۵ کاراکتر باشد.',
+            'email.unique' => 'ایمیل وارد شده قبلاً ثبت شده است.',
+
+            'password.nullable' => 'رمز عبور می‌تواند خالی باشد.',
+            'password.string' => 'رمز عبور باید یک رشته متنی باشد.',
+            'password.min' => 'رمز عبور باید حداقل ۸ کاراکتر باشد.',
+            'password.confirmed' => 'تأیید رمز عبور مطابقت ندارد.',
+        ];
+    }
 }
