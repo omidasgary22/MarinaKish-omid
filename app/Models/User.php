@@ -11,10 +11,11 @@ class User extends Model
 {
     use HasFactory, Notifiable, SoftDeletes;
 
-    protected $fillab = [
+    protected $fillable = [
         'name',
         'phone_number',
         'date_of_birth',
+        'national_code',
         'email',
         'password',
     ];
