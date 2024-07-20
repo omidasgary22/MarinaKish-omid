@@ -15,4 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('user/create', [UserController::class, 'register'])->name('create.user');
+//User Route
+Route::prefix('users')->group(function () {
+    Route::get('/index', [UserController::class, 'index'])->name('users.index');
+    Route::post('/store', [UserController::class, 'store'])->name('users.store');
+    Route::put('/update', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::patch('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
+});
