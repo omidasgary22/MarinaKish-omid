@@ -34,4 +34,11 @@ class UserController extends Controller
         $user->delete();
         return response()->json(['message' => 'کاربر با موفقیت حذف شد.'], 200);
     }
+
+    public function restore($id)
+    {
+        $user = User::onlyTrashed()->findOrFail($id);
+        $user->restore();
+        return response()->json(['message' => 'کاربر با موفقیت بازیابی شد.'], 200);
+    }
 }
