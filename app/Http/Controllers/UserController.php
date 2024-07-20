@@ -27,4 +27,11 @@ class UserController extends Controller
         $User = User::where('id', $id)->update($request->toArray());
         return response()->json(['کاربر با موفقیت به روزرسانی شد', 'user' => $User]);
     }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return response()->json(['message' => 'کاربر با موفقیت حذف شد.'], 200);
+    }
 }
