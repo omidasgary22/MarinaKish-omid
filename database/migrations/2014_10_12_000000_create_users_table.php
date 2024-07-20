@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('national_code')->unique();
             $table->string('email')->unique()->nullable();
             $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
