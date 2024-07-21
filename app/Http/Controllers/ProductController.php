@@ -13,4 +13,12 @@ class ProductController extends Controller
         $products = Product::all();
         return response()->json($products);
     }
+
+    public function store($request)
+    {
+        $product = Product::create($request->validated());
+        return response()->json(['message' => 'محصول با موفقیت ایجاد شد', 'product' => $product]);
+    }
+
+   
 }
