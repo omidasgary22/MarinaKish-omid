@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -32,4 +33,13 @@ Route::prefix('users')->group(function () {
     Route::put('/update/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::patch('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
+});
+
+//ProductRoute
+Route::prefix('products')->group(function () {
+    Route::get('/index', [ProductController::class, 'index'])->name('products.index');
+    Route::post('/store', [ProductController::class, 'store'])->name('Products.store');
+    Route::put('/update/{id}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+    Route::post('/restore/{id}', [ProductController::class, 'restore'])->name('products.restore');
 });
