@@ -26,4 +26,11 @@ class ProductController extends Controller
         $product->update($request->validated());
         return response()->json(['message' => 'محصول با موفقیت به روز رسانی شد', 'product' => $product]);
     }
+
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return response()->json(['محصول با موفقیت حذف شد ']);
+    }
 }
