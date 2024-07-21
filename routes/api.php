@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
+
+
 //User Route
 Route::prefix('users')->group(function () {
     Route::get('/index', [UserController::class, 'index'])->name('users.index');
