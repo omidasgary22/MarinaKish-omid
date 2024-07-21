@@ -32,4 +32,29 @@ class StoreProductRequest extends FormRequest
             'ended_at' => 'required|date_format:H:i',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'نام محصول الزامی است.',
+            'name.string' => 'نام محصول باید یک رشته باشد.',
+            'name.max' => 'نام محصول نباید بیشتر از ۲۵۵ کاراکتر باشد.',
+            'price.required' => 'قیمت محصول الزامی است.',
+            'price.integer' => 'قیمت محصول باید یک عدد صحیح باشد.',
+            'time.required' => 'زمان محصول الزامی است.',
+            'time.integer' => 'زمان محصول باید یک عدد صحیح باشد.',
+            'age_limited.required' => 'محدودیت سنی محصول الزامی است.',
+            'age_limited.integer' => 'محدودیت سنی باید یک عدد صحیح باشد.',
+            'total.required' => 'تعداد کل محصول الزامی است.',
+            'total.integer' => 'تعداد کل باید یک عدد صحیح باشد.',
+            'pending.required' => 'تعداد معلق محصول الزامی است.',
+            'pending.integer' => 'تعداد معلق باید یک عدد صحیح باشد.',
+            'description.required' => 'توضیحات محصول الزامی است.',
+            'description.string' => 'توضیحات باید یک رشته باشد.',
+            'started_at.required' => 'زمان شروع الزامی است.',
+            'started_at.date_format' => 'زمان شروع باید در فرمت ساعت:دقیقه باشد.',
+            'ended_at.required' => 'زمان پایان الزامی است.',
+            'ended_at.date_format' => 'زمان پایان باید در فرمت ساعت:دقیقه باشد.',
+        ];
+    }
 }
