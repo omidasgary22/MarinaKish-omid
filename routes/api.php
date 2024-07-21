@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +19,10 @@ use Illuminate\Support\Facades\Route;
 
 
 //RegisterUser
-Route::post('/register', [UserController::class, 'Register'])->name('user.register');
+Route::post('/register', [RegisterController::class, 'Register'])->name('user.register');
+
+//LoginUser
+Route::post('/login', [LoginController::class, 'Login'])->name('user.login');
 
 
 //User Route

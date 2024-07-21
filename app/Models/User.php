@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Model
+
+
+class User extends Model 
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes,HasApiTokens;
 
     protected $fillable = [
         'name',
@@ -27,5 +30,6 @@ class User extends Model
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => 'hashed'
     ];
 }

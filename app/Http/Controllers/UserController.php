@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -18,6 +19,7 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request)
     {
+        
         $User = User::create($request->toArray());
         return response()->json(['message' => 'کاربر با موفقیت ایجاد شد', 'user' => $User], 201);
     }
