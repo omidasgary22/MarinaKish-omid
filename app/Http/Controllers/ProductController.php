@@ -33,4 +33,11 @@ class ProductController extends Controller
         $product->delete();
         return response()->json(['محصول با موفقیت حذف شد ']);
     }
+
+    public function restore($id)
+    {
+        $product = Product::withTrashed()->findOrFail($id);
+        $product->restore();
+        return response()->json(['message' => ' محصول با موفقیت بازگردانده شد ', 'product' => $product]);
+    }
 }
