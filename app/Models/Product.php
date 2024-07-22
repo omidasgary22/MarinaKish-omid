@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -25,5 +25,18 @@ class Product extends Model
         'tip',
     ];
 
-   
+    protected  $casts = [
+        'name' => 'string',
+        'price'=> 'biginteger',
+        'time' => 'integer',
+        'Discount percentage' => 'integer',
+        'age_limited' => 'integer',
+        'total' => 'integer',
+        'pending' => 'integer',
+        'off_suggestion' => 'string',
+        'description' => 'string',
+        'started_at' => 'datetime:H:i',
+        'ended_at' => 'datetime:H:i',
+        'tip' => 'string',
+    ];
 }
