@@ -22,7 +22,7 @@ class ProductController extends Controller
         return response()->json(['message' => 'محصول با موفقیت ایجاد شد', 'product' => $product]);
     }
 
-    public function update( UpdateProductRequest $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
         $product = Product::findOrFail($id);
         $product->update($request->validated());
@@ -40,6 +40,6 @@ class ProductController extends Controller
     {
         $product = Product::withTrashed()->findOrFail($id);
         $product->restore();
-        return response()->json(['message' => ' محصول با موفقیت بازگردانده شد ', 'product' => $product]);
+        return response()->json(['message' => 'محصول با موفقیت بازگردانی شد', 'product' => $product]);
     }
 }
