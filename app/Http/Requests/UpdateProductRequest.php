@@ -33,6 +33,7 @@ class UpdateProductRequest extends FormRequest
             'ended_at' => 'sometimes|required|date_format:H:i',
             'discount_percentage' => 'integer|min:0|max:100',
             'off_suggestion' => 'required|in:yes,no',
+            'tip' => 'nullable|string',
 
         ];
     }
@@ -63,6 +64,7 @@ class UpdateProductRequest extends FormRequest
             'discount_percentage.min' => 'درصد تخفیف نمی‌تواند کمتر از ۰ باشد.',
             'discount_percentage.max' => 'درصد تخفیف نمی‌تواند بیشتر از ۱۰۰ باشد.',
             'off_suggestion' => 'پیشنهاد تخفیف',
+            'tip' => 'نکته',
         ];
     }
 }

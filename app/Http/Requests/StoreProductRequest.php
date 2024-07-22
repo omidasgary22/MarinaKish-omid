@@ -32,6 +32,7 @@ class StoreProductRequest extends FormRequest
             'ended_at' => 'required|date_format:H:i',
             'discount_percentage' => 'integer|min:0|max:100',
             'off_suggestion' => 'required|in:yes,no',
+            'tip' => 'nullable|string',
         ];
     }
 
@@ -61,6 +62,7 @@ class StoreProductRequest extends FormRequest
             'discount_percentage.min' => 'درصد تخفیف نمی‌تواند کمتر از ۰ باشد.',
             'discount_percentage.max' => 'درصد تخفیف نمی‌تواند بیشتر از ۱۰۰ باشد.',
             'off_suggestion' => 'پیشنهاد تخفیف',
+            'tip' => 'نوشتن نکات لازم برای این تفریح الزامی می باشد',
         ];
     }
 }
