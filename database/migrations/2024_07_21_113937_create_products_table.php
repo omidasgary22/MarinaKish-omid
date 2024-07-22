@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->bigInteger('price');
             $table->integer('time');
+            $table->integer('Discount percentage')->nullable();
             $table->integer('age_limited');
             $table->integer('total');
             $table->integer('pending');

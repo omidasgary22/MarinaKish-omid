@@ -27,10 +27,10 @@ class StoreProductRequest extends FormRequest
             'time' => 'required|integer',
             'age_limited' => 'required|integer',
             'total' => 'required|integer',
-            
             'description' => 'required|string',
             'started_at' => 'required|date_format:H:i',
             'ended_at' => 'required|date_format:H:i',
+            'discount_percentage' => 'integer|min:0|max:100',
         ];
     }
 
@@ -56,6 +56,9 @@ class StoreProductRequest extends FormRequest
             'started_at.date_format' => 'زمان شروع باید در فرمت ساعت:دقیقه باشد.',
             'ended_at.required' => 'زمان پایان الزامی است.',
             'ended_at.date_format' => 'زمان پایان باید در فرمت ساعت:دقیقه باشد.',
+            'discount_percentage.integer' => 'درصد تخفیف باید یک عدد صحیح باشد.',
+            'discount_percentage.min' => 'درصد تخفیف نمی‌تواند کمتر از ۰ باشد.',
+            'discount_percentage.max' => 'درصد تخفیف نمی‌تواند بیشتر از ۱۰۰ باشد.',
         ];
     }
 }

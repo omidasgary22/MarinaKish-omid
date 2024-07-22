@@ -14,6 +14,7 @@ class Product extends Model
         'name',
         'price',
         'time',
+        'Discount percentage',
         'age_limited',
         'total',
         'pending',
