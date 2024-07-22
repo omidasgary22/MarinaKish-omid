@@ -22,5 +22,6 @@ class Product extends Model
         'description',
         'started_at',
         'ended_at',
+        'tip',
     ];
 }
