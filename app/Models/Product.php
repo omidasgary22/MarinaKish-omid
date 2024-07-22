@@ -18,6 +18,7 @@ class Product extends Model
         'age_limited',
         'total',
         'pending',
+        'off_suggestion',
         'description',
         'started_at',
         'ended_at',
