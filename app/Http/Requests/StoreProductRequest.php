@@ -27,6 +27,7 @@ class StoreProductRequest extends FormRequest
             'time' => 'required|integer',
             'age_limited' => 'required|integer',
             'total' => 'required|integer',
+            
             'description' => 'required|string',
             'started_at' => 'required|date_format:H:i',
             'ended_at' => 'required|date_format:H:i',

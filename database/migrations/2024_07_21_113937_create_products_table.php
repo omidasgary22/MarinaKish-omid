@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('description');
             $table->time('started_at');
             $table->time('ended_at');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
