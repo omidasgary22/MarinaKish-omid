@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('age_limited');
             $table->integer('total');
             $table->integer('pending');
+            $table->enum('off_suggestion', ['yes', 'no'])->default('no');
             $table->text('description');
             $table->time('started_at');
             $table->time('ended_at');
