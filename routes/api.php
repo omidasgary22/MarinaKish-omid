@@ -31,6 +31,7 @@ Route::post('/login', [LoginController::class, 'Login'])->name('user.login');
 Route::prefix('users')->group(function () {
     Route::get('/index/{id}', [UserController::class, 'index'])->name('users.index');
     Route::post('/store', [UserController::class, 'store'])->name('users.store');
+    Route::get('/show/{id}', [UserController::class, 'show'])->name('users.show');
     Route::put('/update/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::patch('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
