@@ -3,6 +3,7 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,4 +43,14 @@ Route::prefix('products')->group(function () {
     Route::put('/update/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
     Route::post('/restore/{id}', [ProductController::class, 'restore'])->name('products.restore');
+});
+
+//TicketRoute
+Route::prefix('tickets')->group(function () {
+    Route::get('/index', [TicketController::class, 'index'])->name('tickets.index');
+    Route::post('/store', [TicketController::class, 'store'])->name('tickets.store');
+    Route::get('/show/{id}', [TicketController::class, 'show'])->name('tickets.show');
+    Route::put('/update/{id}', [TicketController::class, 'update'])->name('tickets.update');
+    Route::delete('/delete/{id}', [TicketController::class, 'destroy'])->name('tikets.destroy');
+    Route::post('/restore/{id}', [TicketController::class, 'restore'])->name('tickets.restore');
 });
