@@ -39,4 +39,11 @@ class TicketController extends Controller
         $ticket->delete();
         return response()->json(['message' => 'تیکت با موفقیت حذف شد',], 200);
     }
+
+    public function restore($id)
+    {
+        $ticket = Ticket::withTrashed()->findOrFail($id);
+        $ticket->restore();
+        return response()->json(['message' => 'تیکت با موفقیت بازیابی شد '], 200);
+    }
 }
