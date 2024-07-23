@@ -10,9 +10,7 @@ class TicketController extends Controller
 {
     public function index()
     {
-        $ticket = Ticket::all();
-        return response()->json($tickets);
+        $tickets = Ticket::all();
+        return response()->json(['tickets' => $tickets], 200);
     }
-
-   
 }
