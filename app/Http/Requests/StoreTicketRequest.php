@@ -28,4 +28,14 @@ class StoreTicketRequest extends FormRequest
             'priority' => 'required|in:low,medium,high',
         ];
     }
+
+    public function messagess()
+    {
+        return [
+            'title.required' => 'عنوان تیکت الزامی است',
+            'body.required' => 'محتوای تیکت الزامی است',
+            'status.required' => 'وضعیت تیکت الزامی است',
+            'priority.required' => 'اولویت تیکت الزامی است',
+        ];
+    }
 }
