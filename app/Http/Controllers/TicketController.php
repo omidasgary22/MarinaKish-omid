@@ -25,4 +25,18 @@ class TicketController extends Controller
         $ticket = Ticket::findOrfail($id);
         return response()->json(['ticket' => $ticket], 200);
     }
+
+    public function update($request, $id)
+    {
+        $ticket = Ticket::findOrFail($id);
+        $ticket->update($request->all());
+        return response()->json(['message' => 'تیکت با موفقیت به روز رسانی شد ', 'ticket' => '$ticket'], 200);
+    }
+
+    public function destroy($id)
+    {
+        $ticket = Ticket::findOrFail($id);
+        $ticket->delete();
+        return response()->json(['message' => 'تیکت با موفقیت حذف شد',], 200);
+    }
 }
