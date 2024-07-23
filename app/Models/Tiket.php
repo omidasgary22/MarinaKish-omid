@@ -16,5 +16,5 @@ class Tiket extends Model
         'body',
         'status',
         'priority',
-    ]
+    ];
 }
