@@ -27,7 +27,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::with('tickets')->findOrFail($id);
-        return response()->json(['message' => 'کاربر با موفقیت بازیابی شد.'], 200);
+        return response()->json(['user' => $user]);
     }
 
 
