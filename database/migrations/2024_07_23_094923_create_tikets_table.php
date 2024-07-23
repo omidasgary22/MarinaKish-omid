@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('body');
             $table->enum('status', ['open', 'closed', 'in_progress'])->default('open');
             $table->enum('priority', ['low', 'medium', 'high'])->default('low');
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
