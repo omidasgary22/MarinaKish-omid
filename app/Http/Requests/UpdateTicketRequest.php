@@ -28,4 +28,16 @@ class UpdateTicketRequest extends FormRequest
             'priority' => 'required|in:low,medium,high',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'title.required' => 'عنوان تیکت الزامی است.',
+            'body.required' => 'متن تیکت الزامی است.',
+            'status.required' => 'وضعیت تیکت الزامی است.',
+            'status.in' => 'وضعیت تیکت معتبر نیست.',
+            'priority.required' => 'اولویت تیکت الزامی است.',
+            'priority.in' => 'اولویت تیکت معتبر نیست.',
+        ];
+    }
 }
