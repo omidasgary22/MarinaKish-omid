@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTicketRequest;
+use App\Http\Requests\UpdateTicketRequest;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,7 @@ class TicketController extends Controller
         return response()->json(['tickets' => $tickets], 200);
     }
 
-    public function store($request)
+    public function store(StoreTicketRequest $request)
     {
         $ticket = Ticket::create($request->all());
         return response()->json(['message' => 'تیکت با موفقیت ایجاد شد', 'ticket' => $ticket], 201);
@@ -26,7 +28,7 @@ class TicketController extends Controller
         return response()->json(['ticket' => $ticket], 200);
     }
 
-    public function update($request, $id)
+    public function update(UpdateTicketRequest $request, $id)
     {
         $ticket = Ticket::findOrFail($id);
         $ticket->update($request->all());
