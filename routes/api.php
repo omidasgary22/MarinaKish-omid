@@ -29,7 +29,7 @@ Route::post('/login', [LoginController::class, 'Login'])->name('user.login');
 
 //User Route
 Route::prefix('users')->group(function () {
-    Route::get('/index', [UserController::class, 'index'])->name('users.index');
+    Route::get('/index/{id}', [UserController::class, 'index'])->name('users.index');
     Route::post('/store', [UserController::class, 'store'])->name('users.store');
     Route::put('/update/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');

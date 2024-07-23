@@ -19,10 +19,18 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request)
     {
-        
+
         $User = User::create($request->toArray());
         return response()->json(['message' => 'کاربر با موفقیت ایجاد شد', 'user' => $User], 201);
     }
+
+    public function show($id)
+    {
+        $user = User::with('tickets')->findOrFail($id);
+        return response()->json(['message' => 'کاربر با موفقیت بازیابی شد.'], 200);
+    }
+
+
 
     public function update(UpdateUserRequest $request, string $id)
     {

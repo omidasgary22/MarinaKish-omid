@@ -10,9 +10,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 
 
-class User extends Model 
+class User extends Model
 {
-    use HasFactory, Notifiable, SoftDeletes,HasApiTokens;
+    use HasFactory, Notifiable, SoftDeletes, HasApiTokens;
 
     protected $fillable = [
         'name',
@@ -32,4 +32,10 @@ class User extends Model
         'email_verified_at' => 'datetime',
         'password' => 'hashed'
     ];
+
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
 }
