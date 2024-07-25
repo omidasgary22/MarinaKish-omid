@@ -24,7 +24,7 @@ class TicketController extends Controller
 
     public function show($id)
     {
-        $ticket = Ticket::findOrfail($id);
+        $ticket = Ticket::with('user')->findOrfail($id);
         return response()->json(['ticket' => $ticket], 200);
     }
 
@@ -42,10 +42,5 @@ class TicketController extends Controller
         return response()->json(['message' => 'تیکت با موفقیت حذف شد',], 200);
     }
 
-    public function restore($id)
-    {
-        $ticket = Ticket::withTrashed()->findOrFail($id);
-        $ticket->restore();
-        return response()->json(['message' => 'تیکت با موفقیت بازیابی شد '], 200);
-    }
+   
 }
