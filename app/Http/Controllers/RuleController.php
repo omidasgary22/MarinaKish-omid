@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRuleReuest;
 use App\Models\Rule;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class RuleController extends Controller
         return response()->json(['rules' => 'rules']);
     }
 
-    public function store(Request $request)
+    public function store(StoreRuleReuest $request)
     {
         $rule = Rule::create($request->all());
         return response()->json(['message' => 'قانون با موفقیت ایجاد شد', 'rule' => $rule], 201);
