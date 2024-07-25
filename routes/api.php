@@ -65,7 +65,7 @@ Route::prefix('tickets')->group(function () {
 Route::prefix('rules')->group(function () {
     Route::get('/index/{id?}', [RuleController::class, 'index'])->name('rules.index');
     Route::post('/store', [RuleController::class, 'store'])->name('rules.store');
-    Route::put('/update', [RuleController::class, 'update'])->name('rules.update');
+    Route::put('/update/{id}', [RuleController::class, 'update'])->name('rules.update');
     Route::delete('/delete/{id}', [RuleController::class, 'destroy'])->name('rules.destroy');
-    Route::post('/restore', [RuleController::class, 'restore'])->name('rules.restore');
+    Route::post('/restore{id}', [RuleController::class, 'restore'])->name('rules.restore');
 });

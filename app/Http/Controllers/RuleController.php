@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRuleReuest;
+use App\Http\Requests\UpdateRuleRequest;
 use App\Models\Rule;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,7 @@ class RuleController extends Controller
         return response()->json(['rule' => $rule]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateRuleRequest $request, $id)
     {
         $rule = Rule::findOrFail($id);
         $rule->update($request->all());
