@@ -57,7 +57,5 @@ class UserController extends Controller
         $user = auth()->user()->with("tickets")->first();
 
         return response()->json($user);
-    } 
-        
-    
+    }
 }

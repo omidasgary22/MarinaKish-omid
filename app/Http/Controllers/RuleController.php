@@ -26,5 +26,10 @@ class RuleController extends Controller
         return response()->json(['rule' => $rule]);
     }
 
-    
+    public function update(Request $request, $id)
+    {
+        $rule = Rule::findOrFail($id);
+        $rule->update($request->all());
+        return response()->json(['message' => 'قانون با موفیقیت به روز رسانی شد', 'rule' => $rule]);
+    }
 }
