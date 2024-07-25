@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('rules', function (Blueprint $table) {
             $table->id();
             $table->string('body');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
