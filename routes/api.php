@@ -3,6 +3,7 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RuleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -58,4 +59,12 @@ Route::prefix('tickets')->group(function () {
     Route::put('/update/{id}', [TicketController::class, 'update'])->name('tickets.update');
     Route::delete('/delete/{id}', [TicketController::class, 'destroy'])->name('tikets.destroy');
     Route::post('/restore/{id}', [TicketController::class, 'restore'])->name('tickets.restore');
+});
+
+//RuleRoute
+Route::prefix('rules')->group(function () {
+    Route::get('/index', [RuleController::class, 'index'])->name('rules.index');
+    Route::post('/store', [RuleController::class, 'store'])->name('rules.store');
+    Route::put('/update', [RuleController::class, 'update'])->name('rules.update');
+    Route::delete('/delete/{id}', [RuleController::class, 'destroy'])->name('rules.destroy');
 });
