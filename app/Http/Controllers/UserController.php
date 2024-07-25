@@ -51,4 +51,13 @@ class UserController extends Controller
         $user->restore();
         return response()->json(['message' => 'کاربر با موفقیت بازیابی شد.'], 200);
     }
+
+    public function  me()
+    {
+        $user = auth()->user()->with("tickets")->first();
+
+        return response()->json($user);
+    } 
+        
+    
 }

@@ -20,21 +20,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+
 //RegisterUser
 Route::post('/register', [RegisterController::class, 'Register'])->name('user.register');
 
 //LoginUser
 Route::post('/login', [LoginController::class, 'Login'])->name('user.login');
 
+Route::group(["middleware"=>"auth:sanctum"],function(){
 
-//User Route
-Route::prefix('users')->group(function () {
-    Route::get('/index/{id}', [UserController::class, 'index'])->name('users.index');
-    Route::post('/store', [UserController::class, 'store'])->name('users.store');
-    Route::get('/show/{id}', [UserController::class, 'show'])->name('users.show');
-    Route::put('/update/{id}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
-    Route::patch('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
+    //User Route
+    Route::prefix('users')->group(function () {
+        Route::get('/index/{id}', [UserController::class, 'index'])->name('users.index');
+        Route::post('/store', [UserController::class, 'store'])->name('users.store');
+        Route::get('/show/{id}', [UserController::class, 'show'])->name('users.show');
+        Route::put('/update/{id}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+        Route::patch('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
+        Route::get('/me',[UserController::class,'me']);
+    });
 });
 
 //ProductRoute

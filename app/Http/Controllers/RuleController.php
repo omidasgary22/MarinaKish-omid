@@ -25,4 +25,6 @@ class RuleController extends Controller
         $rule = Rule::findOrFill($id);
         return response()->json(['rule' => $rule]);
     }
+
+    
 }
