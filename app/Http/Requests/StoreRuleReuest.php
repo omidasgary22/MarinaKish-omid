@@ -26,11 +26,4 @@ class StoreRuleReuest extends FormRequest
         ];
     }
 
-    public function messages()
-    {
-        return [
-            'body.required' => 'پر کردن این قسمت اجباری است.',
-            'body.string' => 'فیلد این بدنه باید از نوع رشته یاشد',
-        ];
-    }
 }

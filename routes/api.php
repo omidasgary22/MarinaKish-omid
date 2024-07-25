@@ -67,5 +67,5 @@ Route::prefix('rules')->group(function () {
     Route::post('/store', [RuleController::class, 'store'])->name('rules.store');
     Route::put('/update/{id}', [RuleController::class, 'update'])->name('rules.update');
     Route::delete('/delete/{id}', [RuleController::class, 'destroy'])->name('rules.destroy');
-    Route::post('/restore{id}', [RuleController::class, 'restore'])->name('rules.restore');
+    Route::post('/restore/{id}', [RuleController::class, 'restore'])->name('rules.restore');
 });

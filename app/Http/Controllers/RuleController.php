@@ -37,7 +37,7 @@ class RuleController extends Controller
 
     public function destroy($id)
     {
-        $rule = Rule::findOrFill($id);
+        $rule = Rule::findOrFail($id);
         $rule->delete($id);
         return response()->json(['message' => 'قانون با موفقیت حذف شد']);
     }
