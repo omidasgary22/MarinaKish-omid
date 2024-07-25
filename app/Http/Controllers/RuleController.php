@@ -16,7 +16,13 @@ class RuleController extends Controller
 
     public function store(Request $request)
     {
-      $rule = Rule::create($request->all());
-      return response()->json(['message' => 'قانون با موفقیت ایجاد شد','rule' => $rule],201);
+        $rule = Rule::create($request->all());
+        return response()->json(['message' => 'قانون با موفقیت ایجاد شد', 'rule' => $rule], 201);
+    }
+
+    public function show($id)
+    {
+        $rule = Rule::findOrFill($id);
+        return response()->json(['rule' => $rule]);
     }
 }
