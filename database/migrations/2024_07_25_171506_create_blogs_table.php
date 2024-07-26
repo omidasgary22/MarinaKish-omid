@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('summary');    //توضیح مختصر
             $table->text('content');    //جزییات مطالب
             $table->integer('duration_of_study');    //مدت زمان مطالعه
+            $table->softDeletes();
             $table->timestamps();
         });
     }
