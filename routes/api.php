@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RuleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -68,4 +70,16 @@ Route::prefix('rules')->group(function () {
     Route::put('/update/{id}', [RuleController::class, 'update'])->name('rules.update');
     Route::delete('/delete/{id}', [RuleController::class, 'destroy'])->name('rules.destroy');
     Route::post('/restore/{id}', [RuleController::class, 'restore'])->name('rules.restore');
+});
+
+//BlogRoute
+Route::prefix('blogs')->group(function () {
+    Route::get('/index', [BlogController::class, 'index'])->name('blogs.index');
+    Route::post('/blog', [BlogController::class, 'store'])->name('blogs.store');
+    Route::get('/show/{id}', [BlogController::class, 'show'])->name('blogs.show');
+    Route::put('/update/{id}', [BlogController::class, 'update'])->name('blogs.update');
+    Route::delete('/delete/{id}', [BlogController::class, 'destroy'])->name('blogs.destroy');
+    Route::post('/restore/{id}', [BlogController::class, 'restore'])->name('blogs.restore');
+    //Total removal from the database Route
+    Route::delete('/forcedelete/{id}', [BlogController::class, 'forcedelete'])->name('blog.forceDelete');
 });
