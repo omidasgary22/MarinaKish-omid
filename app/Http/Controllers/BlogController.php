@@ -44,6 +44,15 @@ class BlogController extends Controller
     {
         $blog = Blog::onlyTrashed()->findOrFail($id);
         $blog->restore();
-        return response()->json(['message' => 'بلاگ با موفقیت بازیابی شد',]); 
+        return response()->json(['message' => 'بلاگ با موفقیت بازیابی شد',]);
+    }
+
+    //Total removal from the database
+    
+    public function forceDelete($id)
+    {
+        $blog = Blog::onlyTrashed()->findOrFail($id);
+        $blog->forceDelete();
+        return response()->json(['message' => 'بلاگ با موفقیت به صورت دایمی حذف شد']);
     }
 }
