@@ -19,4 +19,10 @@ class BlogController extends Controller
         $blog = Blog::create($request->all());
         return response()->json(['message' => 'بلاک با موفقیت ایجاد شد', 'blog' => $blog], 201);
     }
+
+    public function show($id)
+    {
+        $blog = Blog::findOrFaill($id);
+        return response()->json(['blog' => $blog]);
+    }
 }
