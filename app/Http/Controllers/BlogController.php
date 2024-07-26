@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreBlogRequest;
+use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,7 @@ class BlogController extends Controller
         return response()->json(['blogs' => $blogs]);
     }
 
-    public function store(Request $request)
+    public function store(StoreBlogRequest $request)
     {
         $blog = Blog::create($request->all());
         return response()->json(['message' => 'بلاک با موفقیت ایجاد شد', 'blog' => $blog], 201);
@@ -26,7 +28,7 @@ class BlogController extends Controller
         return response()->json(['blog' => $blog]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateBlogRequest $request, $id)
     {
         $blog = Blog::findOrFail($id);
         $blog->update($request->all());
@@ -48,7 +50,7 @@ class BlogController extends Controller
     }
 
     //Total removal from the database
-    
+
     public function forceDelete($id)
     {
         $blog = Blog::onlyTrashed()->findOrFail($id);
