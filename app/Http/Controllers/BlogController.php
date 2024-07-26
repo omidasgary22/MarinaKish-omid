@@ -32,4 +32,11 @@ class BlogController extends Controller
         $blog->update($request->all());
         return response()->json(['message' => 'بلاگ با موفقیت به روز رسانی شد', 'blog' => $blog]);
     }
+
+    public function destroy($id)
+    {
+        $blog = Blog::findOrFail($id);
+        $blog->delete();
+        return response()->json(['message' => 'بلاگ با موفقیت حذف شد']);
+    }
 }
