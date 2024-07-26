@@ -39,4 +39,11 @@ class BlogController extends Controller
         $blog->delete();
         return response()->json(['message' => 'بلاگ با موفقیت حذف شد']);
     }
+
+    public function restore($id)
+    {
+        $blog = Blog::onlyTrashed()->findOrFail($id);
+        $blog->restore();
+        return response()->json(['message' => 'بلاگ با موفقیت بازیابی شد',]); 
+    }
 }
