@@ -75,7 +75,7 @@ Route::prefix('rules')->group(function () {
 //BlogRoute
 Route::prefix('blogs')->group(function () {
     Route::get('/index', [BlogController::class, 'index'])->name('blogs.index');
-    Route::post('/blog', [BlogController::class, 'store'])->name('blogs.store');
+    Route::post('/store', [BlogController::class, 'store'])->name('blogs.store');
     Route::get('/show/{id}', [BlogController::class, 'show'])->name('blogs.show');
     Route::put('/update/{id}', [BlogController::class, 'update'])->name('blogs.update');
     Route::delete('/delete/{id}', [BlogController::class, 'destroy'])->name('blogs.destroy');
