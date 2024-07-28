@@ -23,7 +23,7 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:200',
+            'name' => 'string|max:200',
             'phone_number' => 'required|string|regex:/^\+?[0-9]{10,15}$/',
             'date_of_birth' => 'required|date|before:today',
             'national_code' => 'required|string|size:10|regex:/^[0-9]{10}$/',
