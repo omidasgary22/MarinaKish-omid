@@ -27,7 +27,7 @@ class UpdateUserRequest extends FormRequest
             'name' => 'required|string|max:200',
             'phone_number' => 'required|string|regex:/^\+?[0-9]{10,15}$/',
             'date_of_birth' => 'required|date|before:today',
-            'national_code' => 'required|string|size:10|regex:/^[0-9]{10}$/',
+            'national_code' => 'required|ir_national_code',
             'email' => 'string|email|nullable|max:255' . $userId,
             'password' => 'nullable|string|min:8',
         ];
@@ -49,9 +49,8 @@ class UpdateUserRequest extends FormRequest
             'date_of_birth.before' => 'تاریخ تولد باید قبل از امروز باشد.',
 
             'national_code.required' => 'کد ملی الزامی است.',
-            'national_code.string' => 'کد ملی باید یک رشته متنی باشد.',
-            'national_code.size' => 'کد ملی باید ۱۰ کاراکتر باشد.',
-            'national_code.regex' => 'کد ملی باید تنها شامل اعداد باشد.',
+            'national_code.ir_national_code' => 'کد ملی معتبر نمی باشد.',
+           
 
             'email.required' => 'ایمیل الزامی است.',
             'email.string' => 'ایمیل باید یک رشته متنی باشد.',

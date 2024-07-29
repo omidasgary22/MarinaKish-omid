@@ -17,12 +17,12 @@ class UserController extends Controller
         return response()->json(['users' => $users]);
     }
 
-    public function store(StoreUserRequest $request)
-    {
+    // public function store(StoreUserRequest $request)
+    // {
 
-        $User = User::create($request->toArray());
-        return response()->json(['message' => 'کاربر با موفقیت ایجاد شد', 'user' => $User], 201);
-    }
+    //     $User = User::create($request->toArray());
+    //     return response()->json(['message' => 'کاربر با موفقیت ایجاد شد', 'user' => $User], 201);
+    // }
 
     public function show($id)
     {
