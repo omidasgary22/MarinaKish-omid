@@ -26,4 +26,16 @@ class UpdateFAQRequest extends FormRequest
             'answer' => 'required|string',
         ];
     }
+
+
+    public function messages()
+    {
+        return [
+            'question.required' => 'فیلد سوال الزامی است.',
+            'question.string' => 'فیلد سوال باید متن باشد.',
+            'question.max' => 'فیلد سوال نباید بیشتر از ۲۵۵ کاراکتر باشد.',
+            'answer.required' => 'فیلد پاسخ الزامی است.',
+            'answer.string' => 'فیلد پاسخ باید متن باشد.',
+        ];
+    }
 }
