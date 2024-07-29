@@ -35,4 +35,11 @@ class FAQController extends Controller
         $faq->delete();
         return response()->json(['message' => 'سوال با موفقیت حذف شد.'], 200);
     }
+
+    public function restore($id)
+    {
+        $faq = FAQ::onlyTrashed()->findOrFail($id);
+        $faq->restore();
+        return response()->json(['message' => 'سوال با موفقیت بازیابی شد.'], 200);
+    }
 }
