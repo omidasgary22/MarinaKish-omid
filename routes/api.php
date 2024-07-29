@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\FAQController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
@@ -82,4 +83,13 @@ Route::prefix('blogs')->group(function () {
     Route::post('/restore/{id}', [BlogController::class, 'restore'])->name('blogs.restore');
     //Total removal from the database Route
     Route::delete('/forcedelete/{id}', [BlogController::class, 'forcedelete'])->name('blog.forceDelete');
+});
+
+//FAQRoute
+Route::prefix('faq')->group(function () {
+    Route::get('/index/{id?}', [FAQController::class, 'index'])->name('faqs.index');
+    Route::post('/store', [FAQController::class, 'store'])->name('faqs.store');
+    Route::put('/update/{id}', [FAQController::class, 'update'])->name('faqs.update');
+    Route::delete('/delete/{id}', [FAQController::class, 'destroy'])->name('faqs.destroy');
+    Route::post('/restore/{id}', [FAQController::class, 'restore'])->name('faqs.restore');
 });
