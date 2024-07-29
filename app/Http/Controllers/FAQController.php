@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateFAQRequest;
 use App\Models\FAQ;
 use Illuminate\Http\Request;
 
-class FAQController extends Controller
+class FaqController extends Controller
 {
     public function index()
     {
@@ -37,9 +37,9 @@ class FAQController extends Controller
     }
 
     public function restore($id)
-    {
-        $faq = FAQ::onlyTrashed()->findOrFail($id);
-        $faq->restore();
-        return response()->json(['message' => 'سوال با موفقیت بازیابی شد.'], 200);
-    }
+{
+    $faq = FAQ::onlyTrashed()->findOrFail($id);
+    $faq->restore();
+    return response()->json(['message' => 'سوال با موفقیت بازیابی شد.'],200);
+}
 }

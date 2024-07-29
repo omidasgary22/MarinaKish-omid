@@ -35,8 +35,8 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     //User Route
     Route::prefix('users')->group(function () {
-        Route::get('/index/{id}', [UserController::class, 'index'])->name('users.index');
-        Route::post('/store', [UserController::class, 'store'])->name('users.store');
+        Route::get('/index/{id?}', [UserController::class, 'index'])->name('users.index');
+      //  Route::post('/store', [UserController::class, 'store'])->withoutmiddleware("auth:sanctum")->name('users.store');
         Route::get('/show/{id}', [UserController::class, 'show'])->name('users.show');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('users.update');
         Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
@@ -86,10 +86,10 @@ Route::prefix('blogs')->group(function () {
 });
 
 //FAQRoute
-Route::prefix('faq')->group(function () {
-    Route::get('/index/{id?}', [FAQController::class, 'index'])->name('faqs.index');
-    Route::post('/store', [FAQController::class, 'store'])->name('faqs.store');
-    Route::put('/update/{id}', [FAQController::class, 'update'])->name('faqs.update');
-    Route::delete('/delete/{id}', [FAQController::class, 'destroy'])->name('faqs.destroy');
-    Route::post('/restore/{id}', [FAQController::class, 'restore'])->name('faqs.restore');
+Route::prefix('faqs')->group(function () {
+    Route::get('/index/{id?}', [FaqController::class, 'index'])->name('faqs.index');
+    Route::post('/store', [FaqController::class, 'store'])->name('faqs.store');
+    Route::put('/update/{id}', [FaqController::class, 'update'])->name('faqs.update');
+    Route::delete('/delete/{id}', [FaqController::class, 'destroy'])->name('faqs.destroy');
+    Route::post('/restore/{id}', [FaqController::class, 'restore'])->name('faqs.restore');
 });

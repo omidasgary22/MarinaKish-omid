@@ -24,7 +24,7 @@ class BlogController extends Controller
 
     public function show($id)
     {
-        $blog = Blog::findOrFaill($id);
+        $blog = Blog::findOrFail($id);
         return response()->json(['blog' => $blog]);
     }
 
