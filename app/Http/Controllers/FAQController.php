@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFAQRequest;
+use App\Http\Requests\UpdateFAQRequest;
 use App\Models\FAQ;
 use Illuminate\Http\Request;
 
@@ -19,5 +20,12 @@ class FAQController extends Controller
     {
         $faq = FAQ::create($request->toArray());
         return response()->json(['message' => 'سوال با موفقیت ایجاد شد', 'faq' => $faq], 201);
+    }
+
+    public function update(UpdateFAQRequest $request, $id)
+    {
+        $faq = FAQ::findorFail($id);
+        $faq->update($request->toArray());
+        return response()->json(['message' => 'سوال با موفقیت به روز رسانی شد.'], 200);
     }
 }
