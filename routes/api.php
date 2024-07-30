@@ -3,6 +3,7 @@
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RuleController;
@@ -36,7 +37,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     //User Route
     Route::prefix('users')->group(function () {
         Route::get('/index/{id?}', [UserController::class, 'index'])->name('users.index');
-      //  Route::post('/store', [UserController::class, 'store'])->withoutmiddleware("auth:sanctum")->name('users.store');
+        //  Route::post('/store', [UserController::class, 'store'])->withoutmiddleware("auth:sanctum")->name('users.store');
         Route::get('/show/{id}', [UserController::class, 'show'])->name('users.show');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('users.update');
         Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
@@ -93,3 +94,6 @@ Route::prefix('faqs')->group(function () {
     Route::delete('/delete/{id}', [FaqController::class, 'destroy'])->name('faqs.destroy');
     Route::post('/restore/{id}', [FaqController::class, 'restore'])->name('faqs.restore');
 });
+
+//Forget_passwordRoute
+Route::post('forgetpassword', [PasswordResetController::class, 'sendResetToken']);
