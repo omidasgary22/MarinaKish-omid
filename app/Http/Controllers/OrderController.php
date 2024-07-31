@@ -22,4 +22,10 @@ class OrderController extends Controller
         }
         return response()->json($order);
     }
+
+    public function store(Request $request)
+    {
+        $order = Order::create($request->toArray());
+        return response()->json($order, 201); 
+    }
 }
