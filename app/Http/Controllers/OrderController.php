@@ -13,4 +13,13 @@ class OrderController extends Controller
         $orders = Order::orderBy('id', 'desc')->paginate(10);
         return response()->json([$orders]);
     }
+
+    public function show($id)
+    {
+        $order = Order::find($id);
+        if (!$order) {
+            return response()->json(['message' => 'سفارشی یافت نشد.'], 404);
+        }
+        return response()->json($order);
+    }
 }
