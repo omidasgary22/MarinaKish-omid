@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('answer')->nullable();
             $table->enum('star', ['1', '2', '3', '4', '5']);
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
