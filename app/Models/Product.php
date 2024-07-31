@@ -27,7 +27,7 @@ class Product extends Model
 
     protected  $casts = [
         'name' => 'string',
-        'price'=> 'biginteger',
+        'price' => 'biginteger',
         'time' => 'integer',
         'Discount percentage' => 'integer',
         'age_limited' => 'integer',
@@ -39,4 +39,11 @@ class Product extends Model
         'ended_at' => 'datetime:H:i',
         'tip' => 'string',
     ];
+
+
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

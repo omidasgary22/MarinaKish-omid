@@ -38,4 +38,9 @@ class User extends Model
     {
         return $this->hasMany(Ticket::class);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
