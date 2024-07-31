@@ -32,4 +32,11 @@ class CommentController extends Controller
         $comment->update($request->toArray());
         return response()->json(['message' => 'نظر با موفقیت به روز رسانی شد','comment' => $comment]);
     }
+
+    public function destroy($id)
+    {
+        $comment = Comment::findOrFail($id);
+        $comment = delete();
+        return response()->json(['message' => 'نظر با موفقیت حذف شد']);
+    }
 }
