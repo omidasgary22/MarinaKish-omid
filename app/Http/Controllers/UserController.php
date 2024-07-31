@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::with('tickets')->findOrFail($id);
+        $user = User::with('tickets','comments')->findOrFail($id);
         return response()->json(['user' => $user]);
     }
 

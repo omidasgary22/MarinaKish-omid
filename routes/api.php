@@ -112,4 +112,5 @@ Route::prefix('comments')->group(function () {
     Route::put('/update/{id}', [CommentController::class, 'update'])->name('comments.update');
     Route::delete('/delete/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
     Route::post('/restore/{id}', [CommentController::class, 'restore'])->name('comments.restore');
+    Route::get('/show/{id}',[CommentController::class,'show'])->name('comments.show');
 });

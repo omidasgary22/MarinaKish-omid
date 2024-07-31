@@ -28,7 +28,7 @@ class CommentRequest extends FormRequest
             'body' => 'required|string',
             'answer' => 'nullable|string',
             'star' => 'required|in:1,2,3,4,5',
-            'status' => 'required|in:pending,approved,rejected',
+            'status' => 'in:pending,approved,rejected',
         ];
     }
 
