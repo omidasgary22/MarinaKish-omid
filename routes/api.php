@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PasswordChangeController;
@@ -100,6 +101,15 @@ Route::prefix('faqs')->group(function () {
 Route::post('forgetpassword', [PasswordResetController::class, 'sendResetToken']);
 
 //PasswordChangeRoute
-Route::middleware('auth:sanctum')->group(function(){
-    Route::post('/password/change',[PasswordChangeController::class,'update'])->name('password.update');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/password/change', [PasswordChangeController::class, 'update'])->name('password.update');
+});
+
+//CommentRoute
+Route::prefix('comments')->group(function () {
+    Route::get('/index{id?}', [CommentController::class, 'index'])->name('comments.index');
+    Route::post('/store', [CommentController::class, 'store'])->name('comments.store');
+    Route::put('/update/{id}', [CommentController::class, 'update'])->name('comments.update');
+    Route::delete('/delete/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
+    Route::post('/restore/{id}', [CommentController::class, 'restore'])->name('comments.restore');
 });
