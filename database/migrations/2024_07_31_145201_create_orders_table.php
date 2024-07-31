@@ -18,7 +18,6 @@ return new class extends Migration
             $table->enum('status', ['pending', 'completed', 'cancelled']);  //در انتظار /کامل شده/لغو شده
             $table->dateTime('beath')->nullable();  //تاریخ و زمان خرید
             $table->foreignId('factor_id')->nullable()->constrained()->onDelete('set null');
-            $table->softDelete();
             $table->timestamps();
         });
     }
