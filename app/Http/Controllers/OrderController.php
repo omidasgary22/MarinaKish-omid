@@ -28,4 +28,12 @@ class OrderController extends Controller
         $order = Order::create($request->toArray());
         return response()->json($order, 201); 
     }
+
+    public function update(Request $request, $id)
+    {
+        $order = Order::find($id);
+        if (!$order) {
+            return response()->json(['message' => 'سفارشی وجود ندارد.'], 404);
+        }
+    }
 }
