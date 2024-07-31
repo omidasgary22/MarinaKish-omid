@@ -35,5 +35,7 @@ class OrderController extends Controller
         if (!$order) {
             return response()->json(['message' => 'سفارشی وجود ندارد.'], 404);
         }
+        $order->update($request->toArray());
+        return response()->json($order);
     }
 }
