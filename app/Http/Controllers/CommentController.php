@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
@@ -26,17 +27,17 @@ class CommentController extends Controller
         return response()->json(['comment' => '$comment']);
     }
 
-    public function update($UpdateCommentRequest $request, $id)
+    public function update(CommentRequest $request, $id)
     {
         $comment = Comment::findOrFail($id);
         $comment->update($request->toArray());
-        return response()->json(['message' => 'نظر با موفقیت به روز رسانی شد','comment' => $comment]);
+        return response()->json(['message' => 'نظر با موفقیت به روز رسانی شد', 'comment' => $comment]);
     }
 
     public function destroy($id)
     {
         $comment = Comment::findOrFail($id);
-        $comment = delete();
+        $comment->delete();
         return response()->json(['message' => 'نظر با موفقیت حذف شد']);
     }
 
