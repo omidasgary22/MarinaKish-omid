@@ -19,4 +19,6 @@ class CommentController extends Controller
         $comment = Comment::create($request->toArray());
         return response()->json(['message' => 'نظر با موفقیت ایجاد شد', 'comment' => $$comment], 201);
     }
+
+    
 }
