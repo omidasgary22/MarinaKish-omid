@@ -25,4 +25,11 @@ class CommentController extends Controller
         $comment = Comment::whit('user', 'product')->findOrFail($id);
         return response()->json(['comment' => '$comment']);
     }
+
+    public function update($UpdateCommentRequest $request, $id)
+    {
+        $comment = Comment::findOrFail($id);
+        $comment->update($request->toArray());
+        return response()->json(['message' => 'نظر با موفقیت به روز رسانی شد','comment' => $comment]);
+    }
 }
