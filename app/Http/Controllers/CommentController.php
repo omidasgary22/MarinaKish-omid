@@ -20,5 +20,9 @@ class CommentController extends Controller
         return response()->json(['message' => 'نظر با موفقیت ایجاد شد', 'comment' => $$comment], 201);
     }
 
-    
+    public function show($id)
+    {
+        $comment = Comment::whit('user', 'product')->findOrFail($id);
+        return response()->json(['comment' => '$comment']);
+    }
 }
