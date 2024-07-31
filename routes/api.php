@@ -3,6 +3,7 @@
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PasswordChangeController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
@@ -97,3 +98,8 @@ Route::prefix('faqs')->group(function () {
 
 //Forget_passwordRoute
 Route::post('forgetpassword', [PasswordResetController::class, 'sendResetToken']);
+
+//PasswordChangeRoute
+Route::middleware('auth:sanctum')->group(function(){
+    Route::post('/password/change',[PasswordChangeController::class,'update'])->name('password.update');
+});
