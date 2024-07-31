@@ -39,4 +39,11 @@ class CommentController extends Controller
         $comment = delete();
         return response()->json(['message' => 'نظر با موفقیت حذف شد']);
     }
+
+    public function restore($id)
+    {
+        $user = Comment::onlyTrashed()->findOrFail($id);
+        $user->restore();
+        return response()->json(['message' => 'نظر با موفقیت بازیابی شد.'], 200);
+    }
 }
