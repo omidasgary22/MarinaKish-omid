@@ -4,6 +4,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PasswordChangeController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\ProductController;
@@ -112,5 +113,14 @@ Route::prefix('comments')->group(function () {
     Route::put('/update/{id}', [CommentController::class, 'update'])->name('comments.update');
     Route::delete('/delete/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
     Route::post('/restore/{id}', [CommentController::class, 'restore'])->name('comments.restore');
-    Route::get('/show/{id}',[CommentController::class,'show'])->name('comments.show');
+    Route::get('/show/{id}', [CommentController::class, 'show'])->name('comments.show');
+});
+
+//OrderRoute
+Route::prefix('orders')->group(function () {
+    Route::get('/index/{id?}', [OrderController::class, 'index'])->name('ordees.index');
+    Route::post('/store', [OrderController::class, 'store'])->name('orders.store');
+    Route::put('/update/{id}', [OrderController::class, 'update'])->name('orders.update');
+    Route::delete('/delete/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
+    Route::get('/show/{id}', [OrderController::class, 'show'])->name('orders.show');
 });
