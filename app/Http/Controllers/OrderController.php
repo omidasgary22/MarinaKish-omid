@@ -45,5 +45,7 @@ class OrderController extends Controller
         if (!$order) {
             return response()->json(['message' => 'سفارشی یافت نشد.'], 404);
         }
+        $order->delete();
+        return response()->json(['message' => 'سفارش با موفقیت حذف شد.']);
     }
 }
