@@ -124,3 +124,6 @@ Route::prefix('orders')->group(function () {
     Route::delete('/delete/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
     Route::get('/show/{id}', [OrderController::class, 'show'])->name('orders.show');
 });
+
+//uploade profile Route
+Route::post('/users/uploade/profile/{id}',[UserController::class,'uploadeProfilePicture']);
