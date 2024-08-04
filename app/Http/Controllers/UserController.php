@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class UserController extends Controller
 {
@@ -57,5 +58,17 @@ class UserController extends Controller
         $user = auth()->user()->with("tickets")->first();
 
         return response()->json($user);
+    }
+
+    public function uploadProfileFile(Request $request, $id)
+    {
+        $user = User::findOrFile($id);
+
+        if ($request->hasFile('Profile')) {
+            $user->clearMediaCollection('profile');
+            $user->addMediaFormRequest('Profile')->toMediaCollection('profile');
+        }
+
+        return response()->json(['message' => 'پروفایل شما با موفقیت اپلود شد.']);
     }
 }
