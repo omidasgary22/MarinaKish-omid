@@ -84,7 +84,7 @@ Route::prefix('blogs')->group(function () {
     Route::get('/show/{id}', [BlogController::class, 'show'])->name('blogs.show');
     Route::put('/update/{id}', [BlogController::class, 'update'])->name('blogs.update');
     Route::delete('/delete/{id}', [BlogController::class, 'destroy'])->name('blogs.destroy');
-    Route::post('/restore/{id}', [BlogController::class, 'restore'])->name('blogs.restore');
+    Route::get('/restore/{id}', [BlogController::class, 'restore'])->name('blogs.restore');
     //Total removal from the database Route
     Route::delete('/forcedelete/{id}', [BlogController::class, 'forcedelete'])->name('blog.forceDelete');
 });

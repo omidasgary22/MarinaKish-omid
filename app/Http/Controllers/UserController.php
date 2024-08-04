@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('id','desc')->paginate(10);
+        $users = User::orderBy('id', 'desc')->paginate(10);
         return response()->json(['users' => $users]);
     }
 
@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::with('tickets','comments')->findOrFail($id);
+        $user = User::with('tickets', 'comments')->findOrFail($id);
         return response()->json(['user' => $user]);
     }
 
