@@ -126,4 +126,4 @@ Route::prefix('orders')->group(function () {
 });
 
 //uploade profile Route
-Route::post('/users/uploade/profile/{id}',[UserController::class,'uploadeProfilePicture']);
+Route::post('/users/uploade/profile/{id}',[UserController::class,'uploadProfileFile']);

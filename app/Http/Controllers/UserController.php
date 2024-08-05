@@ -62,13 +62,13 @@ class UserController extends Controller
 
     public function uploadProfileFile(Request $request, $id)
     {
-        $user = User::findOrFile($id);
+        $user = User::findOrFail($id);
 
-        if ($request->hasFile('Profile')) {
+        if ($request->hasFile('profile')) {
             $user->clearMediaCollection('profile');
-            $user->addMediaFormRequest('Profile')->toMediaCollection('profile');
+            $user->addMediaFromRequest('profile')->toMediaCollection('profile');
         }
 
-        return response()->json(['message' => 'پروفایل شما با موفقیت اپلود شد.']);
+        return response()->json(['message' => 'پروفایل شما با موفقیت آپلود شد.']);
     }
 }
