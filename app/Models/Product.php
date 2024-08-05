@@ -40,6 +40,11 @@ class Product extends Model
         'tip' => 'string',
     ];
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('image')->singeFile();
+    }
+
 
 
     public function comments()
