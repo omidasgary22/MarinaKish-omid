@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Blog;
+use Dotenv\Validator;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -18,6 +19,10 @@ class BlogController extends Controller
 
     public function store(StoreBlogRequest $request)
     {
+        $validator = Validator::make($request->all(), [
+            'cover_image' => 'required|image|mimes:jpg,jpeg|dimensions:width=247,height=163|max:720',
+            'main_image' => 'required|image|mimes:jpg,jpeg|dimensions:width=247,height=163|max:720',
+        ]);
         $blog = Blog::create($request->all());
         return response()->json(['message' => 'بلاک با موفقیت ایجاد شد', 'blog' => $blog], 201);
     }
