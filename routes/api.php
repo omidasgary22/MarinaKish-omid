@@ -56,6 +56,7 @@ Route::prefix('products')->group(function () {
     Route::put('/update/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
     Route::post('/restore/{id}', [ProductController::class, 'restore'])->name('products.restore');
+    Route::post('/upload/{id}', [ProductController::class, 'uplodeImage']);
 });
 
 //TicketRoute
@@ -126,4 +127,4 @@ Route::prefix('orders')->group(function () {
 });
 
 //uploade profile Route
-Route::post('/users/uploade/profile/{id}',[UserController::class,'uploadProfileFile']);
+Route::post('/users/uploade/profile/{id}', [UserController::class, 'uploadProfileFile']);

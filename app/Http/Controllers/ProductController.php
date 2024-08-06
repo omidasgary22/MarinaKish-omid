@@ -7,6 +7,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use PHPUnit\Event\TestSuite\Loaded;
 
 class ProductController extends Controller
 {
@@ -20,6 +21,33 @@ class ProductController extends Controller
     {
         $product = Product::create($request->toArray());
         return response()->json(['message' => 'محصول با موفقیت ایجاد شد', 'product' => $product]);
+    }
+
+    public function uplodeImage(Request $request, $id)
+    {
+        $request->validate([
+             'image' =>'required|max:10000|file|images:jpg,png,jpeg'
+        ]);
+        $product = Product::findOrFail($id);
+        if ($request->hasFile('image')) 
+        {
+            if ($product->getFirstMedia('images')) {
+                $product->clearMediaCollection('images');
+            }
+            $media = $product->addMedia($request->file('image'))->toMediaCollection('images');
+            $mediaUrl = $media->getUrl(); // URL to access the image
+            $mediaName = $media->name; // Optional: Media name (if set)
+    
+            return response()->json([
+                'message' => 'تصویر با موفقیت اپلود شد',
+                'media_url' => $mediaUrl,
+                'media_name' => $mediaName,
+            ]);
+        }
+        else
+        {
+            return response()->json(['message' => 'هیچ تصویری برای اپلود یافت نشد'], 400);
+        }
     }
 
     public function update(UpdateProductRequest $request, $id)
