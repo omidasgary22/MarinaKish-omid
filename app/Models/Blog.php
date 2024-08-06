@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\HasMedia;
 
-class Blog extends Model
+class Blog extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes,InteractsWithMedia;
 
 
     protected $fillable = [
@@ -27,4 +29,7 @@ class Blog extends Model
         'craeted_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+
+    
 }

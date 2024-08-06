@@ -88,6 +88,7 @@ Route::prefix('blogs')->group(function () {
     Route::get('/restore/{id}', [BlogController::class, 'restore'])->name('blogs.restore');
     //Total removal from the database Route
     Route::delete('/forcedelete/{id}', [BlogController::class, 'forcedelete'])->name('blog.forceDelete');
+    Route::post('/upload/image/{id}', [BlogController::class, 'uploadImage']);
 });
 
 //FAQRoute

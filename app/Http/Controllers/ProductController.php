@@ -26,7 +26,7 @@ class ProductController extends Controller
     public function uplodeImage(Request $request, $id)
     {
         $request->validate([
-             'image' =>'required|max:10000|file|images:jpg,png,jpeg'
+             'image' =>'required|max:10000|file|mimes:jpg,png,jpeg'
         ]);
         $product = Product::findOrFail($id);
         if ($request->hasFile('image')) 
