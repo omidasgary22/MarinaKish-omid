@@ -35,19 +35,19 @@ Route::post('/register', [RegisterController::class, 'Register'])->name('user.re
 //LoginUser
 Route::post('/login', [LoginController::class, 'Login'])->name('user.login');
 
-Route::group(["middleware" => "auth:sanctum"], function () {
+
 
     //User Route
-    Route::prefix('users')->group(function () {
+    Route::prefix('users')->middleware('auth:sanctum')->group(function () {
         Route::get('/index/{id?}', [UserController::class, 'index'])->name('users.index');
-        //  Route::post('/store', [UserController::class, 'store'])->withoutmiddleware("auth:sanctum")->name('users.store');
-        Route::get('/show/{id}', [UserController::class, 'show'])->name('users.show');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('users.update');
         Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
         Route::patch('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
-        Route::get('/me', [UserController::class, 'me'])->name('user.me');
+        Route::get('/me', [UserController::class, 'me'])->name('user.me')->name('me');
+          //  Route::post('/store', [UserController::class, 'store'])->withoutmiddleware("auth:sanctum")->name('users.store');
+       // Route::get('/show/{id}', [UserController::class, 'show'])->name('users.show');
     });
-});
+
 
 //ProductRoute
 Route::prefix('products')->group(function () {
