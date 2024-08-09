@@ -35,6 +35,13 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'product.delete']);
         Permission::create(['name' => 'product.restore']);
 
+        //permission   //Rule
+        Permission::create(['name' => 'rule.index']);
+        Permission::create(['name' => 'rule.store']);
+        Permission::create(['name' => 'rule.update']);
+        Permission::create(['name' => 'rule.destroy']);
+        Permission::create(['name' => 'rule.restore']);
+
        
     }
 }
