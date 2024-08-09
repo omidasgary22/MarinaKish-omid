@@ -17,7 +17,8 @@ class User extends Authenticatable implements HasMedia
     use HasFactory, Notifiable, SoftDeletes, HasApiTokens,InteractsWithMedia,HasRoles;
 
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'phone_number',
         'date_of_birth',
         'national_code',
