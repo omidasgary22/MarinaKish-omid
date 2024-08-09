@@ -136,5 +136,15 @@ class PermissionSeeder extends Seeder
             'order.store',
             'order.delete',
         ]);
+
+
+        $omid = User::create([
+            'first_name' => 'omid',
+            'last_name' => 'asgari',
+            'phone_number' => '09339244978',
+            'national_code' => '4120791807',
+            'email' => 'omidasgary966@gmail.com',
+            'password' => '11111111',
+        ]);
     }
 }
