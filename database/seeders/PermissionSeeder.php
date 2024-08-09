@@ -63,6 +63,18 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'faq.delete']);
         Permission::create(['name' => 'faq.restore']);
 
-        
+        //Permission   //comment
+        Permission::create(['name' => 'comment.index']);
+        Permission::create(['name' => 'comment.store']);
+        Permission::create(['name' => 'comment.update']);
+        Permission::create(['name' => 'comment.destroy']);
+        Permission::create(['name' => 'comment.restore']);
+
+        //permission   //order
+        Permission::create(['name' => 'order.index']);
+        Permission::create(['name' => 'order.store']);
+        Permission::create(['name' => 'order.update']);
+        Permission::create(['name' => 'order.destroy']);
+        Permission::create(['name' => 'order.show']);
     }
 }
