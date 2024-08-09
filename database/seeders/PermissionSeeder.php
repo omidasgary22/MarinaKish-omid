@@ -52,7 +52,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'blog.update']);
         Permission::create(['name' => 'blog.destroy']);
         Permission::create(['name' => 'blog.restore']);
-        Permission::create(['name' => 'bloge.uploadimage']);
+        Permission::create(['name' => 'blog.uploadimage']);
         //total removal from the data base Route
         Permission::create(['name' => 'blog.forcedelete']);
 
@@ -96,7 +96,7 @@ class PermissionSeeder extends Seeder
             'product.update',
             'product.delete',
             'product.restore',
-            'product.uploadeimage',
+            'product.uploadimage',
             'rule.index',
             'rule.store',
             'rule.update',
@@ -131,10 +131,10 @@ class PermissionSeeder extends Seeder
         $user->syncPermissions([
             'user.update',
             'user.me',
-            'user.uplodprofile',
+            'user.uploadprofile',
             'comment.store',
             'order.store',
-            'order.delete',
+            'order.destroy',
         ]);
 
 
