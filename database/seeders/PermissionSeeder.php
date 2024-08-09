@@ -66,6 +66,7 @@ class PermissionSeeder extends Seeder
         //Permission   //comment
         Permission::create(['name' => 'comment.index']);
         Permission::create(['name' => 'comment.store']);
+        Permission::create(['name' => 'comment.show']);
         Permission::create(['name' => 'comment.update']);
         Permission::create(['name' => 'comment.destroy']);
         Permission::create(['name' => 'comment.restore']);
@@ -120,6 +121,7 @@ class PermissionSeeder extends Seeder
             'comment.update',
             'comment.destroy',
             'comment.restore',
+            'comment.show',
             'order.index',
             'order.store',
             'order.update',
