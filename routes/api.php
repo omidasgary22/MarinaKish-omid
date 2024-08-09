@@ -37,16 +37,21 @@ Route::post('/login', [LoginController::class, 'Login'])->name('user.login');
 
 
 
-    //User Route
-    Route::prefix('users')->middleware('auth:sanctum')->group(function () {
-        Route::get('/index/{id?}', [UserController::class, 'index'])->name('users.index');
-        Route::put('/update/{id}', [UserController::class, 'update'])->name('users.update');
-        Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
-        Route::patch('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
-        Route::get('/me', [UserController::class, 'me'])->name('user.me')->name('me');
-          //  Route::post('/store', [UserController::class, 'store'])->withoutmiddleware("auth:sanctum")->name('users.store');
-       // Route::get('/show/{id}', [UserController::class, 'show'])->name('users.show');
-    });
+//User Route
+Route::prefix('users')->middleware('auth:sanctum')->group(function () {
+    Route::get('/index/{id?}', [UserController::class, 'index'])->name('users.index');
+    Route::put('/update/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::patch('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
+    Route::get('/me', [UserController::class, 'me'])->name('user.me')->name('me');
+    //  Route::post('/store', [UserController::class, 'store'])->withoutmiddleware("auth:sanctum")->name('users.store');
+    // Route::get('/show/{id}', [UserController::class, 'show'])->name('users.show');
+});
+
+
+//uploade profile Route
+Route::post('/users/uploade/profile/{id}', [UserController::class, 'uploadProfileFile']);
+
 
 
 //ProductRoute
@@ -56,7 +61,7 @@ Route::prefix('products')->group(function () {
     Route::put('/update/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
     Route::post('/restore/{id}', [ProductController::class, 'restore'])->name('products.restore');
-    Route::post('/upload/{id}', [ProductController::class, 'uplodeImage']);
+    Route::post('/upload/{id}', [ProductController::class, 'uplodImage']);
 });
 
 //TicketRoute
@@ -89,7 +94,6 @@ Route::prefix('blogs')->group(function () {
     Route::post('/upload/image/{id}', [BlogController::class, 'uploadImage']);
     //Total removal from the database Route
     Route::delete('/forcedelete/{id}', [BlogController::class, 'forcedelete'])->name('blog.forceDelete');
-   
 });
 
 //FAQRoute
@@ -127,6 +131,3 @@ Route::prefix('orders')->group(function () {
     Route::delete('/delete/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
     Route::get('/show/{id}', [OrderController::class, 'show'])->name('orders.show');
 });
-
-//uploade profile Route
-Route::post('/users/uploade/profile/{id}', [UserController::class, 'uploadProfileFile']);
