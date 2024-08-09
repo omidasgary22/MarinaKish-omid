@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Contracts\Permission as ContractsPermission;
+use Spatie\Permission\Exceptions\PermissionDoesNotExist;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -51,8 +52,17 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'blog.update']);
         Permission::create(['name' => 'blog.destroy']);
         Permission::create(['name' => 'blog.restore']);
-        Permission::create(['name' => 'bloge.uploadeimage']); 
+        Permission::create(['name' => 'bloge.uploadeimage']);
         //total removal from the data base Route
         Permission::create(['name' => 'blog.forcedelete']);
+
+        //permissin   //FAQ
+        Permission::create(['name' => 'faq.index']);
+        Permission::create(['name' => 'faq.store']);
+        Permission::create(['name' => 'faq.update']);
+        Permission::create(['name' => 'faq.delete']);
+        Permission::create(['name' => 'faq.restore']);
+
+        
     }
 }
