@@ -26,6 +26,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'user.delete']);
         Permission::create(['name' => 'user.restore']);
         Permission::create(['name' => 'me']);
+        Permission::create(['name' => 'user.uploadeprofile']);
 
         //permission   //product
         Permission::create(['name' => 'product.index']);
@@ -34,6 +35,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'product.update']);
         Permission::create(['name' => 'product.delete']);
         Permission::create(['name' => 'product.restore']);
+        Permission::create(['name' => 'product,uploadeimage']);
 
         //permission   //Rule
         Permission::create(['name' => 'rule.index']);
@@ -42,6 +44,15 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'rule.destroy']);
         Permission::create(['name' => 'rule.restore']);
 
-       
+        //permission   //Blog
+        Permission::create(['name' => 'blog.index']);
+        Permission::create(['name' => 'blog.store']);
+        Permission::create(['name' => 'blog.show']);
+        Permission::create(['name' => 'blog.update']);
+        Permission::create(['name' => 'blog.destroy']);
+        Permission::create(['name' => 'blog.restore']);
+        Permission::create(['name' => 'bloge.uploadeimage']); 
+        //total removal from the data base Route
+        Permission::create(['name' => 'blog.forcedelete']);
     }
 }

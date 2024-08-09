@@ -86,9 +86,10 @@ Route::prefix('blogs')->group(function () {
     Route::put('/update/{id}', [BlogController::class, 'update'])->name('blogs.update');
     Route::delete('/delete/{id}', [BlogController::class, 'destroy'])->name('blogs.destroy');
     Route::get('/restore/{id}', [BlogController::class, 'restore'])->name('blogs.restore');
+    Route::post('/upload/image/{id}', [BlogController::class, 'uploadImage']);
     //Total removal from the database Route
     Route::delete('/forcedelete/{id}', [BlogController::class, 'forcedelete'])->name('blog.forceDelete');
-    Route::post('/upload/image/{id}', [BlogController::class, 'uploadImage']);
+   
 });
 
 //FAQRoute
