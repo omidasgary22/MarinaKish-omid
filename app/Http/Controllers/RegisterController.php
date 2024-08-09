@@ -12,7 +12,7 @@ class RegisterController extends Controller
     public function Register(RegisterUserRequest $request)
     {
         $User = User::create($request->toArray());
-        $User->assignRole('user');
+        $User->assignRole('user'); 
         return response()->json(['message' => 'کاربر با موفقیت ثبت شد.', 'user' => $User], 201);
     }
 }
