@@ -8,10 +8,14 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::orderBy('id', 'desc')->paginate(10);
-        return response()->json([$orders]);
+        if ($request->user()->can('order.index')) {
+            $orders = Order::orderBy('id', 'desc')->paginate(10);
+            return response()->json([$orders]);
+        } else {
+            return response()->json(['message' => 'شما دسترسی انجام این کار را ندارید'], 403);
+        }
     }
 
     public function show($id)
@@ -25,27 +29,39 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        $order = Order::create($request->toArray());
-        return response()->json($order, 201);
+        if ($request->user()->can('comment.store')) {
+            $order = Order::create($request->toArray());
+            return response()->json($order, 201);
+        } else {
+            return response()->json(['message' => 'شما دسترسی انجام این کار را ندارید'], 403);
+        }
     }
 
     public function update(Request $request, $id)
     {
-        $order = Order::find($id);
-        if (!$order) {
-            return response()->json(['message' => 'سفارشی وجود ندارد.'], 404);
+        if ($request->user()->can('comment.update')) {
+            $order = Order::find($id);
+            if (!$order) {
+                return response()->json(['message' => 'سفارشی وجود ندارد.'], 404);
+            }
+            $order->update($request->toArray());
+            return response()->json($order);
+        } else {
+            return response()->json(['message' => 'شما دسترسی انجام این کار را ندارید'], 403);
         }
-        $order->update($request->toArray());
-        return response()->json($order);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $order = Order::find($id);
-        if (!$order) {
-            return response()->json(['message' => 'سفارشی یافت نشد.'], 404);
+        if ($request->user()->can('comment.destroy')) {
+            $order = Order::find($id);
+            if (!$order) {
+                return response()->json(['message' => 'سفارشی یافت نشد.'], 404);
+            }
+            $order->delete();
+            return response()->json(['message' => 'سفارش با موفقیت حذف شد.']);
+        } else {
+            return response()->json(['message' => 'شما دسترسی انجام این کار را ندارید'], 403);
         }
-        $order->delete();
-        return response()->json(['message' => 'سفارش با موفقیت حذف شد.']);
     }
 }
