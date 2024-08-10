@@ -11,41 +11,46 @@ use PHPUnit\Event\TestSuite\Loaded;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
-        return response()->json($products);
+        if ($request->user()->can('product.index')) {
+            $products = Product::all();
+            return response()->json($products);
+        } else {
+            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
+        }
     }
 
     public function store(StoreProductRequest $request)
     {
-        $product = Product::create($request->toArray());
-        return response()->json(['message' => 'محصول با موفقیت ایجاد شد', 'product' => $product]);
+        if ($request->user()->can('product.store')) {
+            $product = Product::create($request->toArray());
+            return response()->json(['message' => 'محصول با موفقیت ایجاد شد', 'product' => $product]);
+        } else {
+            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
+        }
     }
 
     public function uploadImage(Request $request, $id)
     {
         $request->validate([
-             'image' =>'required|max:10000|file|mimes:jpg,png,jpeg'
+            'image' => 'required|max:10000|file|mimes:jpg,png,jpeg'
         ]);
         $product = Product::findOrFail($id);
-        if ($request->hasFile('image')) 
-        {
+        if ($request->hasFile('image')) {
             if ($product->getFirstMedia('images')) {
                 $product->clearMediaCollection('images');
             }
             $media = $product->addMedia($request->file('image'))->toMediaCollection('images');
             $mediaUrl = $media->getUrl(); // URL to access the image
             $mediaName = $media->name; // Optional: Media name (if set)
-    
+
             return response()->json([
                 'message' => 'تصویر با موفقیت اپلود شد',
                 'media_url' => $mediaUrl,
                 'media_name' => $mediaName,
             ]);
-        }
-        else
-        {
+        } else {
             return response()->json(['message' => 'هیچ تصویری برای اپلود یافت نشد'], 400);
         }
     }

@@ -17,9 +17,17 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        //Role
-        $admin = Role::create(['name' => 'Admin']);
-        $user = Role::create(['name' => 'user']);
+        //AdminRole
+        $admin = Role::where('name', 'Admin')->exists();
+        if (!$admin) {
+            $admin = Role::create(['name' => 'Admin']);
+        }
+        //userRole
+        $user = Role::where('name', 'user')->exists();
+        if (!$user) {
+            $user = Role::create(['name' => 'user']);
+        }
+
 
         //permission   //user
         Permission::create(['name' => 'user.index']);
