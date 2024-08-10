@@ -81,6 +81,9 @@ class PermissionSeeder extends Seeder
         //permission   //PasswordChange
         Permission::create(['name' => 'PasswordChange']);
 
+        //permission   //PasswordReset
+        Permission::create(['name' => 'PasswordReset']);
+
 
         //give permission to admin
         $admin->syncPermissions([
@@ -127,6 +130,7 @@ class PermissionSeeder extends Seeder
             'order.update',
             'order.destroy',
             'order.show',
+            'PasswordReset',
         ]);
 
         //give permission to user
@@ -137,6 +141,7 @@ class PermissionSeeder extends Seeder
             'comment.store',
             'order.store',
             'order.destroy',
+            'PasswordReset',
         ]);
 
 
