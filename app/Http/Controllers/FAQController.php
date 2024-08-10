@@ -10,36 +10,56 @@ use Illuminate\Http\Request;
 
 class FaqController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $faqs = FAQ::all();
-        return response()->json(['faqs' => $faqs]);
+        if ($request->user()->can('faq.index')) {
+            $faqs = FAQ::all();
+            return response()->json(['faqs' => $faqs]);
+        } else {
+            return response()->json(['message' => 'شما دسترسی انجام این کار را ندارید'], 403);
+        }
     }
 
     public  function store(StoreFAQRequest $request)
     {
-        $faq = FAQ::create($request->toArray());
-        return response()->json(['message' => 'سوال با موفقیت ایجاد شد', 'faq' => $faq], 201);
+        if ($request->user()->can('faq.store')) {
+            $faq = FAQ::create($request->toArray());
+            return response()->json(['message' => 'سوال با موفقیت ایجاد شد', 'faq' => $faq], 201);
+        } else {
+            return response()->json(['message' => 'شما دسترسی انجام این کار را ندارید'], 403);
+        }
     }
 
     public function update(UpdateFAQRequest $request, $id)
     {
-        $faq = FAQ::findorFail($id);
-        $faq->update($request->toArray());
-        return response()->json(['message' => 'سوال با موفقیت به روز رسانی شد.'], 200);
+        if ($request->user()->can('faq.update')) {
+            $faq = FAQ::findorFail($id);
+            $faq->update($request->toArray());
+            return response()->json(['message' => 'سوال با موفقیت به روز رسانی شد.'], 200);
+        } else {
+            return response()->json(['message' => 'شما دسترسی انجام این کار را ندارید'], 403);
+        }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $faq = FAQ::findOrFail($id);
-        $faq->delete();
-        return response()->json(['message' => 'سوال با موفقیت حذف شد.'], 200);
+        if ($request->user()->can('faq.delete')) {
+            $faq = FAQ::findOrFail($id);
+            $faq->delete();
+            return response()->json(['message' => 'سوال با موفقیت حذف شد.'], 200);
+        } else {
+            return response()->json(['message' => 'شما دسترسی انجام این کا را ندارید'], 403);
+        }
     }
 
-    public function restore($id)
-{
-    $faq = FAQ::onlyTrashed()->findOrFail($id);
-    $faq->restore();
-    return response()->json(['message' => 'سوال با موفقیت بازیابی شد.'],200);
-}
+    public function restore(Request $request, $id)
+    {
+        if ($request->user()->can('faq.restore')) {
+            $faq = FAQ::onlyTrashed()->findOrFail($id);
+            $faq->restore();
+            return response()->json(['message' => 'سوال با موفقیت بازیابی شد.'], 200);
+        } else {
+            return response()->json(['message' => 'شما دسترسی انجام این کا را ندارید'], 403);
+        }
+    }
 }
