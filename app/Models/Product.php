@@ -11,7 +11,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Product extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes,InteractsWithMedia;
+    use HasFactory, SoftDeletes, InteractsWithMedia;
 
     protected $fillable = [
         'name',
@@ -53,5 +53,11 @@ class Product extends Model implements HasMedia
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+
+    public function sans()
+    {
+        return $this->hasMany(sans::class);
     }
 }
