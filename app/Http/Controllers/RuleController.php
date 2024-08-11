@@ -18,8 +18,12 @@ class RuleController extends Controller
 
     public function store(StoreRuleReuest $request)
     {
-        $rule = Rule::create($request->all());
-        return response()->json(['message' => 'قانون با موفقیت ایجاد شد', 'rule' => $rule], 201);
+        if ($request->user()->can('rule.store')) {
+            $rule = Rule::create($request->all());
+            return response()->json(['message' => 'قانون با موفقیت ایجاد شد', 'rule' => $rule], 201);
+        } else {
+            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
+        }
     }
 
     public function show($id)
@@ -30,22 +34,34 @@ class RuleController extends Controller
 
     public function update(UpdateRuleRequest $request, $id)
     {
-        $rule = Rule::findOrFail($id);
-        $rule->update($request->all());
-        return response()->json(['message' => 'قانون با موفیقیت به روز رسانی شد', 'rule' => $rule]);
+        if ($request->user()->can('rule.update')) {
+            $rule = Rule::findOrFail($id);
+            $rule->update($request->all());
+            return response()->json(['message' => 'قانون با موفیقیت به روز رسانی شد', 'rule' => $rule]);
+        } else {
+            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
+        }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $rule = Rule::findOrFail($id);
-        $rule->delete($id);
-        return response()->json(['message' => 'قانون با موفقیت حذف شد']);
+        if ($request->user()->can('rule.destroy')) {
+            $rule = Rule::findOrFail($id);
+            $rule->delete($id);
+            return response()->json(['message' => 'قانون با موفقیت حذف شد']);
+        } else {
+            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
+        }
     }
 
-    public function restore($id)
+    public function restore(Request $request, $id)
     {
-        $user = Rule::onlyTrashed()->findOrFail($id);
-        $user->restore();
-        return response()->json(['message' => 'قانون مورد نظر  با موفقیت بازیابی شد.'], 200);
+        if ($request->user()->can('rule.restore')) {
+            $user = Rule::onlyTrashed()->findOrFail($id);
+            $user->restore();
+            return response()->json(['message' => 'قانون مورد نظر  با موفقیت بازیابی شد.'], 200);
+        } else {
+            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
+        }
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PasswordChangeController;
 use App\Http\Controllers\PasswordResetController;
@@ -47,6 +48,9 @@ Route::prefix('users')->middleware('auth:sanctum')->group(function () {
     //  Route::post('/store', [UserController::class, 'store'])->withoutmiddleware("auth:sanctum")->name('users.store');
     // Route::get('/show/{id}', [UserController::class, 'show'])->name('users.show');
 });
+
+//Logout Route
+Route::middleware('auth:sanctum')->delete('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 
 //uploade profile Route

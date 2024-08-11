@@ -23,7 +23,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'national_code' => 'required|string|max:10',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:6',
         ];
     }
 
