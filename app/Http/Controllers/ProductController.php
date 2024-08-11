@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PHPUnit\Event\TestSuite\Loaded;
 
 class ProductController extends Controller
@@ -23,6 +25,14 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
+        $user = Auth::user();
+        $time = $request->time;
+        $pending = $request->pending;
+        $total = $request->total;
+        $start_time = Carbon::parse($request->started_at);
+        $ended_at = Carbon::parse($request->ended_at);
+
+
         if ($request->user()->can('product.store')) {
             $product = Product::create($request->toArray());
             return response()->json(['message' => 'محصول با موفقیت ایجاد شد', 'product' => $product]);
@@ -30,6 +40,7 @@ class ProductController extends Controller
             return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
         }
     }
+
 
     public function uploadImage(Request $request, $id)
     {
@@ -61,6 +72,14 @@ class ProductController extends Controller
 
     public function update(UpdateProductRequest $request, $id)
     {
+        $time = $request->time;
+        $pending = $request->pending;
+        $total = $request->total;
+        $started_at = Carbon::parse($request->started_at);
+        $ended_at = Carbon::parse($request->ended_at);
+        $user = Auth::user();
+
+
         if ($request->user()->can('product.update')) {
             $product = Product::findOrFail($id);
             $product->update($request->validated());
@@ -88,7 +107,7 @@ class ProductController extends Controller
             $product->restore();
             return response()->json(['message' => 'محصول با موفقیت بازگردانی شد', 'product' => $product]);
         } else {
-            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403); 
+            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
         }
     }
 }
