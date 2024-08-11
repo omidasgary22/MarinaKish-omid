@@ -88,7 +88,7 @@ class ProductController extends Controller
             $product->restore();
             return response()->json(['message' => 'محصول با موفقیت بازگردانی شد', 'product' => $product]);
         } else {
-            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
+            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403); 
         }
     }
 }
