@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Sans extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'product_id',
+        'start_time',
+        'capacity',
+    ];
+
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
