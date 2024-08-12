@@ -14,7 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements HasMedia
 {
-    use HasFactory, Notifiable, SoftDeletes, HasApiTokens,InteractsWithMedia,HasRoles;
+    use HasFactory, Notifiable, SoftDeletes, HasApiTokens, InteractsWithMedia, HasRoles;
 
     protected $fillable = [
         'first_name',
@@ -37,7 +37,7 @@ class User extends Authenticatable implements HasMedia
     ];
 
 
-  
+
 
 
     public function tickets()
@@ -48,5 +48,10 @@ class User extends Authenticatable implements HasMedia
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
     }
 }
