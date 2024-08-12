@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->enum('status', ['pending', 'completed', 'cancelled']);  //در انتظار /کامل شده/لغو شده
             $table->dateTime('beath')->nullable();  //تاریخ و زمان خرید
+            $table->date('day_reserved');
            // $table->foreignId('factor_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
         });

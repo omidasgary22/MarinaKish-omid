@@ -29,16 +29,19 @@ class ProductController extends Controller
         $time = $request->time;
         $pending = $request->pending;
         $total = $request->total;
-        $start_time = Carbon::parse($request->started_at);
+        $started_time = Carbon::parse($request->started_at);
         $ended_at = Carbon::parse($request->ended_at);
 
 
-        if ($request->user()->can('product.store')) {
-            $product = Product::create($request->toArray());
-            return response()->json(['message' => 'محصول با موفقیت ایجاد شد', 'product' => $product]);
-        } else {
-            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
-        }
+        //
+        $product = Product::create($request->toArray());
+        $id = $product->id;
+        SansController::store($time, $pending, $total, $started_time, $ended_at, $id);
+        $product = Product::with('sans')->find($id);
+        return response()->json(['message' => 'محصول با موفقیت ایجاد شد', 'product' => $product]);
+
+        // return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
+        // }
     }
 
 
