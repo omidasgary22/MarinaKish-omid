@@ -20,4 +20,9 @@ class Sans extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }
