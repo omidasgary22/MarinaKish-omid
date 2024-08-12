@@ -161,5 +161,6 @@ class PermissionSeeder extends Seeder
             'email' => 'omidasgary966@gmail.com',
             'password' => '11111111',
         ]);
+        $omid->assignRole('Admin');
     }
 }

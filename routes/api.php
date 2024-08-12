@@ -139,6 +139,12 @@ Route::prefix('orders')->group(function () {
 });
 
 //ReservationRoute
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::post('/reservation', [ReservationController::class, 'store']);
+});
+
+//user->show Prifile & Update Profile
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('profile', [UserController::class,'profile']);
+    Route::get('showprofile',[UserController::class,'showprofile']);
 });

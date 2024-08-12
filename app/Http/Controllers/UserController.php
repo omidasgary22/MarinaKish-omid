@@ -7,7 +7,9 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Psy\CodeCleaner\ReturnTypePass;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class UserController extends Controller
@@ -39,7 +41,7 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, string $id)
     {
-        if ($request->user()->can()) {
+        if ($request->user()->can('user.update')) {
             $User = User::where('id', $id)->update($request->toArray());
             return response()->json(['کاربر با موفقیت به روزرسانی شد', 'user' => $User]);
         } else {
@@ -69,11 +71,11 @@ class UserController extends Controller
         }
     }
 
-    public function  me()
+    public function  updateprofile(Request $request)
     {
-        $user = auth()->user()->with("tickets")->first();
-
-        return response()->json($user);
+        $user = User::find(Auth::id());
+        $user->update($request->toArray());
+        return response()->json(['message' => 'با موفقیت اپدیت شد']);
     }
 
     public function uploadProfileFile(Request $request, $id)
@@ -90,5 +92,11 @@ class UserController extends Controller
         } else {
             return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
         }
+    }
+
+    public function showprofile()
+    {
+        $user = Auth::user();
+        return response()->json($user);
     }
 }

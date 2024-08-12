@@ -23,7 +23,7 @@ class RegisterUserRequest extends FormRequest
     {
         return [
             // 'name' => 'required|string|max:255',
-            'national_code' => 'required|string|max:10|unique:users,national_code|digits:10',
+            'national_code' => 'required|ir_national_code|unique:users,national_code|digits:10',
             'phone_number' => 'required|string|max:11|unique:users,phone_number',
         ];
     }
@@ -35,7 +35,7 @@ class RegisterUserRequest extends FormRequest
             'national_code.required' => 'کد ملی الزامی است.',
             'national_code.unique' => 'کد ملی باید منحصر به فرد باشد.',
             'phone_number.required' => 'شماره موبایل الزامی است.',
-            'national_code.digits' => 'شماره ملی باید دقیقا ده رقم باشد.',
+            'national_code.ir_national_code' => 'کد ملی معتبر نمی باشد',
             'phone_number.unique' => 'شماره موبایل باید منحصر به فرد باشد.',
         ];
     }

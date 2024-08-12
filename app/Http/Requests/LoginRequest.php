@@ -22,8 +22,8 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'national_code' => 'required|string|max:10',
-            'password' => 'required|string|min:6',
+            'national_code' => 'required|ir_national_code',
+            'password' => 'required|string|min:8',
         ];
     }
 
@@ -31,6 +31,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'national_code.required' => 'کد ملی الزامی است.',
+            'national_code.ir_national_code' => 'کد ملی معتبر نمی باشد',
             'national_code.max' => 'کد ملی نباید بیشتر از ۱۰ کاراکتر باشد.',
             'password.required' => 'رمز عبور الزامی است.',
             'password.min' => 'رمز عبور باید حداقل ۸ کاراکتر باشد.',
