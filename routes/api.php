@@ -10,10 +10,12 @@ use App\Http\Controllers\PasswordChangeController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RuleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Models\Blog;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -134,4 +136,9 @@ Route::prefix('orders')->group(function () {
     Route::put('/update/{id}', [OrderController::class, 'update'])->name('orders.update');
     Route::delete('/delete/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
     Route::get('/show/{id}', [OrderController::class, 'show'])->name('orders.show');
+});
+
+//ReservationRoute
+Route::middleware('auth')->group(function () {
+    Route::post('/reservation', [ReservationController::class, 'store']);
 });
