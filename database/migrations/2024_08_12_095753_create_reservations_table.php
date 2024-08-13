@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('sans_id');
             $table->date('reservation_date');
             $table->timestamps();
-
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('sans_id')->references('id')->on('sans')->onDelete('cascade');
         });

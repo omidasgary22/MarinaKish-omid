@@ -31,12 +31,12 @@ class ProductController extends Controller
         $total = $request->total;
         $started_time = Carbon::parse($request->started_at);
         $ended_at = Carbon::parse($request->ended_at);
-
+        $age_limit = $request->age_limit;
 
         //
         $product = Product::create($request->toArray());
         $id = $product->id;
-        SansController::store($time, $pending, $total, $started_time, $ended_at, $id);
+        SansController::store($time, $pending, $total, $started_time, $ended_at, $id, $age_limit);
         $product = Product::with('sans')->find($id);
         return response()->json(['message' => 'محصول با موفقیت ایجاد شد', 'product' => $product]);
 

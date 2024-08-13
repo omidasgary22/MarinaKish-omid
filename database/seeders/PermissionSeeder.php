@@ -157,6 +157,7 @@ class PermissionSeeder extends Seeder
             'first_name' => 'omid',
             'last_name' => 'asgari',
             'phone_number' => '09339244978',
+            'age' => '22',
             'national_code' => '4120791807',
             'email' => 'omidasgary966@gmail.com',
             'password' => '11111111',

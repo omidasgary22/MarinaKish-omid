@@ -27,7 +27,7 @@ class UpdateUserRequest extends FormRequest
             'first_name' => 'required|string|max:200',
             'last_name' => 'required|string|max:200',
             'phone_number' => 'required|string|regex:/^\+?[0-9]{10,15}$/',
-            'date_of_birth' => 'required|date|before:today',
+            //'date_of_birth' => 'required|date|before:today',
             'national_code' => 'required|ir_national_code',
             'email' => 'string|email|nullable|max:255' . $userId,
             'password' => 'nullable|string|min:8',

@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 
 class SansController extends Controller
 {
-    public static function store($time, $pending, $total, $start_time, $ended_at, $id)
+    public static function store($time, $pending, $total, $start_time, $ended_at, $id,$age_limit = 0)
     {
         while ($start_time->lessThan($ended_at)) {
             Sans::create([
                 'product_id' => $id,
                 'start_time' => $start_time->toTimeString(),
                 'capacity' => $total,
+                'age_limit' => $age_limit,
             ]);
             $start_time->addMinutes($pending + $time);
         }
