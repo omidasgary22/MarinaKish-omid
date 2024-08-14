@@ -54,4 +54,9 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasMany(Reservation::class);
     }
+
+    public function passengers()
+    {
+        return $this->hasMany(Passenger::class);
+    }
 }
