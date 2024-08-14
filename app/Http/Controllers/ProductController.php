@@ -15,12 +15,8 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->user()->can('product.index')) {
-            $products = Product::all();
-            return response()->json($products);
-        } else {
-            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
-        }
+        $products = Product::all();
+        return response()->json($products);
     }
 
     public function store(StoreProductRequest $request)

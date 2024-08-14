@@ -143,6 +143,7 @@ class PermissionSeeder extends Seeder
 
         //give permission to user
         $user->syncPermissions([
+            'product.index',
             'user.update',
             'user.me',
             'user.uploadprofile',

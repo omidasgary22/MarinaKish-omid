@@ -27,10 +27,10 @@ class UpdateUserRequest extends FormRequest
             'first_name' => 'required|string|max:200',
             'last_name' => 'required|string|max:200',
             'phone_number' => 'required|string|regex:/^\+?[0-9]{10,15}$/',
-            //'date_of_birth' => 'required|date|before:today',
+            'age' => 'required|min:1|max:80',
             'national_code' => 'required|ir_national_code',
             'email' => 'string|email|nullable|max:255' . $userId,
-            'password' => 'nullable|string|min:8',
+            //'password' => 'nullable|string|min:8',
         ];
     }
 
@@ -50,9 +50,9 @@ class UpdateUserRequest extends FormRequest
             'phone_number.string' => 'شماره تلفن باید یک رشته متنی باشد.',
             'phone_number.regex' => 'فرمت شماره تلفن معتبر نیست.',
 
-            'date_of_birth.required' => 'تاریخ تولد الزامی است.',
-            'date_of_birth.date' => 'تاریخ تولد باید یک تاریخ معتبر باشد.',
-            'date_of_birth.before' => 'تاریخ تولد باید قبل از امروز باشد.',
+            'age.required' => 'تاریخ تولد الزامی است.',
+            // 'date_of_birth.date' => 'تاریخ تولد باید یک تاریخ معتبر باشد.',
+            // 'date_of_birth.before' => 'تاریخ تولد باید قبل از امروز باشد.',
 
             'national_code.required' => 'کد ملی الزامی است.',
             'national_code.ir_national_code' => 'کد ملی معتبر نمی باشد.',
@@ -64,10 +64,10 @@ class UpdateUserRequest extends FormRequest
             'email.max' => 'ایمیل نباید بیشتر از ۲۵۵ کاراکتر باشد.',
             'email.unique' => 'ایمیل وارد شده قبلاً ثبت شده است.',
 
-            'password.nullable' => 'رمز عبور می‌تواند خالی باشد.',
-            'password.string' => 'رمز عبور باید یک رشته متنی باشد.',
-            'password.min' => 'رمز عبور باید حداقل ۸ کاراکتر باشد.',
-            'password.confirmed' => 'تأیید رمز عبور مطابقت ندارد.',
+            // 'password.nullable' => 'رمز عبور می‌تواند خالی باشد.',
+            // 'password.string' => 'رمز عبور باید یک رشته متنی باشد.',
+            // 'password.min' => 'رمز عبور باید حداقل ۸ کاراکتر باشد.',
+            // 'password.confirmed' => 'تأیید رمز عبور مطابقت ندارد.',
         ];
     }
 }
