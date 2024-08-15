@@ -31,4 +31,11 @@ class DiscountCodeController extends Controller
         $discountCode->update($request->toArray());
         return response()->json($discountCode);
     }
+
+    public function destroy($id)
+    {
+        $discountCode = DiscountCode::findOrFaile($id);
+        $discountCode->delete();
+        return response()->json(['message' => 'کد تخفیف با موفقیت حذف شد']);
+    }
 }
