@@ -12,4 +12,10 @@ class DiscountCodeController extends Controller
         $discountCode = DiscountCode::all();
         return response()->json($discountCode);
     }
+
+    public function store($request)
+    {
+        $discountCode = DiscountCode::create($request->toArray());
+        return response()->json($discountCode, 201);
+    }
 }
