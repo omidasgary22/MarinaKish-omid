@@ -18,4 +18,10 @@ class DiscountCodeController extends Controller
         $discountCode = DiscountCode::create($request->toArray());
         return response()->json($discountCode, 201);
     }
+
+    public function show($id)
+    {
+        $discountCode = DiscountCode::findOrFile($id);
+        return response()->json($discountCode);
+    }
 }
