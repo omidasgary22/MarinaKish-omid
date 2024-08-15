@@ -24,4 +24,11 @@ class DiscountCodeController extends Controller
         $discountCode = DiscountCode::findOrFile($id);
         return response()->json($discountCode);
     }
+
+    public function update($request, $id)
+    {
+        $discountCode = DiscountCode::findOrFile($id);
+        $discountCode->update($request->toArray());
+        return response()->json($discountCode);
+    }
 }
