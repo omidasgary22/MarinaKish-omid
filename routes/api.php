@@ -6,6 +6,7 @@ use App\Http\Controllers\FAQController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PassengerController;
 use App\Http\Controllers\PasswordChangeController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\ProductController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Models\Blog;
 use App\Models\Reservation;
+use Illuminate\Foundation\Console\RouteCacheCommand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -145,6 +147,14 @@ Route::middleware('auth:sanctum')->group(function () {
 
 //user->show Prifile & Update Profile
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('profile', [UserController::class,'profile']);
-    Route::get('showprofile',[UserController::class,'showprofile']);
+    Route::get('profile', [UserController::class, 'profile']);
+    Route::get('showprofile', [UserController::class, 'showprofile']);
+});
+
+//PassengerRoute
+Route::prefix('passengers')->middleware('auth:sanctum')->group(function () {
+    Route::get('/index', [PassengerController::class, 'index'])->name('passengers.index');
+    Route::post('/store', [PassengerController::class, 'store'])->name('passengers.store');
+    Route::put('/update/{passengerId}', [PassengerController::class, 'update'])->name('passengers.update');
+    Route::delete('/delete/{passengerId}', [PassengerController::class, 'destroy'])->name('passengers.delete');
 });

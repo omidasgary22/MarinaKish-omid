@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::create('passengers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('Name and surname');
+            $table->unsignedBigInteger('user_id')->constrained()->onDelete('cascade');
+            $table->string('Name_and_surname');
             $table->enum('gender', ['زن', 'مرد']);
             $table->integer('age');
             $table->string('national_code')->unique();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

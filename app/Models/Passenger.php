@@ -11,12 +11,14 @@ class Passenger extends Model
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'user_id',
-        'Name and surname',
+        'name_and_surname',
         'gender',
         'age',
         'national_code',
     ];
+    
 
+    protected $dates = ['deleted_at'];
 
     public function user()
     {
