@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EmergencyContact extends Model
+class EmrgencyContact extends Model
 {
     use HasFactory;
 

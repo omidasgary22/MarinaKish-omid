@@ -59,4 +59,9 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasMany(Passenger::class);
     }
+
+    public function emrgencyContact()
+    {
+        return $this->hasMany(EmrgencyContact::class);
+    }
 }
