@@ -142,7 +142,7 @@ Route::prefix('orders')->group(function () {
 });
 
 //ReservationRoute
-Route::prefix('reservation')->middleware('auth:sanctum')->group(function () {
+Route::prefix('reservations')->middleware('auth:sanctum')->group(function () {
     Route::get('/index', [ReservationController::class, 'index'])->name('reservation.index');
     Route::post('/store', [ReservationController::class, 'store'])->name('reservation.store');
     Route::put('/update/{id}', [ReservationController::class, 'update'])->name('reservation.update');

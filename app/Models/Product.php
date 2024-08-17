@@ -43,12 +43,6 @@ class Product extends Model implements HasMedia
         'tip' => 'string',
     ];
 
-    // public function registerMediaCollections(): void
-    // {
-    //     $this->addMediaCollection('image')->singeFile();
-    // }
-
-
 
     public function comments()
     {
@@ -59,5 +53,10 @@ class Product extends Model implements HasMedia
     public function sans()
     {
         return $this->hasMany(sans::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
     }
 }

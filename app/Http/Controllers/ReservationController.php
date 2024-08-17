@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateReservationRequest;
+use App\Http\Requests\UpdateRuleRequest;
 use App\Models\DiscountCode;
 use App\Models\Passenger;
 use App\Models\Product;
@@ -15,7 +17,7 @@ class ReservationController extends Controller
 
     public function index(Request $request)
     {
-        $query = Reservation::whit(['user', 'sans', 'product', 'discountCode']);
+        $query = Reservation::with(['user', 'sans', 'product', 'discountCode']);
         //فیلتر بر اساس تاریخ رزرو
         if ($request->has('reservation_date')) {
             $query->whreDate('reservation_date', $request->input('reservation'));
@@ -107,7 +109,7 @@ class ReservationController extends Controller
         return response()->json(['message' => 'رزرو با موفقیت انجام شد.', 'reservation' => $reservation, 'total_amount' => $totalAmount,], 201);
     }
 
-    public function update($request, $id)
+    public function update(UpdateReservationRequest $request, $id)
     {
         $reservation = Reservation::findOrFail($id);
         $reservation->update($request->toArray());
