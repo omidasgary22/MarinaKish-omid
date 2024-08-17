@@ -145,8 +145,8 @@ Route::prefix('orders')->group(function () {
 Route::prefix('reservation')->middleware('auth:sanctum')->group(function () {
     Route::get('/index', [ReservationController::class, 'index'])->name('reservation.index');
     Route::post('/store', [ReservationController::class, 'store'])->name('reservation.store');
-    Route::put('/update', [ReservationController::class, 'update'])->name('reservation.update');
-    Route::delete('/delete', [ReservationController::class, 'destroy'])->name('Reservation.delete');
+    Route::put('/update/{id}', [ReservationController::class, 'update'])->name('reservation.update');
+    Route::delete('/delete/{id}', [ReservationController::class, 'destroy'])->name('Reservation.delete');
 });
 
 //user->show Prifile & Update Profile
