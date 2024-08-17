@@ -181,6 +181,6 @@ Route::post('apply-discount-code', [ReservationController::class, 'aaplyDiscount
 Route::prefix('emrgences')->middleware('auth:sanctum')->group(function () {
     Route::get('/index', [EmergencyContactController::class, 'index'])->name('emrgences.index');
     Route::post('/store', [EmergencyContactController::class, 'store'])->name('emrgences.store');
-    Route::put('/update', [EmergencyContactController::class, 'update'])->name('emrgences.update');
-    Route::delete('/delete', [EmergencyContactController::class, 'destroy'])->name('emrgences.destroy');
+    Route::put('/update/{id}', [EmergencyContactController::class, 'update'])->name('emrgences.update');
+    Route::delete('/delete/{id}', [EmergencyContactController::class, 'destroy'])->name('emrgences.destroy');
 });
