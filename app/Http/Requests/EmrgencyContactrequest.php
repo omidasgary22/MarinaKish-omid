@@ -26,4 +26,12 @@ class EmrgencyContactrequest extends FormRequest
             'phone' => 'required|string|max:255',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'نام الزامی است',
+            'phone.required' => 'شماره موبایل الزامی است',
+        ];
+    }
 }
