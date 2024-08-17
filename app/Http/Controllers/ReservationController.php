@@ -107,6 +107,14 @@ class ReservationController extends Controller
         return response()->json(['message' => 'رزرو با موفقیت انجام شد.', 'reservation' => $reservation, 'total_amount' => $totalAmount,], 201);
     }
 
+    public function update($request, $id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        $reservation->update($request->toArray());
+
+        return response()->json(['message' => 'رزرو با موفقیت به روز رسانی شد.', 'reservation' => $reservation]);
+    }
+
     //اعمال کد تخفیف در زمان پرداخت
     public function aaplyDiscountCode(Request $request)
     {
