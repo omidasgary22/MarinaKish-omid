@@ -28,4 +28,14 @@ class UpdateReservationRequest extends FormRequest
             'discount_code_id' => 'nullable|exists:discount_codes_,id',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'sans_id.exists' => 'سانس انتخاب شده وجود ندارد.',
+            'reservation_date.date' => 'تاریخ رزرو معتبر نیست.',
+            'product_id.exists' => 'محصول انتخاب شده وجود ندارد.',
+            'discount_code_id.exists' => 'کد تخفیف انتخاب شده وجود ندارد.',
+        ];
+    }
 }
