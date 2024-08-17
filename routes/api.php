@@ -3,6 +3,7 @@
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DiscountCodeController;
+use App\Http\Controllers\EmergencyContactController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
@@ -175,3 +176,11 @@ Route::prefix('discount_code')->group(function () {
 
 // Route for applying discount code
 Route::post('apply-discount-code', [ReservationController::class, 'aaplyDiscountCode']);
+
+//EmrgencyContactRoute
+Route::prefix('emrgences')->middleware('auth:sanctum')->group(function () {
+    Route::get('/index', [EmergencyContactController::class, 'index'])->name('emrgences.index');
+    Route::post('/store', [EmergencyContactController::class, 'store'])->name('emrgences.store');
+    Route::put('/update', [EmergencyContactController::class, 'update'])->name('emrgences.update');
+    Route::delete('/delete', [EmergencyContactController::class, 'destroy'])->name('emrgences.destroy');
+});

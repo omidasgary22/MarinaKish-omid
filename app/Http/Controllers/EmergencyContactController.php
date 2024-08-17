@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmrgencyContactrequest;
 use App\Models\EmrgencyContact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,20 +15,20 @@ class EmergencyContactController extends Controller
         return response()->json($contact);
     }
 
-    public function store($request)
+    public function store(EmrgencyContactrequest $request)
     {
         $contact = EmrgencyContact::create($request->toArray());
         return response()->json($contact, 201);
     }
 
-    public function update($request, $id)
+    public function update(EmrgencyContactrequest $request, $id)
     {
         $contact = EmrgencyContact::findOrFail($id);
         $contact->update($request->only(['name', 'phone']));
         return response()->json($contact);
     }
 
-    public function destroy()
+    public function destroy($request, $id)
     {
         $contact = EmrgencyContact::findOrFail($id);
         $contact->delete();
