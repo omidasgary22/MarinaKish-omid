@@ -33,14 +33,14 @@ class PassengerController extends Controller
         return response()->json(['message' => 'مسافر با موفقیت به‌روزرسانی شد', 'passenger' => $passenger]);
     }
 
-    public function destroy(Passenger $passengerId)
+    public function destroy( Request $request, $id)
     {
-        $passenger = Passenger::findOrFail($passengerId);
-
-        $this->authorize('delete', $passenger);
-
+     
+        $passenger = Passenger::findOrFail($id);
+       // $this->authorize('delete', $id);
+       $passenger->national_code .= '_deleted_' . now()->timestamp;
+       $passenger->save();
         $passenger->delete();
         return response()->json(['message' => 'مسافر با موفقیت حذف شد']);
     }
-    
 }

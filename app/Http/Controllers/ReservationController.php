@@ -48,6 +48,7 @@ class ReservationController extends Controller
 
         $totalAmount = $product->price;
 
+
         // بررسی وجود مسافران و محدودیت سنی آنها
         if (is_array($passengerIds) || is_object($passengerIds)) {
             foreach ($passengerIds as $passengerData) {
@@ -89,9 +90,11 @@ class ReservationController extends Controller
     public function aaplyDiscountCode(Request $request)
     {
         $request->validate([
+            'reservation_id' => 'required|exists:reservations,id',
             'discount_code' => 'required|string|exists:discount_codes,code',
         ]);
 
+        $reservation = Reservation::findOrFail($request->input('reservation_id'));
         $discountCode = DiscountCode::where('code', $request->input('discount_code'))->firstOrFail();
 
         //بررسی تاریخ انتقضا
@@ -101,16 +104,21 @@ class ReservationController extends Controller
 
         //بررسی استفاده قبلی توسط کاربر
         $userHasUsedCode = Reservation::where('user_id', Auth::id())
-            ->where('discoun_codedddde_id', $discountCode->id)->exissts();
+            ->where('discount_code_id', $discountCode->id)->exists();
 
         if ($userHasUsedCode) {
             return response()->json(['message' => 'شما قبلا از این کد تخفیف استفاده کرده اید'], 400);
         }
 
         //محاسبه مبلغ نهایی با تخفیف
-        $totalAmount = $request->input('total_amount');
+        $totalAmount = $reservation->total_amount;
         $discountAmount = ($totalAmount * $discountCode->discount_percentage) / 100;
         $finalAmount = $totalAmount - $discountAmount;
+
+        // به‌روزرسانی رزرو با کد تخفیف
+        $reservation->discount_code_id = $discountCode->id;
+        $reservation->save();
+
 
         return response()->json([
             'total_amount' => $totalAmount,

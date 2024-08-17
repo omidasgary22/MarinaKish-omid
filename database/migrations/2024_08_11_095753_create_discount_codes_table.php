@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->decimal('discount_percentage', 5, 2);
             $table->integer('quantity');
-            $table->timestamps('start_at');
+            $table->timestamp('start_at');
             $table->timestamp('expires_at');
             $table->timestamps();
         });

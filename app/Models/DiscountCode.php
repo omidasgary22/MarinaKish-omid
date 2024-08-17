@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DiscountCode extends Model
 {
@@ -14,9 +15,14 @@ class DiscountCode extends Model
         'code',
         'discount_percentage',
         'quantity',
-        'starts_at',
+        'start_at',
         'expires_at',
     ];
 
     protected $dates = ['start_at','expires_at'];
+
+    public function reservation()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

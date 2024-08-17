@@ -26,7 +26,7 @@ class DiscountCodeRequest extends FormRequest
             'code' => 'required|string|unique:discount_codes,code,' . $this->route('discount_code'),
             'discount_percentage' => 'required|numeric|min:0|max:100',
             'quantity' => 'required|integer|min:1',
-            'starts_at' => 'required|date',
+            'start_at' => 'required|date',
             'expires_at' => 'required|date|after_or_equal:starts_at',
         ];
     }

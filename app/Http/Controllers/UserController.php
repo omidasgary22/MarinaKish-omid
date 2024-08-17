@@ -53,6 +53,8 @@ class UserController extends Controller
     {
         if ($request->user()->can('user.delete')) {
             $user = User::findOrFail($id);
+            $user->national_code .= '_deleted_' . now()->timestamp;
+            $user->save();
             $user->delete();
             return response()->json(['message' => 'کاربر با موفقیت حذف شد.'], 200);
         } else {

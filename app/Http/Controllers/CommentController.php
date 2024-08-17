@@ -11,7 +11,7 @@ class CommentController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->user()->can('comment.index')) {
+        if ($request->user()->can('comment.store')) {
             $comments = Comment::with('user', 'product')->get();
             return response()->json(['comments' => $comments]);
         } else {

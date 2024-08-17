@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DiscountCodeController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
@@ -156,5 +157,18 @@ Route::prefix('passengers')->middleware('auth:sanctum')->group(function () {
     Route::get('/index', [PassengerController::class, 'index'])->name('passengers.index');
     Route::post('/store', [PassengerController::class, 'store'])->name('passengers.store');
     Route::put('/update/{passengerId}', [PassengerController::class, 'update'])->name('passengers.update');
-    Route::delete('/delete/{passengerId}', [PassengerController::class, 'destroy'])->name('passengers.delete');
+    Route::delete('/delete/{id}', [PassengerController::class, 'destroy'])->name('passengers.delete');
 });
+
+
+// Routes for Discount Codes
+Route::prefix('discount_code')->group(function () {
+    Route::get('index', [DiscountCodeController::class, 'index']);
+    Route::post('store', [DiscountCodeController::class, 'store']);
+    Route::get('show/{id}', [DiscountCodeController::class, 'show']);
+    Route::put('update/{id}', [DiscountCodeController::class, 'update']);
+    Route::delete('delete/{id}', [DiscountCodeController::class, 'destroy']);
+});
+
+// Route for applying discount code
+Route::post('apply-discount-code', [ReservationController::class, 'aaplyDiscountCode']);

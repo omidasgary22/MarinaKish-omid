@@ -14,6 +14,9 @@ class Reservation extends Model
         'sans_id',
         'user_id',
         'product_id',
+        'discount_code_id',
+        'total_amount',
+        'discount_code_id',
     ];
 
     public function user()
@@ -29,5 +32,10 @@ class Reservation extends Model
     public function passengers()
     {
         return $this->belongsToMany(Passenger::class, 'reservation_passenger');
+    }
+
+    public function discountCode()
+    {
+        return $this->belongsTo(DiscountCode::class);
     }
 }
