@@ -22,22 +22,21 @@ class UpdateTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-            'body' => 'required|string',
-            'status' => 'required|in:open,closed,pending',
-            'priority' => 'required|in:low,medium,high',
+            'title' => 'sometimes|required|string|max:255',
+            'body' => 'sometimes|required|string',
+            'priority' => 'sometimes|required|in:low,medium,high',
+            'status' => 'sometimes|required|in:open,closed,in_progress',
         ];
     }
+
 
     public function messages()
     {
         return [
-            'title.required' => 'عنوان تیکت الزامی است.',
-            'body.required' => 'متن تیکت الزامی است.',
-            'status.required' => 'وضعیت تیکت الزامی است.',
-            'status.in' => 'وضعیت تیکت معتبر نیست.',
-            'priority.required' => 'اولویت تیکت الزامی است.',
-            'priority.in' => 'اولویت تیکت معتبر نیست.',
+            'title.required' => 'عنوان الزامی است',
+            'body.required' => 'متن الزامی است',
+            'priority.required' => 'اولویت الزامی است',
+            'status.required' => 'وضعیت الزامی است',
         ];
     }
 }

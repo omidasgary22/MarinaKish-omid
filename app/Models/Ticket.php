@@ -23,4 +23,9 @@ class Ticket extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function responses()
+    {
+        return $this->hasMany(TicketResponse::class);
+    }
 }

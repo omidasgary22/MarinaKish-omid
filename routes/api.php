@@ -74,13 +74,13 @@ Route::prefix('products')->group(function () {
 });
 
 //TicketRoute
-Route::prefix('tickets')->group(function () {
+Route::middleware('auth:sanctum')->prefix('tickets')->group(function () {
     Route::get('/index', [TicketController::class, 'index'])->name('tickets.index');
     Route::post('/store', [TicketController::class, 'store'])->name('tickets.store');
-    Route::get('/show/{id}', [TicketController::class, 'show'])->name('tickets.show');
     Route::put('/update/{id}', [TicketController::class, 'update'])->name('tickets.update');
     Route::delete('/delete/{id}', [TicketController::class, 'destroy'])->name('tikets.destroy');
     Route::post('/restore/{id}', [TicketController::class, 'restore'])->name('tickets.restore');
+    Route::post('/response/{id}', [TicketController::class, 'addResponse'])->name('tickets.addResponse');
 });
 
 //RuleRoute
