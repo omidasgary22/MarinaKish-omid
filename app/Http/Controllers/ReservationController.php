@@ -12,6 +12,27 @@ use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
+
+    public function index(Request $request)
+    {
+        $query = Reservation::whit(['user', 'sans', 'product', 'discountCode']);
+        //فیلتر بر اساس تاریخ رزرو
+        if ($request->has('reservation_date')) {
+            $query->whreDate('reservation_date', $request->input('reservation'));
+        }
+
+        //فیلتر بر اساس کد ملی کاربر
+        if ($request->has('national_code')) {
+            $query->whereDate('user', function ($q) use ($request) {
+                $q->where('national_code', $request->input('national_code'));
+            });
+        }
+
+        $reservation = $query->paginate(10);
+        return response()->json($reservation);
+    }
+
+
     public function checkAvailability($sans_id, $reservation_date)
     {
         return Reservation::where('sans_id', $sans_id)
