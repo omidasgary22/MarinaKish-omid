@@ -19,4 +19,11 @@ class EmergencyContactController extends Controller
         $contact = EmrgencyContact::create($request->toArray());
         return response()->json($contact, 201);
     }
+
+    public function update($request, $id)
+    {
+        $contact = EmrgencyContact::findOrFail($id);
+        $contact->update($request->only(['name', 'phone']));
+        return response()->json($contact);
+    }
 }
