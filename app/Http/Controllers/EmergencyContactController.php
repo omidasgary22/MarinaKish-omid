@@ -26,4 +26,11 @@ class EmergencyContactController extends Controller
         $contact->update($request->only(['name', 'phone']));
         return response()->json($contact);
     }
+
+    public function destroy()
+    {
+        $contact = EmrgencyContact::findOrFail($id);
+        $contact->delete();
+        return response()->json(['message' => 'تماس اضطراری با موفقیت حذف شد']);
+    }
 }
