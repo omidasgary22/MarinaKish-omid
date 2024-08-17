@@ -18,7 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->date('reservation_date');
             $table->decimal('total_amount', 8, 2);
-           $table->unsignedBigInteger('discount_code_id')->nullable();
+            $table->unsignedBigInteger('discount_code_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

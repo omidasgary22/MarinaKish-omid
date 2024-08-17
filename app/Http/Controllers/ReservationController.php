@@ -115,6 +115,14 @@ class ReservationController extends Controller
         return response()->json(['message' => 'رزرو با موفقیت به روز رسانی شد.', 'reservation' => $reservation]);
     }
 
+    public function destroy($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        $reservation->delete();
+
+        return response()->json(['message' => 'رزرو با موفقیت حذف شد.']);
+    }
+
     //اعمال کد تخفیف در زمان پرداخت
     public function aaplyDiscountCode(Request $request)
     {
