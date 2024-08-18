@@ -18,6 +18,7 @@ use App\Http\Controllers\RuleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Models\Blog;
+use App\Models\Newsletter;
 use App\Models\Reservation;
 use Illuminate\Foundation\Console\RouteCacheCommand;
 use Illuminate\Http\Request;
@@ -184,3 +185,6 @@ Route::prefix('emrgences')->middleware('auth:sanctum')->group(function () {
     Route::put('/update/{id}', [EmergencyContactController::class, 'update'])->name('emrgences.update');
     Route::delete('/delete/{id}', [EmergencyContactController::class, 'destroy'])->name('emrgences.destroy');
 });
+
+
+//Newsletter Route
