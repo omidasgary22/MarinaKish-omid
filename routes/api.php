@@ -7,6 +7,7 @@ use App\Http\Controllers\EmergencyContactController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PassengerController;
 use App\Http\Controllers\PasswordChangeController;
@@ -188,3 +189,4 @@ Route::prefix('emrgences')->middleware('auth:sanctum')->group(function () {
 
 
 //Newsletter Route
+Route::post('/newslatter',[NewsletterController::class,'store']);
