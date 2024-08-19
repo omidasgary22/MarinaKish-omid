@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
+            $table->string('ticket_number')->unique();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('sans_id');
             $table->unsignedBigInteger('product_id');
             $table->date('reservation_date');
             $table->decimal('total_amount', 8, 2);
+            $table->enum('status', ['pending', 'confirmed'])->default('pending');
             $table->unsignedBigInteger('discount_code_id')->nullable();
-           // $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

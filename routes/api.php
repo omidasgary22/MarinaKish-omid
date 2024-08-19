@@ -17,6 +17,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RuleController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\TickettController;
 use App\Http\Controllers\UserController;
 use App\Models\Blog;
 use App\Models\Newsletter;
@@ -190,3 +191,6 @@ Route::prefix('emrgences')->middleware('auth:sanctum')->group(function () {
 
 //Newsletter Route
 Route::post('/newslatter',[NewsletterController::class,'store']);
+
+// مسیر برای نمایش بلیط
+Route::post('/tickets', [TickettController::class, 'create']);

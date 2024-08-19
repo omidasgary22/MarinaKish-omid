@@ -17,7 +17,11 @@ class Reservation extends Model
         'product_id',
         'discount_code_id',
         'total_amount',
-        'discount_code_id',
+        'discount_percent',
+        'activity_id',
+        'ticket_number',
+        'status',
+        //'ticket_count',
     ];
 
     public function user()
@@ -43,5 +47,11 @@ class Reservation extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+
+    public function activity()
+    {
+        return $this->belongsTo(Activity::class);
     }
 }

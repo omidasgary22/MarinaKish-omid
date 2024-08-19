@@ -42,6 +42,12 @@ class ReservationController extends Controller
             ->doesntExist();
     }
 
+    public function showTicket($id)
+    {
+        $reservation = Reservation::with(['user', 'passengers', 'product', 'sans', 'discountCode'])->findOrFail($id);
+        return view('ticket', compact('reservation'));
+    }
+
 
     public function store(Request $request)
     {
@@ -104,7 +110,16 @@ class ReservationController extends Controller
             'product_id' => $product_id,
             'reservation_date' => $reservation_date,
             'total_amount' => $totalAmount,
+            'ticket_number' => 'TICKET-' . str_pad(Reservation::max('id') + 1, 6, '0', STR_PAD_LEFT),
+            'status' => 'pending',
         ]);
+
+
+        // اضافه کردن مسافران به رزرو
+        if (is_array($passengerIds) || is_object($passengerIds)) {
+            $reservation->passengers()->attach($passengerIds);
+        }
+
 
         return response()->json(['message' => 'رزرو با موفقیت انجام شد.', 'reservation' => $reservation, 'total_amount' => $totalAmount,], 201);
     }
