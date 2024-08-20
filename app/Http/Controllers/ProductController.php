@@ -36,8 +36,6 @@ class ProductController extends Controller
         $product = Product::with('sans')->find($id);
         return response()->json(['message' => 'محصول با موفقیت ایجاد شد', 'product' => $product]);
 
-        // return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
-        // }
     }
 
 

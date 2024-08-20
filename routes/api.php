@@ -22,6 +22,7 @@ use App\Http\Controllers\UserController;
 use App\Models\Blog;
 use App\Models\Newsletter;
 use App\Models\Reservation;
+use GuzzleHttp\Middleware;
 use Illuminate\Foundation\Console\RouteCacheCommand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,8 +37,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-
 
 //RegisterUser
 Route::post('/register', [RegisterController::class, 'Register'])->name('user.register');
@@ -61,12 +60,6 @@ Route::prefix('users')->middleware('auth:sanctum')->group(function () {
 
 //Logout Route
 Route::middleware('auth:sanctum')->delete('/logout', [LogoutController::class, 'logout'])->name('logout');
-
-
-
-
-
-
 
 //ProductRoute
 Route::middleware('auth:sanctum')->prefix('products')->group(function () {
@@ -137,15 +130,6 @@ Route::prefix('comments')->group(function () {
     Route::get('/show/{id}', [CommentController::class, 'show'])->name('comments.show');
 });
 
-//OrderRoute
-Route::prefix('orders')->group(function () {
-    Route::get('/index/{id?}', [OrderController::class, 'index'])->name('ordees.index');
-    Route::post('/store', [OrderController::class, 'store'])->name('orders.store');
-    Route::put('/update/{id}', [OrderController::class, 'update'])->name('orders.update');
-    Route::delete('/delete/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
-    Route::get('/show/{id}', [OrderController::class, 'show'])->name('orders.show');
-});
-
 //ReservationRoute
 Route::prefix('reservations')->middleware('auth:sanctum')->group(function () {
     Route::get('/index', [ReservationController::class, 'index'])->name('reservation.index');
@@ -168,18 +152,17 @@ Route::prefix('passengers')->middleware('auth:sanctum')->group(function () {
     Route::delete('/delete/{id}', [PassengerController::class, 'destroy'])->name('passengers.delete');
 });
 
-
 // Routes for Discount Codes
 Route::prefix('discount_code')->group(function () {
     Route::get('index', [DiscountCodeController::class, 'index']);
     Route::post('store', [DiscountCodeController::class, 'store']);
-    Route::get('show/{id}', [DiscountCodeController::class, 'show']);
+   // Route::get('show/{id}', [DiscountCodeController::class, 'show']);
     Route::put('update/{id}', [DiscountCodeController::class, 'update']);
     Route::delete('delete/{id}', [DiscountCodeController::class, 'destroy']);
 });
 
 // Route for applying discount code
-Route::post('apply-discount-code', [ReservationController::class, 'aaplyDiscountCode']);
+Route::post('apply-discount-code', [ReservationController::class, 'aaplyDiscountCode'])->middleware('auth:sanctum');
 
 //EmrgencyContactRoute
 Route::prefix('emrgences')->middleware('auth:sanctum')->group(function () {
@@ -189,10 +172,14 @@ Route::prefix('emrgences')->middleware('auth:sanctum')->group(function () {
     Route::delete('/delete/{id}', [EmergencyContactController::class, 'destroy'])->name('emrgences.destroy');
 });
 
-
 //Newsletter Route
-Route::post('/newslatter', [NewsletterController::class, 'store']);
+Route::middleware('auth:sanctum')->prefix('newslatter')->group(function () {
+    Route::post('/store', [NewsletterController::class, 'store']);
+    Route::get('/index', [NewsletterController::class, 'index']);
+});
 
 // Tickett Route
-Route::post('/tickets', [TickettController::class, 'create']);
-Route::post('/tickets/index', [TickettController::class, 'index']);
+Route::middleware('auth:sanctum')->prefix('ticketts')->group(function () {
+    Route::post('/store', [TickettController::class, 'create']);
+    Route::get('/index', [TickettController::class, 'index']);
+});
