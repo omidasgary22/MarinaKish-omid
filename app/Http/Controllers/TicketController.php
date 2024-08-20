@@ -12,59 +12,78 @@ use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tickets = Ticket::with('responses.user')->get();
+        if ($request->user()->can('ticket.index')) {
+            $tickets = Ticket::with('responses.user')->get();
+            $tickets->each(function ($ticket) {
+                $ticket->response_status = $ticket->responses->isEmpty() ? 'پاسخ داده نشده' : 'پاسخ داده شده';
+            });
 
-        $tickets->each(function ($ticket) {
-            $ticket->response_status = $ticket->responses->isEmpty() ? 'پاسخ داده نشده' : 'پاسخ داده شده';
-        });
-
-        return response()->json($tickets);
+            return response()->json($tickets);
+        } else {
+            return response()->json(['message' => 'شما دسترسی مجاز را ندارید']);
+        }
     }
 
     public function store(StoreTicketRequest $request)
     {
-        $ticket = Ticket::create([
-            'user_id' => Auth::id(),
-            'title' => $request->title,
-            'body' => $request->body,
-            'priority' => $request->priority,
-            'status' => 'open',
-        ]);
+        if ($request->user()->can('ticket.store')) {
+            $ticket = Ticket::create([
+                'user_id' => Auth::id(),
+                'title' => $request->title,
+                'body' => $request->body,
+                'priority' => $request->priority,
+                'status' => 'open',
+            ]);
 
-        return response()->json($ticket, 201);
+            return response()->json($ticket, 201);
+        } else {
+            return response()->json(['message' => 'شما دسترسی مجاز را ندارید']);
+        }
     }
 
     public function update(UpdateTicketRequest $request, $id)
     {
-        $ticket = Ticket::findOrFail($id);
-        $ticket->update($request->only(['title', 'body', 'priority', 'status']));
+        if ($request->user()->can('ticket.update')) {
+            $ticket = Ticket::findOrFail($id);
+            $ticket->update($request->only(['title', 'body', 'priority', 'status']));
 
-        return response()->json($ticket);
+            return response()->json($ticket);
+        } else {
+            return  response()->json(['message' => 'شما دسترسی مجاز را ندارید']);
+        }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $ticket = Ticket::findOrFail($id);
-        $ticket->delete();
-        return response()->json(['message' => 'تیکت با موفقیت حذف شد']);
+        if ($request->user()->can('ticket.destroy')) {
+            $ticket = Ticket::findOrFail($id);
+            $ticket->delete();
+            return response()->json(['message' => 'تیکت با موفقیت حذف شد']);
+        } else {
+            return response()->json(['message' => 'شما دسترسی مجاز را ندارید']);
+        }
     }
 
     //پاسخ به تیکت
     public function addResponse(AddTicketResponseRequest $request, $id)
     {
-        $ticket = Ticket::findOrFail($id);
+        if ($request->user()->can('ticket.response')) {
+            $ticket = Ticket::findOrFail($id);
 
-        $response = $ticket->responses()->create([
-            'user_id' => Auth::id(),
-            'response' => $request->response,
-        ]);
+            $response = $ticket->responses()->create([
+                'user_id' => Auth::id(),
+                'response' => $request->response,
+            ]);
 
-        if ($ticket->status == 'open') {
-            $ticket->update(['status' => 'in_progress']);
+            if ($ticket->status == 'open') {
+                $ticket->update(['status' => 'in_progress']);
+            }
+
+            return response()->json($response, 201);
+        } else {
+            return response()->json(['message' => 'شما دسترسی مجاز را ندارید']);
         }
-
-        return response()->json($response, 201);
     }
 }
