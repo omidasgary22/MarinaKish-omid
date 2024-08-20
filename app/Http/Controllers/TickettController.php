@@ -10,6 +10,14 @@ use Illuminate\Support\Str;
 
 class TickettController extends Controller
 {
+
+    public function index()
+    {
+        $Tickett = Tickett::all();
+        return response()->json($Tickett);
+    }
+
+    
     public function create(Request $request)
     {
         // پیدا کردن رزرو و بررسی وجود آن
@@ -23,6 +31,10 @@ class TickettController extends Controller
 
         // بررسی پرداخت
         $status = $reservation->status == 'confirmed' ? 'confirmed' : 'pending';
+
+
+         // دریافت اطلاعات تخفیف
+        $discountCode = $reservation->discountCode;
 
         // جمع‌آوری اطلاعات بلیط
         $ticketData = [
@@ -51,7 +63,7 @@ class TickettController extends Controller
             ],
             'ticket_count' => $reservation->passengers->count() + 1, // تعداد مسافر + رزرو کننده
             'total_price' => $reservation->total_amount,
-            'discount_percent' => $reservation->discountCode ? $reservation->discountCode->percent : 0,
+            'discount_percent' => optional($reservation->discountCode)->discount_percent ?? 0,
             'final_price' => $reservation->total_amount - ($reservation->total_amount * ($reservation->discountCode ? $reservation->discountCode->percent : 0) / 100),
         ];
 

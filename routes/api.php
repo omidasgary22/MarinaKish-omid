@@ -54,6 +54,7 @@ Route::prefix('users')->middleware('auth:sanctum')->group(function () {
     Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::patch('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
     Route::get('/me', [UserController::class, 'me'])->name('user.me')->name('me');
+    Route::post('/uploade/profile/{id}', [UserController::class, 'uploadProfileFile']);
     //  Route::post('/store', [UserController::class, 'store'])->withoutmiddleware("auth:sanctum")->name('users.store');
     // Route::get('/show/{id}', [UserController::class, 'show'])->name('users.show');
 });
@@ -62,19 +63,19 @@ Route::prefix('users')->middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->delete('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 
-//uploade profile Route
-Route::post('/users/uploade/profile/{id}', [UserController::class, 'uploadProfileFile']);
+
+
 
 
 
 //ProductRoute
-Route::prefix('products')->group(function () {
+Route::middleware('auth:sanctum')->prefix('products')->group(function () {
     Route::get('/index', [ProductController::class, 'index'])->name('products.index');
     Route::post('/store', [ProductController::class, 'store'])->name('Products.store');
     Route::put('/update/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
     Route::post('/restore/{id}', [ProductController::class, 'restore'])->name('products.restore');
-    Route::post('/upload/{id}', [ProductController::class, 'uplodImage']);
+    Route::post('/upload/{id}', [ProductController::class, 'uploadImage']);
 });
 
 //TicketRoute
@@ -110,7 +111,7 @@ Route::prefix('blogs')->group(function () {
 });
 
 //FAQRoute
-Route::prefix('faqs')->group(function () {
+Route::middleware('auth:sanctum')->prefix('faqs')->group(function () {
     Route::get('/index/{id?}', [FaqController::class, 'index'])->name('faqs.index');
     Route::post('/store', [FaqController::class, 'store'])->name('faqs.store');
     Route::put('/update/{id}', [FaqController::class, 'update'])->name('faqs.update');
@@ -190,7 +191,8 @@ Route::prefix('emrgences')->middleware('auth:sanctum')->group(function () {
 
 
 //Newsletter Route
-Route::post('/newslatter',[NewsletterController::class,'store']);
+Route::post('/newslatter', [NewsletterController::class, 'store']);
 
-// مسیر برای نمایش بلیط
+// Tickett Route
 Route::post('/tickets', [TickettController::class, 'create']);
+Route::post('/tickets/index', [TickettController::class, 'index']);

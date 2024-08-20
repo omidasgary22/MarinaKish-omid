@@ -79,18 +79,56 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'comment.destroy']);
         Permission::create(['name' => 'comment.restore']);
 
-        //permission   //order
-        Permission::create(['name' => 'order.index']);
-        Permission::create(['name' => 'order.store']);
-        Permission::create(['name' => 'order.update']);
-        Permission::create(['name' => 'order.destroy']);
-        Permission::create(['name' => 'order.show']);
+        // //permission   //order
+        // Permission::create(['name' => 'order.index']);
+        // Permission::create(['name' => 'order.store']);
+        // Permission::create(['name' => 'order.update']);
+        // Permission::create(['name' => 'order.destroy']);
+        // Permission::create(['name' => 'order.show']);
 
         //permission   //PasswordChange
         Permission::create(['name' => 'PasswordChange']);
 
         //permission   //PasswordReset
         Permission::create(['name' => 'PasswordReset']);
+
+        //Discount_code   //permission
+        Permission::create(['name' => 'discount.index']);
+        Permission::create(['name' => 'discount.store']);
+        Permission::create(['name' => 'discount.update']);
+        Permission::create(['name' => 'discount.destroy']);
+
+        //Emrgency_contact   //permission
+        Permission::create(['name' => 'emrgency.index']);
+        Permission::create(['name' => 'emrgency.store']);
+        Permission::create(['name' => 'emrgency.update']);
+        Permission::create(['name' => 'emrgency.destroy']);
+
+        //Newslatter   //Permission
+        Permission::create(['name' => 'news.index']);
+        Permission::create(['name' => 'news.stor']);
+
+        //Passenger   //Permission
+        Permission::create(['name' => 'passenger.index']);
+        Permission::create(['name' => 'passenger.store']);
+        Permission::create(['name' => 'passenger.update']);
+        Permission::create(['name' => 'passenger.destroy']);
+
+        //Reservation   //Permission
+        Permission::create(['name' => 'reservation.index']);
+        Permission::create(['name' => 'reservation.store']);
+        Permission::create(['name' => 'reservation.update']);
+        Permission::create(['name' => 'reservation.destroy']);
+
+        //Ticket  //Permission
+        Permission::create(['name' => 'ticket.index']);
+        Permission::create(['name' => 'ticket.store']);
+        Permission::create(['name' => 'ticket.update']);
+        Permission::create(['name' => 'ticket.destroy']);
+        Permission::create(['name' => 'ticket.response']);
+
+        //Tickett   //ermission   //بلیط
+        Permission::create(['name' => 'tickett.index']);
 
 
         //give permission to admin
@@ -139,6 +177,30 @@ class PermissionSeeder extends Seeder
             'order.destroy',
             'order.show',
             'PasswordReset',
+            'discount.index',
+            'discount.store',
+            'discount.update',
+            'discount.destroy',
+            'emrgency.index',
+            'emrgency.store',
+            'emrgency.update',
+            'emrgency.destroy',
+            'news.index',
+            'news.store',
+            'passenger.index',
+            'passenger.store',
+            'passenger.update',
+            'passenger.destroy',
+            'reservation.index',
+            'reservation.store',
+            'reservation.update',
+            'reservation.destroy',
+            'ticket.index',
+            'ticket.store',
+            'ticket.update',
+            'ticket.destroy',
+            'ticket.response',
+            'tickett.index',
         ]);
 
         //give permission to user
@@ -151,6 +213,15 @@ class PermissionSeeder extends Seeder
             'order.store',
             'order.destroy',
             'PasswordReset',
+            'emrgency.store',
+            'emrgency.update',
+            'news.store',
+            'passenger.store',
+            'passenger.update',
+            'passenger.destroy',
+            'reservation.store',
+            'reservation.destroy',
+            'ticket.store',
         ]);
 
 

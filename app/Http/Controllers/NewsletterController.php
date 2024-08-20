@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 
 class NewsletterController extends Controller
 {
+
+    public function index()
+    {
+        $newsletter = Newsletter::all();
+        return response()->json($newsletter);
+    }
+
+    
     public function store(StoreNewsletterRequest $request)
     {
         $newsletter = Newsletter::create($request->toArray());

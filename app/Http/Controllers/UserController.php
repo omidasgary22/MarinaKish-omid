@@ -33,7 +33,7 @@ class UserController extends Controller
 
     public function show(Request $request, $id)
     {
-        $user = User::with('tickets', 'comments')->findOrFail($id);
+        $user = User::with('tickets', 'comments','emrgency_contacts')->findOrFail($id);
         return response()->json(['user' => $user]);
     }
 
