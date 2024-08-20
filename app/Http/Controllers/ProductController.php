@@ -21,21 +21,24 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
-        $user = Auth::user();
-        $time = $request->time;
-        $pending = $request->pending;
-        $total = $request->total;
-        $started_time = Carbon::parse($request->started_at);
-        $ended_at = Carbon::parse($request->ended_at);
-        $age_limit = $request->age_limit;
+        if ($request->user()->can('product.store')) {
+            $user = Auth::user();
+            $time = $request->time;
+            $pending = $request->pending;
+            $total = $request->total;
+            $started_time = Carbon::parse($request->started_at);
+            $ended_at = Carbon::parse($request->ended_at);
+            $age_limit = $request->age_limit;
 
-        //
-        $product = Product::create($request->toArray());
-        $id = $product->id;
-        SansController::store($time, $pending, $total, $started_time, $ended_at, $id, $age_limit);
-        $product = Product::with('sans')->find($id);
-        return response()->json(['message' => 'محصول با موفقیت ایجاد شد', 'product' => $product]);
-
+            //
+            $product = Product::create($request->toArray());
+            $id = $product->id;
+            SansController::store($time, $pending, $total, $started_time, $ended_at, $id, $age_limit);
+            $product = Product::with('sans')->find($id);
+            return response()->json(['message' => 'محصول با موفقیت ایجاد شد', 'product' => $product]);
+        } else {
+            return response()->json(['message' => 'شما دسترسی مجاز را ندارید']);
+        }
     }
 
 
