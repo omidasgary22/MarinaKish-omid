@@ -110,4 +110,23 @@ class ProductController extends Controller
             return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
         }
     }
+
+
+    // public function getProductReports()
+    // {
+    //     $products = Product::with('tickett', 'comments')->get();
+
+    //     $reports = $products->map(function ($product) {
+    //         return [
+    //             'product_name' => $product->name,
+    //             'total_tickets_sold' => $product->total_tickets_sold,
+    //             'total_sales' => $product->total_sales,
+    //             'total_comments' => $product->total_comments,
+    //             'average_rating' => $product->average_rating,
+    //         ];
+    //     });
+
+    //     return response()->json($reports);
+    // }
+
 }

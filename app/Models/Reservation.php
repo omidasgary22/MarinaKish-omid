@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -50,8 +51,24 @@ class Reservation extends Model
     }
 
 
+    public function ticketts()
+    {
+        return $this->hasMany(Tickett::class);
+    }
+
+
     public function activity()
     {
         return $this->belongsTo(Activity::class);
     }
+
+    // protected function isCode(): Attribute
+    // {
+    //     return new Attribute(
+    //         get: fn() => 'jhhh',
+    //     );
+    // }
+    // protected $appends = [
+    //     'is_code'
+    // ];
 }

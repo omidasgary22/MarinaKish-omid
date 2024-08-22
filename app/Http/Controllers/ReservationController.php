@@ -21,12 +21,12 @@ class ReservationController extends Controller
             $query = Reservation::with(['user', 'sans', 'product', 'discountCode']);
             //فیلتر بر اساس تاریخ رزرو
             if ($request->has('reservation_date')) {
-                $query->whreDate('reservation_date', $request->input('reservation'));
+                $query->whereDate('reservation_date', $request->input('reservation'));
             }
 
             //فیلتر بر اساس کد ملی کاربر
             if ($request->has('national_code')) {
-                $query->whereDate('user', function ($q) use ($request) {
+                $query->whereHas('user', function ($q) use ($request) {
                     $q->where('national_code', $request->input('national_code'));
                 });
             }
@@ -181,9 +181,11 @@ class ReservationController extends Controller
         }
 
         //محاسبه مبلغ نهایی با تخفیف
+        // $id = $request->reservation_id;
         $totalAmount = $reservation->total_amount;
         $discountAmount = ($totalAmount * $discountCode->discount_percentage) / 100;
         $finalAmount = $totalAmount - $discountAmount;
+        //  Reservation::find($id)->update(['total_amount' => $finalAmount]);
 
         // به‌روزرسانی رزرو با کد تخفیف
         $reservation->discount_code_id = $discountCode->id;

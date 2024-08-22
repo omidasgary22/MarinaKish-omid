@@ -59,4 +59,27 @@ class Product extends Model implements HasMedia
     {
         return $this->hasMany(Reservation::class);
     }
+
+  
+
+ public function getTotalTicketsSoldAttribute()
+    {
+        return $this->tickett()->count();
+    }
+
+    public function getTotalSalesAttribute()
+    {
+        return $this->tickett()->sum('total_amount');
+    }
+
+    public function getTotalCommentsAttribute()
+    {
+        return $this->comments()->count();
+    }
+
+    public function getAverageRatingAttribute()
+    {
+        return $this->comments()->avg('star');
+    }
+
 }

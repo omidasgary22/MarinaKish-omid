@@ -14,6 +14,7 @@ use App\Http\Controllers\PasswordChangeController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RuleController;
 use App\Http\Controllers\TicketController;
@@ -121,7 +122,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 //CommentRoute
-Route::prefix('comments')->group(function () {
+Route::middleware('auth:sanctum')->prefix('comments')->group(function () {
     Route::get('/index{id?}', [CommentController::class, 'index'])->name('comments.index');
     Route::post('/store', [CommentController::class, 'store'])->name('comments.store');
     Route::put('/update/{id}', [CommentController::class, 'update'])->name('comments.update');
@@ -153,7 +154,7 @@ Route::prefix('passengers')->middleware('auth:sanctum')->group(function () {
 });
 
 // Routes for Discount Codes
-Route::prefix('discount_code')->group(function () {
+Route::middleware('auth:sanctum')->prefix('discount_code')->group(function () {
     Route::get('index', [DiscountCodeController::class, 'index']);
     Route::post('store', [DiscountCodeController::class, 'store']);
    // Route::get('show/{id}', [DiscountCodeController::class, 'show']);
@@ -180,6 +181,13 @@ Route::middleware('auth:sanctum')->prefix('newslatter')->group(function () {
 
 // Tickett Route
 Route::middleware('auth:sanctum')->prefix('ticketts')->group(function () {
-    Route::post('/store', [TickettController::class, 'create']);
+    Route::get('/store', [TickettController::class, 'create']);
     Route::get('/index', [TickettController::class, 'index']);
+});
+
+
+Route::prefix('reports')->group(function(){
+
+Route::get('/show/{productId}', [ReportController::class, 'show']);
+Route::get('/index', [ReportController::class, 'allReports']);
 });

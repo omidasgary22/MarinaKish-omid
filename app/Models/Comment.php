@@ -18,7 +18,7 @@ class Comment extends Model
         'body',
         'answer',
         'star',
-        'status'
+        'status',
     ];
 
     public function user()

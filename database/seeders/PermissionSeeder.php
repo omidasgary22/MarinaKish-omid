@@ -106,7 +106,7 @@ class PermissionSeeder extends Seeder
 
         //Newslatter   //Permission
         Permission::create(['name' => 'news.index']);
-        Permission::create(['name' => 'news.stor']);
+        Permission::create(['name' => 'news.store']);
 
         //Passenger   //Permission
         Permission::create(['name' => 'passenger.index']);
@@ -171,11 +171,11 @@ class PermissionSeeder extends Seeder
             'comment.destroy',
             'comment.restore',
             'comment.show',
-            'order.index',
-            'order.store',
-            'order.update',
-            'order.destroy',
-            'order.show',
+            // 'order.index',
+            // 'order.store',
+            // 'order.update',
+            // 'order.destroy',
+            // 'order.show',
             'PasswordReset',
             'discount.index',
             'discount.store',
@@ -210,8 +210,8 @@ class PermissionSeeder extends Seeder
             'user.me',
             'user.uploadprofile',
             'comment.store',
-            'order.store',
-            'order.destroy',
+            // 'order.store',
+            // 'order.destroy',
             'PasswordReset',
             'emrgency.store',
             'emrgency.update',
