@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Product;
+use App\Models\Reservation;
 use App\Models\Tickett;
 use Illuminate\Http\Request;
 
@@ -20,12 +22,12 @@ class ReportController extends Controller
 
         foreach ($products as $product) {
             // تعداد بلیط‌های فروش رفته برای هر محصول
-            $soldTicketsCount = Tickett::whereHas('reservation', function($query) use ($product) {
+            $soldTicketsCount = Tickett::whereHas('reservation', function ($query) use ($product) {
                 $query->where('product_id', $product->id);
             })->count();
 
             // مجموع فروش برای هر محصول
-            $totalSales = Tickett::whereHas('reservation', function($query) use ($product) {
+            $totalSales = Tickett::whereHas('reservation', function ($query) use ($product) {
                 $query->where('product_id', $product->id);
             })->sum('final_price');
 
@@ -49,33 +51,54 @@ class ReportController extends Controller
         return response()->json($reports);
     }
 
-    public function show($productId)
+
+    public function show(Request $request, $productId)
     {
-
         $product = Product::findOrFail($productId);
-        // تعداد بلیط‌های فروش رفته برای این محصول
-        $soldTicketsCount = Tickett::whereHas('reservation', function($query) use ($productId) {
-            $query->where('product_id', $productId);
-        })->count();
 
-        // مجموع فروش برای این محصول
-        $totalSales = Tickett::whereHas('reservation', function($query) use ($productId) {
-            $query->where('product_id', $productId);
-        })->sum('final_price');
+        // دریافت تاریخ شروع و پایان از درخواست کاربر
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
-        // تعداد نظرات ثبت شده برای این محصول
-        $reviewsCount = Product::find($productId)->comments()->count();
+        // استخراج تعداد بلیط‌های فروش رفته به تفکیک روز
+        $ticketsSold = Tickett::whereBetween('purchase_time', [$startDate, $endDate])
+            ->selectRaw('DATE(purchase_time) as date, COUNT(*) as total_sold')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
 
-        // میانگین امتیازات برای این محصول
-        $averageRating = Product::find($productId)->comments()->avg('star');
+        // استخراج بیشترین سانس‌های رزرو شده
+        $mostReservedSans = Reservation::whereBetween('reservation_date', [$startDate, $endDate])
+            ->selectRaw('sans_id, COUNT(*) as total_reservations')
+            ->groupBy('sans_id')
+            ->orderBy('total_reservations', 'desc')
+            ->get();
 
-        // بازگرداندن این اطلاعات به ویو
+        // محاسبه میانگین امتیازات ثبت شده
+        $averageRating = Comment::whereBetween('created_at', [$startDate, $endDate])
+            ->avg('star');
+
+        // تعداد کل نظرات ثبت شده
+        $totalComments = Comment::whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
+        // // تعداد نظرات پاسخ داده شده
+        // $answeredComments = Comment::whereBetween('created_at', [$startDate, $endDate])
+        //     ->whereNotNull('answer')
+        //     ->count();
+
+        // // تعداد نظرات در انتظار پاسخ
+        // $pendingComments = Comment::whereBetween('created_at', [$startDate, $endDate])
+        //     ->whereNull('answer')
+        //     ->count();
+
         return response()->json([
-            'product_name' => $product->name,
-            'soldTicketsCount' => $soldTicketsCount,
-            'totalSales' => $totalSales,
-            'reviewsCount' => $reviewsCount,
-            'averageRating' => $averageRating
+            'تعداد بلیط های فروش رفته' => $ticketsSold,
+            'بیشترین سانس های رزرو شده' => $mostReservedSans,
+            'امتیاز ثبت شده' => $averageRating,
+            'تعداد نظرات' => $totalComments,
+            // 'نظر پاسخ داده شده' => $answeredComments,
+            // 'نظر در انتظار پاسخ' => $pendingComments,
         ]);
     }
 }

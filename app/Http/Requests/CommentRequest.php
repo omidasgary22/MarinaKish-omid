@@ -26,7 +26,7 @@ class CommentRequest extends FormRequest
             'product_id' => 'required|exists:products,id',
             'title' => 'required|string|max:300',
             'body' => 'required|string',
-            'answer' => 'nullable|string',
+           // 'answer' => 'nullable|string',
             'star' => 'required|in:1,2,3,4,5',
             'status' => 'in:pending,approved,rejected',
         ];
@@ -46,7 +46,7 @@ class CommentRequest extends FormRequest
             'body.required' => 'متن نظر اجباری است',
             'body.string' => 'متن نظر باید رشته‌ای باشد',
             'answer.string' => 'پاسخ باید رشته‌ای باشد',
-            'star.required' => 'امتیاز اجباری است',
+           // 'star.required' => 'امتیاز اجباری است',
             'star.in' => 'امتیاز باید بین 1 تا 5 باشد',
             'status.required' => 'وضعیت اجباری است',
             'status.in' => 'وضعیت باید یکی از مقادیر pending, approved, rejected باشد',

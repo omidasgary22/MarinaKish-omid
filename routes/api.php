@@ -187,7 +187,6 @@ Route::middleware('auth:sanctum')->prefix('ticketts')->group(function () {
 
 
 Route::prefix('reports')->group(function(){
-
 Route::get('/show/{productId}', [ReportController::class, 'show']);
 Route::get('/index', [ReportController::class, 'allReports']);
 });

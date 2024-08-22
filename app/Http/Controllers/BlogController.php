@@ -115,7 +115,6 @@ class BlogController extends Controller
     }
 
     //Total removal from the database
-
     public function forceDelete(Request $request, $id)
     {
         if ($request->user()->can('blog.forcedelete')) {
