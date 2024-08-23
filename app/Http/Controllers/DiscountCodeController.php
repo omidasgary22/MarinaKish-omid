@@ -8,33 +8,38 @@ use Illuminate\Http\Request;
 
 class DiscountCodeController extends Controller
 {
+    /**
+     * Display a listing of all discount codes.
+     * This method returns all discount codes in JSON format if the user has the necessary permission.
+     */
     public function index(Request $request)
     {
         if ($request->user()->can('discount.index')) {
-            $discountCode = DiscountCode::all();
-            return response()->json($discountCode);
+            $discountCodes = DiscountCode::all();
+            return response()->json($discountCodes);
         } else {
-            return response()->json(['message' => 'شما دسترسی مجاز را ندارید']);
+            return response()->json(['message' => 'شما دسترسی مجاز را ندارید'], 403);
         }
     }
 
+    /**
+     * Store a newly created discount code in storage.
+     * This method creates a new discount code if the user has the necessary permission.
+     */
     public function store(DiscountCodeRequest $request)
     {
         if ($request->user()->can('discount.store')) {
             $discountCode = DiscountCode::create($request->toArray());
             return response()->json($discountCode, 201);
         } else {
-            return response()->json(['message' => 'شما دسترسی مجاز را ندارید']);
+            return response()->json(['message' => 'شما دسترسی مجاز را ندارید'], 403);
         }
     }
 
-    // public function show(Request $request, $id)
-    // {
-
-    //     $discountCode = DiscountCode::findOrFail($id);
-    //     return response()->json($discountCode);
-    // }
-
+    /**
+     * Update the specified discount code in storage.
+     * This method updates the discount code if the user has the necessary permission.
+     */
     public function update(DiscountCodeRequest $request, $id)
     {
         if ($request->user()->can('discount.update')) {
@@ -42,10 +47,14 @@ class DiscountCodeController extends Controller
             $discountCode->update($request->toArray());
             return response()->json($discountCode);
         } else {
-            return response()->json(['message' => 'شما دسترسی مجاز را ندارید']);
+            return response()->json(['message' => 'شما دسترسی مجاز را ندارید'], 403);
         }
     }
 
+    /**
+     * Soft delete the specified discount code.
+     * This method appends a timestamp to the discount code before soft deleting it if the user has the necessary permission.
+     */
     public function destroy(Request $request, $id)
     {
         if ($request->user()->can('discount.destroy')) {
@@ -55,7 +64,7 @@ class DiscountCodeController extends Controller
             $discountCode->delete();
             return response()->json(['message' => 'کد تخفیف با موفقیت حذف شد']);
         } else {
-            return response()->json(['message' => 'شما دسترسی مجاز را ندارید']);
+            return response()->json(['message' => 'شما دسترسی مجاز را ندارید'], 403);
         }
     }
 }
