@@ -11,12 +11,20 @@ use Illuminate\Support\Facades\Validator;
 
 class BlogController extends Controller
 {
+    /**
+     * Display a listing of the blogs.
+     * This method returns a JSON response containing all blogs.
+     */
     public function index()
     {
         $blogs = Blog::all();
         return response()->json(['blogs' => $blogs]);
     }
 
+    /**
+     * Store a newly created blog in storage.
+     * This method validates the request and creates a new blog if the user has the required permission.
+     */
     public function store(StoreBlogRequest $request)
     {
         if ($request->user()->can('blog.store')) {
@@ -27,11 +35,16 @@ class BlogController extends Controller
         }
     }
 
+    /**
+     * Upload images for the specified blog.
+     * This method validates and uploads cover and main images for the blog.
+     */
     public function uploadImage(Request $request, $id)
     {
         if ($request->user()->can('blog.uploadimage')) {
             $blog = Blog::findOrFail($id);
 
+            // Validate the uploaded images
             $validator = Validator::make($request->all(), [
                 'cover_image' => 'sometimes|image|mimes:jpg,jpeg|dimensions:width=247,height=163|max:720',
                 'main_image' => 'sometimes|image|mimes:jpg,jpeg|dimensions:width=247,height=163|max:720',
@@ -43,6 +56,7 @@ class BlogController extends Controller
 
             $response = [];
 
+            // Handle cover image upload
             if ($request->hasFile('cover_image')) {
                 if ($blog->getFirstMedia('cover_image')) {
                     $blog->clearMediaCollection('cover_image');
@@ -54,8 +68,10 @@ class BlogController extends Controller
                     'mime_type' => $media->mime_type,
                 ];
             }
-            if ($request->hasFile('main_page')) {
-                if ($blog->getFirstMedia('main_page')) {
+
+            // Handle main image upload
+            if ($request->hasFile('main_image')) {
+                if ($blog->getFirstMedia('main_image')) {
                     $blog->clearMediaCollection('main_image');
                 }
                 $media = $blog->addMediaFromRequest('main_image')->toMediaCollection('main_images');
@@ -65,12 +81,17 @@ class BlogController extends Controller
                     'mime_type' => $media->mime_type,
                 ];
             }
+
             return response()->json(['message' => 'تصاویر با موفقیت آپلود شدند', 'images' => $response]);
         } else {
             return response()->json(['message' => 'شما دسترسی انجام این کار را ندارید']);
         }
     }
 
+    /**
+     * Display the specified blog.
+     * This method returns a JSON response containing the blog details.
+     */
     public function show(Request $request, $id)
     {
         if ($request->user()->can('blog.show')) {
@@ -81,6 +102,10 @@ class BlogController extends Controller
         }
     }
 
+    /**
+     * Update the specified blog in storage.
+     * This method validates the request and updates the blog if the user has the required permission.
+     */
     public function update(UpdateBlogRequest $request, $id)
     {
         if ($request->user()->can('blog.update')) {
@@ -92,6 +117,10 @@ class BlogController extends Controller
         }
     }
 
+    /**
+     * Remove the specified blog from storage.
+     * This method soft deletes the blog if the user has the required permission.
+     */
     public function destroy(Request $request, $id)
     {
         if ($request->user()->can('blog.destroy')) {
@@ -103,18 +132,25 @@ class BlogController extends Controller
         }
     }
 
+    /**
+     * Restore a soft deleted blog.
+     * This method restores the blog if the user has the required permission.
+     */
     public function restore(Request $request, $id)
     {
         if ($request->user()->can('blog.restore')) {
             $blog = Blog::onlyTrashed()->findOrFail($id);
             $blog->restore();
-            return response()->json(['message' => 'بلاگ با موفقیت بازیابی شد',]);
+            return response()->json(['message' => 'بلاگ با موفقیت بازیابی شد']);
         } else {
             return response()->json(['message' => 'شما دسترسی انجام این کار ندارید'], 403);
         }
     }
 
-    //Total removal from the database
+    /**
+     * Permanently delete the specified blog from storage.
+     * This method force deletes the blog if the user has the required permission.
+     */
     public function forceDelete(Request $request, $id)
     {
         if ($request->user()->can('blog.forcedelete')) {
