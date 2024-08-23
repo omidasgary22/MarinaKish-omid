@@ -10,33 +10,36 @@ use Illuminate\Support\Str;
 
 class TickettController extends Controller
 {
-
+    /**
+     * Retrieve all tickets.
+     */
     public function index()
     {
-        $Tickett = Tickett::all();
-        return response()->json($Tickett);
+        $tickets = Tickett::all();
+        return response()->json($tickets);
     }
 
-    
+    /**
+     * Create a new ticket for a given reservation.
+     */
     public function create(Request $request)
     {
-        // پیدا کردن رزرو و بررسی وجود آن
+        // Find the reservation and check its existence
         $reservation = Reservation::with(['user', 'product', 'sans', 'passengers'])->find($request->reservation_id);
         if (!$reservation) {
             return response()->json(['message' => 'Reservation not found'], 404);
         }
 
-        // تولید شماره بلیط رندوم
+        // Generate a random ticket number
         $ticketNumber = strtoupper(Str::random(10));
 
-        // بررسی پرداخت
+        // Determine the ticket status based on reservation status
         $status = $reservation->status == 'confirmed' ? 'confirmed' : 'pending';
 
-
-         // دریافت اطلاعات تخفیف
+        // Get discount code information
         $discountCode = $reservation->discountCode;
 
-        // جمع‌آوری اطلاعات بلیط
+        // Collect ticket information
         $ticketData = [
             'ticket_number' => $ticketNumber,
             'reservation_id' => $reservation->id,
@@ -61,13 +64,13 @@ class TickettController extends Controller
                 'sans_date' => $reservation->reservation_date,
                 'start_time' => $reservation->sans->start_time,
             ],
-            'ticket_count' => $reservation->passengers->count() + 1, // تعداد مسافر + رزرو کننده
+            'ticket_count' => $reservation->passengers->count() + 1, // Number of passengers + reserver
             'total_price' => $reservation->total_amount,
             'discount_percent' => optional($reservation->discountCode)->discount_percent ?? 0,
             'final_price' => $reservation->total_amount - ($reservation->total_amount * ($reservation->discountCode ? $reservation->discountCode->percent : 0) / 100),
         ];
 
-        // ذخیره‌سازی بلیط در دیتابیس
+        // Save the ticket to the database
         $ticket = Tickett::create($ticketData);
 
         return response()->json($ticket);
