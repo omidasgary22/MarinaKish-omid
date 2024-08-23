@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class PassengerController extends Controller
 {
+    /**
+     * Display a listing of the passengers for the authenticated user.
+     * Returns all passengers associated with the authenticated user if they have the required permissions.
+     */
     public function index(Request $request)
     {
         if ($request->user()->can('passenger.index')) {
@@ -20,6 +24,10 @@ class PassengerController extends Controller
         }
     }
 
+    /**
+     * Store a newly created passenger in the database.
+     * Accepts a validated request and creates a new passenger entry for the authenticated user if they have the required permissions.
+     */
     public function store(PassengerRequest $request)
     {
         if ($request->user()->can('passenger.store')) {
@@ -31,6 +39,10 @@ class PassengerController extends Controller
         }
     }
 
+    /**
+     * Update the specified passenger in the database.
+     * Finds a passenger by ID and updates its details if the authenticated user has the required permissions.
+     */
     public function update(PassengerRequest $request, $passengerId)
     {
         if ($request->user()->can('passenger.update')) {
@@ -41,18 +53,23 @@ class PassengerController extends Controller
             $passenger->update($request->only(['name_and_surname', 'gender', 'age', 'national_code']));
             return response()->json(['message' => 'مسافر با موفقیت به‌روزرسانی شد', 'passenger' => $passenger]);
         } else {
-            return response()->json(['message' => 'شما دسترسی مجاز  را ندارید']);
+            return response()->json(['message' => 'شما دسترسی مجاز را ندارید']);
         }
     }
 
+    /**
+     * Remove the specified passenger from the database.
+     * Finds a passenger by ID, marks it as deleted, and then removes it if the authenticated user has the required permissions.
+     */
     public function destroy(Request $request, $id)
     {
         if ($request->user()->can('passenger.destroy')) {
             $passenger = Passenger::findOrFail($id);
-            // $this->authorize('delete', $id);
+
             $passenger->national_code .= '_deleted_' . now()->timestamp;
             $passenger->save();
             $passenger->delete();
+
             return response()->json(['message' => 'مسافر با موفقیت حذف شد']);
         } else {
             return response()->json(['message' => 'شما دسترسی مجاز را ندارید']);
