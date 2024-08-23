@@ -2,53 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Psy\CodeCleaner\ReturnTypePass;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class UserController extends Controller
 {
+    /**
+     * List all users with pagination.
+     */
     public function index(Request $request)
     {
         if ($request->user()->can('user.index')) {
             $users = User::orderBy('id', 'desc')->paginate(10);
             return response()->json(['users' => $users]);
         } else {
-            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
+            return response()->json(['message' => 'You do not have permission to perform this action'], 403);
         }
     }
 
-    // public function store(StoreUserRequest $request)
-    // {
-
-    //     $User = User::create($request->toArray());
-    //     return response()->json(['message' => 'کاربر با موفقیت ایجاد شد', 'user' => $User], 201);
-    // }
-
+    /**
+     * Show details of a specific user.
+     */
     public function show(Request $request, $id)
     {
-        $user = User::with('tickets', 'comments','emrgency_contacts')->findOrFail($id);
+        $user = User::with('tickets', 'comments', 'emergency_contacts')->findOrFail($id);
         return response()->json(['user' => $user]);
     }
 
-
-
+    /**
+     * Update a user's information.
+     */
     public function update(UpdateUserRequest $request, string $id)
     {
         if ($request->user()->can('user.update')) {
-            $User = User::where('id', $id)->update($request->toArray());
-            return response()->json(['کاربر با موفقیت به روزرسانی شد', 'user' => $User]);
+            $user = User::where('id', $id)->update($request->toArray());
+            return response()->json(['message' => 'User successfully updated', 'user' => $user]);
         } else {
-            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
+            return response()->json(['message' => 'You do not have permission to perform this action'], 403);
         }
     }
 
+    /**
+     * Soft delete a user by updating their national code and removing the record.
+     */
     public function destroy(Request $request, $id)
     {
         if ($request->user()->can('user.delete')) {
@@ -56,30 +55,39 @@ class UserController extends Controller
             $user->national_code .= '_deleted_' . now()->timestamp;
             $user->save();
             $user->delete();
-            return response()->json(['message' => 'کاربر با موفقیت حذف شد.'], 200);
+            return response()->json(['message' => 'User successfully deleted.'], 200);
         } else {
-            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
+            return response()->json(['message' => 'You do not have permission to perform this action'], 403);
         }
     }
 
+    /**
+     * Restore a previously soft-deleted user.
+     */
     public function restore(Request $request, $id)
     {
         if ($request->user()->can('user.restore')) {
             $user = User::onlyTrashed()->findOrFail($id);
             $user->restore();
-            return response()->json(['message' => 'کاربر با موفقیت بازیابی شد.'], 200);
+            return response()->json(['message' => 'User successfully restored.'], 200);
         } else {
-            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
+            return response()->json(['message' => 'You do not have permission to perform this action'], 403);
         }
     }
 
-    public function  updateprofile(Request $request)
+    /**
+     * Update the profile information of the authenticated user.
+     */
+    public function updateProfile(Request $request)
     {
         $user = User::find(Auth::id());
         $user->update($request->toArray());
-        return response()->json(['message' => 'با موفقیت اپدیت شد']);
+        return response()->json(['message' => 'Profile successfully updated']);
     }
 
+    /**
+     * Upload a new profile picture for the user.
+     */
     public function uploadProfileFile(Request $request, $id)
     {
         if ($request->user()->can('user.uploadprofile')) {
@@ -90,13 +98,16 @@ class UserController extends Controller
                 $user->addMediaFromRequest('profile')->toMediaCollection('profile');
             }
 
-            return response()->json(['message' => 'پروفایل شما با موفقیت آپلود شد.']);
+            return response()->json(['message' => 'Profile picture successfully uploaded.']);
         } else {
-            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید'], 403);
+            return response()->json(['message' => 'You do not have permission to perform this action'], 403);
         }
     }
 
-    public function showprofile()
+    /**
+     * Show the profile of the authenticated user.
+     */
+    public function showProfile()
     {
         $user = Auth::user();
         return response()->json($user);
