@@ -10,95 +10,88 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-
-
+    /**
+     * Get all product reports including ticket sales, total sales, reviews count, and average ratings.
+     * Returns a JSON response containing the reports.
+     */
     public function allReports()
     {
-        // بازیابی همه محصولات
+        // Retrieve all products
         $products = Product::all();
 
-        // آرایه‌ای برای ذخیره اطلاعات هر محصول
+        // Array to store each product's report
         $reports = [];
 
         foreach ($products as $product) {
-            // تعداد بلیط‌های فروش رفته برای هر محصول
+            // Count of sold tickets for each product
             $soldTicketsCount = Tickett::whereHas('reservation', function ($query) use ($product) {
                 $query->where('product_id', $product->id);
             })->count();
 
-            // مجموع فروش برای هر محصول
+            // Total sales amount for each product
             $totalSales = Tickett::whereHas('reservation', function ($query) use ($product) {
                 $query->where('product_id', $product->id);
             })->sum('final_price');
 
-            // تعداد نظرات ثبت شده برای هر محصول
+            // Number of comments for each product
             $reviewsCount = $product->comments()->count();
 
-            // میانگین امتیازات برای هر محصول
+            // Average rating for each product
             $averageRating = $product->comments()->avg('star');
 
-            // اضافه کردن اطلاعات محصول به آرایه reports
+            // Add the product report to the reports array
             $reports[] = [
-                ' تفریح' => $product->name,
-                'تعداد بلیط های فروخته شده' => $soldTicketsCount,
-                'میزان فروش' => $totalSales,
-                'تعداد نظرات ثبت شده' => $reviewsCount,
-                'امتیاز' => $averageRating,
+                'product' => $product->name,
+                'sold_tickets_count' => $soldTicketsCount,
+                'total_sales' => $totalSales,
+                'reviews_count' => $reviewsCount,
+                'average_rating' => $averageRating,
             ];
         }
 
-        // بازگرداندن مجموعه اطلاعات به عنوان پاسخ JSON
+        // Return the reports as a JSON response
         return response()->json($reports);
     }
 
-
+    /**
+     * Show detailed report for a specific product between given dates.
+     * Includes ticket sales by date, most reserved sans, average rating, and total comments.
+     */
     public function show(Request $request, $productId)
     {
         $product = Product::findOrFail($productId);
 
-        // دریافت تاریخ شروع و پایان از درخواست کاربر
+        // Get start and end dates from the request
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
 
-        // استخراج تعداد بلیط‌های فروش رفته به تفکیک روز
+        // Retrieve count of tickets sold grouped by date
         $ticketsSold = Tickett::whereBetween('purchase_time', [$startDate, $endDate])
             ->selectRaw('DATE(purchase_time) as date, COUNT(*) as total_sold')
             ->groupBy('date')
             ->orderBy('date')
             ->get();
 
-        // استخراج بیشترین سانس‌های رزرو شده
+        // Retrieve the most reserved sans within the date range
         $mostReservedSans = Reservation::whereBetween('reservation_date', [$startDate, $endDate])
             ->selectRaw('sans_id, COUNT(*) as total_reservations')
             ->groupBy('sans_id')
             ->orderBy('total_reservations', 'desc')
             ->get();
 
-        // محاسبه میانگین امتیازات ثبت شده
+        // Calculate the average rating within the date range
         $averageRating = Comment::whereBetween('created_at', [$startDate, $endDate])
             ->avg('star');
 
-        // تعداد کل نظرات ثبت شده
+        // Count of all comments within the date range
         $totalComments = Comment::whereBetween('created_at', [$startDate, $endDate])
             ->count();
 
-        // // تعداد نظرات پاسخ داده شده
-        // $answeredComments = Comment::whereBetween('created_at', [$startDate, $endDate])
-        //     ->whereNotNull('answer')
-        //     ->count();
-
-        // // تعداد نظرات در انتظار پاسخ
-        // $pendingComments = Comment::whereBetween('created_at', [$startDate, $endDate])
-        //     ->whereNull('answer')
-        //     ->count();
-
         return response()->json([
-            'تعداد بلیط های فروش رفته' => $ticketsSold,
-            'بیشترین سانس های رزرو شده' => $mostReservedSans,
-            'امتیاز ثبت شده' => $averageRating,
-            'تعداد نظرات' => $totalComments,
-            // 'نظر پاسخ داده شده' => $answeredComments,
-            // 'نظر در انتظار پاسخ' => $pendingComments,
+            'tickets_sold' => $ticketsSold,
+            'most_reserved_sans' => $mostReservedSans,
+            'average_rating' => $averageRating,
+            'total_comments' => $totalComments,
         ]);
     }
 }
