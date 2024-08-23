@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
+    /**
+     * Get all tickets with their responses and status.
+     */
     public function index(Request $request)
     {
         if ($request->user()->can('ticket.index')) {
@@ -26,6 +29,9 @@ class TicketController extends Controller
         }
     }
 
+    /**
+     * Create a new ticket.
+     */
     public function store(StoreTicketRequest $request)
     {
         if ($request->user()->can('ticket.store')) {
@@ -43,6 +49,9 @@ class TicketController extends Controller
         }
     }
 
+    /**
+     * Update an existing ticket.
+     */
     public function update(UpdateTicketRequest $request, $id)
     {
         if ($request->user()->can('ticket.update')) {
@@ -51,10 +60,13 @@ class TicketController extends Controller
 
             return response()->json($ticket);
         } else {
-            return  response()->json(['message' => 'شما دسترسی مجاز را ندارید']);
+            return response()->json(['message' => 'شما دسترسی مجاز را ندارید']);
         }
     }
 
+    /**
+     * Delete a ticket.
+     */
     public function destroy(Request $request, $id)
     {
         if ($request->user()->can('ticket.destroy')) {
@@ -66,7 +78,9 @@ class TicketController extends Controller
         }
     }
 
-    //پاسخ به تیکت
+    /**
+     * Add a response to a ticket.
+     */
     public function addResponse(AddTicketResponseRequest $request, $id)
     {
         if ($request->user()->can('ticket.response')) {
