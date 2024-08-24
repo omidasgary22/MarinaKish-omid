@@ -38,7 +38,12 @@ use Illuminate\Support\Facades\Route;
 // Public Routes
 
 // User Registration
-Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
+//Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
+
+
+Route::post('/register', [RegisterController::class, 'sendVerificationCode']);
+Route::post('/verify', [RegisterController::class, 'verifyCode']);
+
 
 // User Login
 Route::post('/login', [LoginController::class, 'login'])->name('user.login');
@@ -180,3 +185,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('profile', [UserController::class, 'profile'])->name('user.profile');
     Route::get('showprofile', [UserController::class, 'showprofile'])->name('user.showprofile');
 });
+
+
+// Route::get('/test-sms', function () {
+//     dispatch(new \App\Jobs\SendVerificationSMS('09021744235', '12345'));
+// });
