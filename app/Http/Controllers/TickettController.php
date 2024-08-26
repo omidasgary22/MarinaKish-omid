@@ -25,9 +25,9 @@ class TickettController extends Controller
     public function create(Request $request)
     {
         // Find the reservation and check its existence
-        $reservation = Reservation::with(['user', 'product', 'sans', 'passengers'])->find($request->reservation_id);
+        $reservation = Reservation::with(['user', 'product', 'sans', 'passengers', 'discountCode'])->find($request->reservation_id);
         if (!$reservation) {
-            return response()->json(['message' => 'Reservation not found'], 404);
+            return response()->json(['message' => 'رزرو یافت نشد'], 404);
         }
 
         // Generate a random ticket number
@@ -39,12 +39,19 @@ class TickettController extends Controller
         // Get discount code information
         $discountCode = $reservation->discountCode;
 
+        // Calculate discount details
+        $baseAmount = $reservation->total_amount; // Use total_amount from reservation
+        $discountAmount = $reservation->discount_amount; // Use the value from reservation
+        $finalAmount = $reservation->final_amount; // Use the value from reservation
+
         // Collect ticket information
         $ticketData = [
             'ticket_number' => $ticketNumber,
             'reservation_id' => $reservation->id,
             'purchase_time' => now(),
             'status' => $status,
+            'total_amount' => $baseAmount, 
+            'final_amount' => $finalAmount, 
             'user_info' => [
                 'first_name' => $reservation->user->first_name,
                 'last_name' => $reservation->user->last_name,
@@ -52,7 +59,7 @@ class TickettController extends Controller
                 'age' => $reservation->user->age,
                 'national_code' => $reservation->user->national_code,
             ],
-            'passenger_info' => $reservation->passengers->map(function($passenger) {
+            'passenger_info' => $reservation->passengers->map(function ($passenger) {
                 return [
                     'name_and_surname' => $passenger->Name_and_surname,
                     'gender' => $passenger->gender,
@@ -65,14 +72,21 @@ class TickettController extends Controller
                 'start_time' => $reservation->sans->start_time,
             ],
             'ticket_count' => $reservation->passengers->count() + 1, // Number of passengers + reserver
-            'total_price' => $reservation->total_amount,
-            'discount_percent' => optional($reservation->discountCode)->discount_percent ?? 0,
-            'final_price' => $reservation->total_amount - ($reservation->total_amount * ($reservation->discountCode ? $reservation->discountCode->percent : 0) / 100),
+            'total_price' => $baseAmount, // ذخیره مبلغ کل قبل از تخفیف
+            'discount_percent' => $discountCode ? $discountCode->discount_percentage : 0, // درصد تخفیف
+            'discount_amount' => $discountAmount ?? 0, // مبلغ تخفیف
+            'final_price' => $finalAmount, // مبلغ نهایی پس از تخفیف
         ];
 
         // Save the ticket to the database
         $ticket = Tickett::create($ticketData);
 
-        return response()->json($ticket);
+        // Return the ticket data along with total_amount, discount_amount, and final_amount
+        return response()->json([
+            'ticket' => $ticket,
+            'total_amount' => $baseAmount,       // بازگرداندن total_amount
+            'discount_amount' => $discountAmount, // بازگرداندن discount_amount
+            'final_amount' => $finalAmount        // بازگرداندن final_amount
+        ]);
     }
 }

@@ -19,9 +19,10 @@ class Tickett extends Model
         'passenger_info',
         'sans_info',
         'ticket_count',
-        'total_price',
-        'discount_percent',
-        'final_price',
+       'total_amount',
+        //'discount_percent',
+        'discount_amount',
+        'final_amount',
     ];
 
     protected $casts = [

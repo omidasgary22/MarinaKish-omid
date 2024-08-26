@@ -6,6 +6,7 @@ use App\Http\Controllers\{
     DiscountCodeController,
     EmergencyContactController,
     FAQController,
+    ForgotPasswordController,
     LoginController,
     LogoutController,
     NewsletterController,
@@ -48,8 +49,11 @@ Route::post('/verify', [RegisterController::class, 'verifyCode']);
 // User Login
 Route::post('/login', [LoginController::class, 'login'])->name('user.login');
 
-// Password Reset
-Route::post('forgetpassword', [PasswordResetController::class, 'sendResetToken']);
+//ForgotPassword
+Route::post('/password-reset', [ForgotPasswordController::class, 'sendResetCode']);
+Route::post('/password-reset/verify', [ForgotPasswordController::class, 'verifyResetCode']);
+Route::post('/password-reset/new-password', [ForgotPasswordController::class, 'resetPassword']);
+
 
 // Newsletter
 Route::post('/newsletter/store', [NewsletterController::class, 'store'])->name('newsletter.store');
@@ -151,6 +155,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/store', [DiscountCodeController::class, 'store'])->name('discount_code.store');
         Route::put('/update/{id}', [DiscountCodeController::class, 'update'])->name('discount_code.update');
         Route::delete('/delete/{id}', [DiscountCodeController::class, 'destroy'])->name('discount_code.destroy');
+        Route::post('give_discount', [DiscountCodeController::class, 'give_discount_code']);
     });
 
     // Emergency Contact Routes

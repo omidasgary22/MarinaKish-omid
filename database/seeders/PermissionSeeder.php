@@ -23,9 +23,9 @@ class PermissionSeeder extends Seeder
             $admin = Role::create(['name' => 'Admin']);
         }
         //userRole
-        $user = Role::where('name', 'user')->exists();
+        $user = Role::where('name', 'User')->exists();
         if (!$user) {
-            $user = Role::create(['name' => 'user']);
+            $user = Role::create(['name' => 'User']);
         }
 
 
@@ -97,6 +97,8 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'discount.store']);
         Permission::create(['name' => 'discount.update']);
         Permission::create(['name' => 'discount.destroy']);
+        Permission::create(['name' => 'discount_give']);
+
 
         //Emrgency_contact   //permission
         Permission::create(['name' => 'emrgency.index']);
@@ -130,6 +132,7 @@ class PermissionSeeder extends Seeder
         //Tickett   //ermission   //بلیط
         Permission::create(['name' => 'tickett.index']);
 
+       
 
         //give permission to admin
         $admin->syncPermissions([
@@ -201,6 +204,7 @@ class PermissionSeeder extends Seeder
             'ticket.destroy',
             'ticket.response',
             'tickett.index',
+            'discount_give',
         ]);
 
         //give permission to user
@@ -235,5 +239,16 @@ class PermissionSeeder extends Seeder
             'password' => '11111111',
         ]);
         $omid->assignRole('Admin');
+
+        $user = User::create([
+            'first_name' => 'ehsan',
+            'last_name' => 'zanjani',
+            'phone_number' => '09021744235',
+            'age' => '22',
+            'national_code' => '4131951746',
+            'email' => 'omidasgary967@gmail.com',
+            'password' => '11111111',
+        ]);
+        $user->assignRole('User');
     }
 }

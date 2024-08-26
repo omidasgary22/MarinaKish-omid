@@ -16,13 +16,11 @@ class Reservation extends Model
         'sans_id',
         'user_id',
         'product_id',
-        'discount_code_id',
         'total_amount',
-        'discount_percent',
-        'activity_id',
-        'ticket_number',
+        'discount_code',
+        'discount_amount', 
+        'final_amount', 
         'status',
-        //'ticket_count',
     ];
 
     public function user()

@@ -28,7 +28,7 @@ class LoginController extends Controller
         }
 
         // Generate a new authentication token for the user
-        $token = $user->createToken('auth_token')->plainTextToken;
+         $token = $user->createToken('auth_token')->plainTextToken;
 
         // Return a success response with the generated token and user information
         return response()->json([
@@ -38,3 +38,6 @@ class LoginController extends Controller
         ], 200);
     }
 }
+
+
+//$token = $user->createToken('auth_token', expiresAt:now()->addMinute(1))->plainTextToken;

@@ -13,20 +13,22 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->string('ticket_number')->unique();
+           // $table->string('ticket_number')->unique();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('sans_id');
             $table->unsignedBigInteger('product_id');
             $table->date('reservation_date');
             $table->decimal('total_amount', 8, 2);
+            $table->decimal('discount_amount', 10, 2)->default(0);
+            $table->decimal('final_amount', 10, 2)->default(0);
             $table->enum('status', ['pending', 'confirmed'])->default('pending');
-            $table->unsignedBigInteger('discount_code_id')->nullable();
+            $table->string('discount_code')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('sans_id')->references('id')->on('sans')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('discount_code_id')->references('id')->on('discount_codes')->onDelete('set null');
+           
         });
     }
 

@@ -22,12 +22,13 @@ class RegisterController extends Controller
         $code = rand(10000, 99999);
         $expiresAt = Carbon::now()->addMinutes(2); // تنظیم تاریخ انقضا به مدت 2 دقیقه
 
-        VerificationCode::create([
+        $user = VerificationCode::create([
             'phone_number' => $request->phone_number,
             'national_code' => $request->national_code,
             'code' => $code,
             'expires_at' => $expiresAt,
         ]);
+        $user->assignRole('User');
 
         SendVerificationSMS::dispatch($request->phone_number, $code);
 
@@ -63,4 +64,5 @@ class RegisterController extends Controller
 
         return response()->json(['message' => 'ثبت‌ نام با موفقیت انجام شد'], 200);
     }
+
 }

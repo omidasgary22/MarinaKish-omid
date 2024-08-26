@@ -67,4 +67,24 @@ class DiscountCodeController extends Controller
             return response()->json(['message' => 'شما دسترسی مجاز را ندارید'], 403);
         }
     }
+
+    public function give_discount_code(Request $request)
+    {
+        if ($request->user()->can('discount_give'))
+        {
+            $discount_code = DiscountCode::find($request->discount_code);
+            $users = $request->user_ids;
+            if (count($users) > $discount_code->quantity)
+            {
+                return response()->json(['message' => 'تعداد کد تخفیف کافی نیست']);
+            }
+            $discount_code->users()->attach($users);
+            $discount_code->decrement('quantity',count($users));
+            return response()->json($discount_code);
+        } 
+        else 
+        {
+            return response()->json(['message' => 'شما دسترسی انجام این کا را ندارید']);
+        }
+    }
 }

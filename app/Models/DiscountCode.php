@@ -25,4 +25,9 @@ class DiscountCode extends Model
     {
         return $this->hasMany(Reservation::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_discount_codes');
+    }
 }

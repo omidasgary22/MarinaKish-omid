@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('password_resets', function (Blueprint $table) {
+        Schema::create('forget_verification_codes', function (Blueprint $table) {
             $table->id();
-            $table->string('national_code',10);
             $table->string('phone_number');
-            $table->string('token');
+            $table->string('code');
+            $table->timestamp('expires_at');
             $table->timestamps();
 
-            $table->index(['national_code','phone_number']);
+//افزایش سرعت جستوجو ها
+            $table->index('phone_number');
+            $table->index('code');
         });
     }
 
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('forget_verification_codes');
     }
 };

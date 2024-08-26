@@ -31,7 +31,7 @@ class ReportController extends Controller
             // Total sales amount for each product
             $totalSales = Tickett::whereHas('reservation', function ($query) use ($product) {
                 $query->where('product_id', $product->id);
-            })->sum('final_price');
+            })->sum('final_amount');
 
             // Number of comments for each product
             $reviewsCount = $product->comments()->count();
@@ -41,11 +41,11 @@ class ReportController extends Controller
 
             // Add the product report to the reports array
             $reports[] = [
-                'product' => $product->name,
-                'sold_tickets_count' => $soldTicketsCount,
-                'total_sales' => $totalSales,
-                'reviews_count' => $reviewsCount,
-                'average_rating' => $averageRating,
+                'تفریح' => $product->name,
+                'تعداد بلیط های فروخته شده' => $soldTicketsCount,
+                'میزان فروش' => $totalSales,
+                'تعداد نظرات ثبت شده' => $reviewsCount,
+                'امتیاز' => $averageRating,
             ];
         }
 
@@ -88,10 +88,10 @@ class ReportController extends Controller
             ->count();
 
         return response()->json([
-            'tickets_sold' => $ticketsSold,
-            'most_reserved_sans' => $mostReservedSans,
-            'average_rating' => $averageRating,
-            'total_comments' => $totalComments,
+            'تعداد بلیط های فروش رفته' => $ticketsSold,
+            'بیشترین سانس های رزرو شده' => $mostReservedSans,
+            'امتیاز ثبت شده' => $averageRating,
+            'تعداد نظرات' => $totalComments,
         ]);
     }
 }

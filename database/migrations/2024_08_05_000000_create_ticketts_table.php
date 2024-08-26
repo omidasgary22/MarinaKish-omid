@@ -21,9 +21,10 @@ return new class extends Migration
             $table->json('passenger_info')->nullable();
             $table->json('sans_info');
             $table->integer('ticket_count');
-            $table->decimal('total_price', 10, 2);
-            $table->decimal('discount_percent', 5, 2)->nullable();
-            $table->decimal('final_price', 10, 2);
+            $table->decimal('total_amount', 10, 2)->nullable();
+           // $table->decimal('discount_percent', 5, 2)->nullable();
+            $table->decimal('discount_amount', 10, 2);
+            $table->decimal('final_amount', 10, 2)->nullable();
             $table->timestamps();
 
             $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
