@@ -23,7 +23,7 @@ class PermissionSeeder extends Seeder
             $admin = Role::create(['name' => 'Admin']);
         }
         //userRole
-        $user = Role::where('name', 'User')->exists();
+        $user = Role  ::where('name', 'User')->exists();
         if (!$user) {
             $user = Role::create(['name' => 'User']);
         }
@@ -78,6 +78,8 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'comment.update']);
         Permission::create(['name' => 'comment.destroy']);
         Permission::create(['name' => 'comment.restore']);
+        Permission::create(['name' => 'comment.approve']);
+        Permission::create(['name' => 'comment.reject']);
 
         // //permission   //order
         // Permission::create(['name' => 'order.index']);
@@ -205,6 +207,8 @@ class PermissionSeeder extends Seeder
             'ticket.response',
             'tickett.index',
             'discount_give',
+            'comment.approve',
+            'comment.reject',
         ]);
 
         //give permission to user

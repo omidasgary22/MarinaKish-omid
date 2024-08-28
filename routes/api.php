@@ -130,6 +130,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/restore/{id}', [CommentController::class, 'restore'])->name('comments.restore');
         Route::get('/show/{id}', [CommentController::class, 'show'])->name('comments.show');
         Route::get('/index/{id?}', [CommentController::class, 'index'])->name('comments.index');
+        Route::put('/approve/{id}',[CommentController::class,'approve']);
+        Route::put('/reject/{id}',[CommentController::class,'reject']);
     });
 
     // Reservation Routes

@@ -15,12 +15,8 @@ class CommentController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->user()->can('comment.index')) {
-            $comments = Comment::with('user', 'product')->where('status', 'approved')->get();
-            return response()->json(['comments' => $comments]);
-        } else {
-            return response()->json(['message' => 'شما دسترسی انجام این کار ندارید'], 403);
-        }
+        $comments = Comment::with('user', 'product')->where('status', 'approved')->get();
+        return response()->json(['comments' => $comments]);
     }
 
     /**
@@ -100,9 +96,8 @@ class CommentController extends Controller
     {
         if ($request->user()->can('comment.approve')) {
             $comment = Comment::findOrFail($id);
-            $comment->status = 'approved';
-            $comment->save();
-            return response()->json(['message' => 'کامنت با موفقیت تایید شد']);
+            $comment->update(['status' => 'approved']);
+            return response()->json(['message' => 'Comment approved successfully.']);
         } else {
             return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید']);
         }
@@ -112,11 +107,9 @@ class CommentController extends Controller
     {
         if ($request->user()->can('comment.reject')) {
             $comment = Comment::findOrFail($id);
-            $comment->status = 'rejected';
-            $comment->save();
-            return response()->json(['message' => 'کامنت تایید رد شد']);
-        }
-        else {
+            $comment->update(['status' => 'rejected']);
+            return response()->json(['message' => 'Comment rejected successfully.']);
+        } else {
             return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید']);
         }
     }
