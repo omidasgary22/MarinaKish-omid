@@ -14,4 +14,10 @@ class Setting extends Model
         'value',
         'type'
     ];
+
+    protected $casts = [
+        'key' => 'string',
+        'value' => 'text',
+        'type' => 'string',
+    ]
 }
