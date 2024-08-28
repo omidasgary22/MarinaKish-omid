@@ -81,13 +81,6 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'comment.approve']);
         Permission::create(['name' => 'comment.reject']);
 
-        // //permission   //order
-        // Permission::create(['name' => 'order.index']);
-        // Permission::create(['name' => 'order.store']);
-        // Permission::create(['name' => 'order.update']);
-        // Permission::create(['name' => 'order.destroy']);
-        // Permission::create(['name' => 'order.show']);
-
         //permission   //PasswordChange
         Permission::create(['name' => 'PasswordChange']);
 
@@ -100,7 +93,6 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'discount.update']);
         Permission::create(['name' => 'discount.destroy']);
         Permission::create(['name' => 'discount_give']);
-
 
         //Emrgency_contact   //permission
         Permission::create(['name' => 'emrgency.index']);
@@ -133,6 +125,10 @@ class PermissionSeeder extends Seeder
 
         //Tickett   //ermission   //بلیط
         Permission::create(['name' => 'tickett.index']);
+
+        //Report    //Permission
+        Permission::create(['name' => 'index.report']);
+        Permission::create(['name' => 'show.report']);
 
        
 
@@ -209,6 +205,8 @@ class PermissionSeeder extends Seeder
             'discount_give',
             'comment.approve',
             'comment.reject',
+            'index.report',
+            'show.report',
         ]);
 
         //give permission to user
