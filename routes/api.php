@@ -10,15 +10,14 @@ use App\Http\Controllers\{
     LoginController,
     LogoutController,
     NewsletterController,
-    OrderController,
     PassengerController,
     PasswordChangeController,
-    PasswordResetController,
     ProductController,
     RegisterController,
     ReportController,
     ReservationController,
     RuleController,
+    SettingController,
     TicketController,
     TickettController,
     UserController
@@ -190,6 +189,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('profile', [UserController::class, 'profile'])->name('user.profile');
     Route::get('showprofile', [UserController::class, 'showprofile'])->name('user.showprofile');
 });
+
 
 
 // Route::get('/test-sms', function () {

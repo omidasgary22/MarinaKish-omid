@@ -15,8 +15,8 @@ class CommentController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->user()->can('comment.store')) {
-            $comments = Comment::with('user', 'product')->get();
+        if ($request->user()->can('comment.index')) {
+            $comments = Comment::with('user', 'product')->where('status', 'approved')->get();
             return response()->json(['comments' => $comments]);
         } else {
             return response()->json(['message' => 'شما دسترسی انجام این کار ندارید'], 403);
@@ -93,6 +93,18 @@ class CommentController extends Controller
             return response()->json(['message' => 'نظر با موفقیت بازیابی شد.'], 200);
         } else {
             return response()->json(['message' => 'شما دسترسی انجام این کا را ندارید'], 403);
+        }
+    }
+
+    public function approve(Request $request, $id)
+    {
+        if ($request->user()->can('comment.approve')) {
+            $comment = Comment::findOrFail($id);
+            $comment->status = 'approved';
+            $comment->save();
+            return response()->json(['message' => 'کامنت با موفقیت تایید شد']);
+        } else {
+            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید']);
         }
     }
 }
