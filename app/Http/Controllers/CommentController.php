@@ -107,4 +107,17 @@ class CommentController extends Controller
             return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید']);
         }
     }
+
+    public function reject(Request $request, $id)
+    {
+        if ($request->user()->can('comment.reject')) {
+            $comment = Comment::findOrFail($id);
+            $comment->status = 'rejected';
+            $comment->save();
+            return response()->json(['message' => 'کامنت تایید رد شد']);
+        }
+        else {
+            return response()->json(['message' => 'شما دسترسی لازم برای انجام این کار را ندارید']);
+        }
+    }
 }
