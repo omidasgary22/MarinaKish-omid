@@ -19,5 +19,5 @@ class Setting extends Model
         'key' => 'string',
         'value' => 'text',
         'type' => 'string',
-    ]
+    ];
 }
