@@ -28,7 +28,10 @@ class RegisterController extends Controller
             'code' => $code,
             'expires_at' => $expiresAt,
         ]);
-        $user->assignRole('User');
+        session([
+            'phone_number' => $request->phone_number,
+            'national_code' => $request->national_code,
+        ]);
 
         SendVerificationSMS::dispatch($request->phone_number, $code);
 
@@ -39,13 +42,16 @@ class RegisterController extends Controller
     public function verifyCode(Request $request)
     {
         $request->validate([
-            'phone_number' => 'required|digits:11',
-            'national_code' => 'required|digits:10',
+            // 'phone_number' => 'required|digits:11',
+            // 'national_code' => 'required|digits:10',
             'verification_code' => 'required|digits:5',
         ]);
 
+        $phone_number = session('phone_number');
+        $national_code = session('national_code');
+
         $verification = VerificationCode::where('phone_number', $request->phone_number)
-            ->where('national_code', $request->national_code)
+           // ->where('national_code', $request->national_code)
             ->where('code', $request->verification_code)
             ->where('expires_at', '>', Carbon::now()) // بررسی تاریخ انقضا
             ->first();
@@ -59,6 +65,7 @@ class RegisterController extends Controller
             'national_code' => $request->national_code,
             'password' => bcrypt($request->password),
         ]);
+        
 
         $verification->delete();
 

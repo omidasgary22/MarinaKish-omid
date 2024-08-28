@@ -239,16 +239,5 @@ class PermissionSeeder extends Seeder
             'password' => '11111111',
         ]);
         $omid->assignRole('Admin');
-
-        $user = User::create([
-            'first_name' => 'ehsan',
-            'last_name' => 'zanjani',
-            'phone_number' => '09021744235',
-            'age' => '22',
-            'national_code' => '4131951746',
-            'email' => 'omidasgary967@gmail.com',
-            'password' => '11111111',
-        ]);
-        $user->assignRole('User');
     }
 }

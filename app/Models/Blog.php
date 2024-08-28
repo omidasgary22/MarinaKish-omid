@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\HasMedia;
 
+
 class Blog extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes,InteractsWithMedia;
+    use HasFactory, SoftDeletes, InteractsWithMedia;
 
 
     protected $fillable = [
@@ -31,5 +32,10 @@ class Blog extends Model implements HasMedia
     ];
 
 
-    
+    public function tosearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+        ];
+    }
 }

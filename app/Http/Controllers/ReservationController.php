@@ -73,79 +73,79 @@ class ReservationController extends Controller
                 'passengers.*.id' => 'exists:passengers,id',
                 'discount_code' => 'nullable|string',
             ]);
-    
+
             $sans_id = $validatedData['sans_id'];
             $reservation_date = $validatedData['reservation_date'];
             $product_id = $validatedData['product_id'];
             $passengerIds = $request->input('passengers', []);
             $discount_code = $validatedData['discount_code'] ?? null;
-    
+
             $user = Auth::user();
             $sans = Sans::findOrFail($sans_id);
             $product = Product::findOrFail($product_id);
-    
+
             // بررسی رزرو تکراری بر اساس product_id، sans_id و reservation_date
             $existingReservation = Reservation::where('product_id', $product_id)
                 ->where('sans_id', $sans_id)
                 ->where('reservation_date', $reservation_date)
                 ->first();
-    
+
             if ($existingReservation) {
                 return response()->json(['message' => 'این سانس و تاریخ برای این تفریح قبلاً رزرو شده است.'], 400);
             }
-    
+
             // Check product age limit
             if ($product->age_limited && $user->age < $product->age_limited) {
                 return response()->json(['message' => 'سن شما کمتر از محدودیت سنی برای این تفریح است.'], 403);
             }
-    
+
             $baseAmount = $product->price;
             $totalAmount = $baseAmount;
-    
+
             // Check passengers' age limits and calculate total amount
             foreach ($passengerIds as $passengerId) {
                 $passenger = Passenger::findOrFail($passengerId);
-    
+
                 if ($sans->age_limit && $passenger->age < $sans->age_limit) {
                     return response()->json(['message' => "سن مسافر {$passenger->name_and_surname} کمتر از محدودیت سنی برای این سانس است."], 403);
                 }
-    
+
                 if ($product->age_limited && $passenger->age < $product->age_limited) {
                     return response()->json(['message' => "سن مسافر {$passenger->name_and_surname} کمتر از محدودیت سنی برای این تفریح است."], 403);
                 }
-    
+
                 $totalAmount += $baseAmount;
             }
-    
+
             // Handle discount code
             $discountAmount = 0;
             $finalAmount = $totalAmount;
-    
+
             $discountCodeId = null;
-    
+
             if ($discount_code) {
                 $discountCode = DiscountCode::where('code', $discount_code)
                     ->where('expires_at', '>', now())
                     ->first();
-    
+
                 if (!$discountCode) {
                     return response()->json(['message' => 'کد تخفیف اشتباه است یا منقضی شده است'], 400);
                 }
-    
+
                 $userDiscountCode = DB::table('user_discount_codes')
                     ->where('user_id', $user->id)
                     ->where('discount_code_id', $discountCode->id)
                     ->first();
-    
+
                 if ($userDiscountCode) {
                     return response()->json(['message' => 'شما قبلا از این کد تخفیف استفاده کرده‌اید'], 400);
                 }
-    
+
                 $discountAmount = ($totalAmount * $discountCode->discount_percentage) / 100;
                 $finalAmount = $totalAmount - $discountAmount;
-    
+
                 $discountCodeId = $discountCode->id;
-    
+
                 DB::table('user_discount_codes')->insert([
                     'user_id' => $user->id,
                     'discount_code_id' => $discountCode->id,
@@ -153,7 +153,7 @@ class ReservationController extends Controller
                     'updated_at' => now(),
                 ]);
             }
-    
+
             // Create reservation
             $reservation = Reservation::create([
                 'user_id' => $user->id,
@@ -167,11 +167,11 @@ class ReservationController extends Controller
                 'final_amount' => $finalAmount,
                 'status' => 'pending',
             ]);
-    
+
             if (is_array($passengerIds) || is_object($passengerIds)) {
                 $reservation->passengers()->attach($passengerIds);
             }
-    
+
             // Return response with all amounts
             return response()->json([
                 'message' => 'رزرو با موفقیت انجام شد.',
@@ -184,118 +184,7 @@ class ReservationController extends Controller
             return response()->json(['message' => 'شما دسترسی مجاز را ندارید'], 403);
         }
     }
-    
 
-
-    // public function store(Request $request, Sans $sans, Product $product)
-    // {
-    //     $data = $request->all();
-    //     $data['user_id'] = Auth()->id();
-    //     $data['sans_id'] = $sans->id;
-    //     $data['product_id'] = $product->id;
-    //     $data['ticket_number'] = rand(10000, 99999);
-    //     $data['total_amount'] = count($request->passengers) * $product->price ;
-    //     if ($data['discount_code'])
-    //     {
-    //         //check have this code or no in database and is valid
-    //         $discount_code = DiscountCode::where('code', $data['discount_code'])
-    //         ->where('expires_at' > Carbon::now())
-    //         ->first();
-    //         if (!$discount_code)
-    //         {
-    //             return response()->json(['message' => 'کد تخفیف یافت نشد']);
-    //         }
-    //         // do you have this discount_code in pivot table?
-    //        $user_code = DB::table('user_discount_codes')->where('user_id', Auth()->id())
-    //         ->where('discount_code_id', $discount_code->id)->first();
-    //         if (!$user_code) 
-    //         {
-    //             return response()->json(['message' => 'کد تخفیف متعلق به شما نیست']);
-    //         }
-
-    //         $data['total_amount'] = (count($request->passengers ) * $product->price) - (count($request->passengers ) * $product->price * $discount_code->discount_percentage /100);
-    //     }
-
-    //     $reservation = Reservation::create($data);
-    //     return response()->json($reservation);
-
-    // }
-
-    /**
-     * Create a new reservation.
-     */
-    // public function store(Request $request)
-    // {
-    //     if ($request->user()->can('reservation.store')) {
-    //         $validatedData = $request->validate([
-    //             'sans_id' => 'required|exists:sans,id',
-    //             'reservation_date' => 'required|date',
-    //             'product_id' => 'required|exists:products,id',
-    //             'passengers' => 'array',
-    //             'passengers.*.id' => 'exists:passengers,id',
-    //         ]);
-
-    //         $sans_id = $validatedData['sans_id'];
-    //         $reservation_date = $validatedData['reservation_date'];
-    //         $product_id = $validatedData['product_id'];
-    //         $passengerIds = $request->input('passengers', []);
-
-    //         $user = Auth::user();
-    //         $sans = Sans::findOrFail($sans_id);
-    //         $product = Product::findOrFail($product_id);
-
-    //         // Check product age limit
-    //         if ($product->age_limited && $user->age < $product->age_limited) {
-    //             return response()->json(['message' => 'سن شما کمتر از محدودیت سنی برای این تفریح است.'], 403);
-    //         }
-
-    //         $totalAmount = $product->price;
-
-    //         // Check passengers' age limits
-    //         if (is_array($passengerIds) || is_object($passengerIds)) {
-    //             foreach ($passengerIds as $passengerId) {
-    //                 $passenger = Passenger::findOrFail($passengerId);
-
-    //                 // Check age limit for the sans
-    //                 if ($sans->age_limit && $passenger->age < $sans->age_limit) {
-    //                     return response()->json(['message' => "سن مسافر {$passenger->name_and_surname} کمتر از محدودیت سنی برای این سانس است."], 403);
-    //                 }
-
-    //                 // Check age limit for the product
-    //                 if ($product->age_limited && $passenger->age < $product->age_limited) {
-    //                     return response()->json(['message' => "سن مسافر {$passenger->name_and_surname} کمتر از محدودیت سنی برای این تفریح است."], 403);
-    //                 }
-
-    //                 // Add amount for passengers
-    //                 $totalAmount += $product->price;
-
-    //             }
-    //         }
-
-    //         if (!$this->checkAvailability($sans_id, $reservation_date)) {
-    //             return response()->json(['message' => 'این سانس در این تاریخ قبلا رزرو شده است'], 400);
-    //         }
-
-    //         $reservation = Reservation::create([
-    //             'user_id' => Auth::id(),
-    //             'sans_id' => $sans_id,
-    //             'product_id' => $product_id,
-    //             'reservation_date' => $reservation_date,
-    //             'total_amount' => $totalAmount,
-    //             'ticket_number' => 'TICKET-' . str_pad(Reservation::max('id') + 1, 6, '0', STR_PAD_LEFT),
-    //             'status' => 'pending',
-    //         ]);
-
-    //         // Attach passengers to the reservation
-    //         if (is_array($passengerIds) || is_object($passengerIds)) {
-    //             $reservation->passengers()->attach($passengerIds);
-    //         }
-
-    //         return response()->json(['message' => 'رزرو با موفقیت انجام شد.', 'reservation' => $reservation, 'total_amount' => $totalAmount], 201);
-    //     } else {
-    //         return response()->json(['message' => 'شما دسترسی مجاز را ندارید']);
-    //     }
-    // }
 
     /**
      * Update an existing reservation.
@@ -367,5 +256,41 @@ class ReservationController extends Controller
     //         'discount_amount' => $discountAmount,
     //         'final_amount' => $finalAmount,
     //     ]);
+    // }
+
+
+    
+    // public function store(Request $request, Sans $sans, Product $product)
+    // {
+    //     $data = $request->all();
+    //     $data['user_id'] = Auth()->id();
+    //     $data['sans_id'] = $sans->id;
+    //     $data['product_id'] = $product->id;
+    //     $data['ticket_number'] = rand(10000, 99999);
+    //     $data['total_amount'] = count($request->passengers) * $product->price ;
+    //     if ($data['discount_code'])
+    //     {
+    //         //check have this code or no in database and is valid
+    //         $discount_code = DiscountCode::where('code', $data['discount_code'])
+    //         ->where('expires_at' > Carbon::now())
+    //         ->first();
+    //         if (!$discount_code)
+    //         {
+    //             return response()->json(['message' => 'کد تخفیف یافت نشد']);
+    //         }
+    //         // do you have this discount_code in pivot table?
+    //        $user_code = DB::table('user_discount_codes')->where('user_id', Auth()->id())
+    //         ->where('discount_code_id', $discount_code->id)->first();
+    //         if (!$user_code) 
+    //         {
+    //             return response()->json(['message' => 'کد تخفیف متعلق به شما نیست']);
+    //         }
+
+    //         $data['total_amount'] = (count($request->passengers ) * $product->price) - (count($request->passengers ) * $product->price * $discount_code->discount_percentage /100);
+    //     }
+
+    //     $reservation = Reservation::create($data);
+    //     return response()->json($reservation);
+
     // }
 }
