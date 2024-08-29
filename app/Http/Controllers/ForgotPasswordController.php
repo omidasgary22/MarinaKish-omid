@@ -14,6 +14,10 @@ class ForgotPasswordController extends Controller
     {
         $request->validate([
             'phone_number' => 'required|digits:11|exists:users,phone_number',
+        ], [
+            'phone_number.required' => 'شماره موبایل الزامی است',
+            'phone_number.digits' => 'شماره موبایل باید 11 رقم باشد',
+            'phone_number.exists' => 'شماره موبایل وارد شده در سیستم وجود ندارد',
         ]);
 
         $phone_number = $request->phone_number;
@@ -41,6 +45,8 @@ class ForgotPasswordController extends Controller
         // اعتبارسنجی کد تأیید
         $request->validate([
             'verification_code' => 'required|digits:5',
+        ], [
+            'verification_code.required' => 'کد تایید الزامی است',
         ]);
 
         // دریافت شماره موبایل از سشن
@@ -73,6 +79,11 @@ class ForgotPasswordController extends Controller
         $request->validate([
             'new_password' => 'required|string|min:8',
             'repeat_password' => 'required|string|min:8',
+        ], [
+            'new_password.required' => 'رمز عبور جدید الزامی است',
+            'new_password.min' => 'رمز عبور نباید کمتر از 8 کاراکتر باشد',
+            'repeat_password.required' => 'تکرار رمز عبور الزامی است',
+            'repeat_password.min' => 'تعداد کاراکتر تکرار رمز عبور  صحیح نمیباشد',
         ]);
 
         if ($request->new_password != $request->repeat_password) {
