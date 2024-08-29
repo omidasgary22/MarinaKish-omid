@@ -62,17 +62,10 @@ class ReservationController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(StoreReservationRequest $request)
     {
         if ($request->user()->can('reservation.store')) {
-            $validatedData = $request->validate([
-                'sans_id' => 'required|exists:sans,id',
-                'reservation_date' => 'required|date',
-                'product_id' => 'required|exists:products,id',
-                'passengers' => 'array',
-                'passengers.*.id' => 'exists:passengers,id',
-                'discount_code' => 'nullable|string',
-            ]);
+            $validatedData = $request->validate();
 
             $sans_id = $validatedData['sans_id'];
             $reservation_date = $validatedData['reservation_date'];
