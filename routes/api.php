@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     EmergencyContactController,
     FAQController,
     ForgotPasswordController,
+    HomeSearchController,
     LoginController,
     LogoutController,
     NewsletterController,
@@ -23,6 +24,7 @@ use App\Http\Controllers\{
     UserController
 };
 use Illuminate\Support\Facades\Route;
+use Laravel\Telescope\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +42,8 @@ use Illuminate\Support\Facades\Route;
 // User Registration
 //Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
 
+
+Route::get('/search',[HomeSearchController::class,'search']);
 
 Route::post('/register', [RegisterController::class, 'sendVerificationCode']);
 Route::post('/verify', [RegisterController::class, 'verifyCode']);
