@@ -16,7 +16,11 @@ class RegisterController extends Controller
 
         $request->validate([
             'phone_number' => 'required|digits:11|unique:users,phone_number',
-            'national_code' => 'required|digits:10|unique:users,national_code',
+            'national_code' => 'required|ir_national_code',
+        ], [
+            'phone_number.required' => 'لطفا شماره موبایل خود را وارد کنید',
+            'phone_number.digits' => 'شماره موبایل صحیح نمی باشد',
+            'national_code.required' => 'لطفا کد ملی خود را وارد کنید'
         ]);
 
         $code = rand(10000, 99999);
@@ -51,7 +55,7 @@ class RegisterController extends Controller
         $national_code = session('national_code');
 
         $verification = VerificationCode::where('phone_number', $request->phone_number)
-           // ->where('national_code', $request->national_code)
+            // ->where('national_code', $request->national_code)
             ->where('code', $request->verification_code)
             ->where('expires_at', '>', Carbon::now()) // بررسی تاریخ انقضا
             ->first();
@@ -65,11 +69,10 @@ class RegisterController extends Controller
             'national_code' => $request->national_code,
             'password' => bcrypt($request->password),
         ]);
-        
+
 
         $verification->delete();
 
         return response()->json(['message' => 'ثبت‌ نام با موفقیت انجام شد'], 200);
     }
-
 }
