@@ -16,7 +16,14 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->user()->can('user.index')) {
-            $users = User::orderBy('id', 'desc')->paginate(10);
+            if ($request->has('national_code')) {
+                $national_code = $request->input('national_code');
+                $users = User::where('national_code', 'like', "%$national_code%")
+                    ->orderBy('id', 'desc')
+                    ->paginate(10);
+            } else {
+                $users = User::orderBy('id', 'desc')->paginate(10);
+            }
             return response()->json(['users' => $users]);
         } else {
             return response()->json(['message' => 'You do not have permission to perform this action'], 403);
