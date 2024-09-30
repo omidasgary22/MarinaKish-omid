@@ -23,7 +23,7 @@ class PermissionSeeder extends Seeder
             $admin = Role::create(['name' => 'Admin']);
         }
         //userRole
-        $user = Role  ::where('name', 'User')->exists();
+        $user = Role ::where('name', 'User')->exists();
         if (!$user) {
             $user = Role::create(['name' => 'User']);
         }

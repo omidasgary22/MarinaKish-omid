@@ -8,7 +8,12 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Setting extends Model
 {
-    use HasFactory,InteractsWithMedia ;
+    use HasFactory, InteractsWithMedia;
 
-   
+
+    protected $fillable = [
+        'key',
+        'value'
+
+    ];
 }

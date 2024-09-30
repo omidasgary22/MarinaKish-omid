@@ -16,7 +16,7 @@ class FaqController extends Controller
     public function index(Request $request)
     {
         if ($request->user()->can('faq.index')) {
-            $faqs = FAQ::all();
+            $faqs = FAQ::paginate(10);
             return response()->json(['faqs' => $faqs]);
         } else {
             return response()->json(['message' => 'شما دسترسی انجام این کار را ندارید'], 403);

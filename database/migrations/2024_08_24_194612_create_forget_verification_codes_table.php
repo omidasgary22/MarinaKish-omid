@@ -18,7 +18,6 @@ return new class extends Migration
             $table->timestamp('expires_at');
             $table->timestamps();
 
-//افزایش سرعت جستوجو ها
             $table->index('phone_number');
             $table->index('code');
         });

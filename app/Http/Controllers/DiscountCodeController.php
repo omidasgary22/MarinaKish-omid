@@ -15,7 +15,7 @@ class DiscountCodeController extends Controller
     public function index(Request $request)
     {
         if ($request->user()->can('discount.index')) {
-            $discountCodes = DiscountCode::all();
+            $discountCodes = DiscountCode::paginate(10);
             return response()->json($discountCodes);
         } else {
             return response()->json(['message' => 'شما دسترسی مجاز را ندارید'], 403);

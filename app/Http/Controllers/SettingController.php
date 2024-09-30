@@ -9,5 +9,8 @@ class SettingController extends Controller
 {
     public function index() {}
 
-    public function update(Request $request) {}
+    public function update(Request $request, $key)
+    {
+        $setting = Setting::where('key', $key)->update($request);
+    }
 }

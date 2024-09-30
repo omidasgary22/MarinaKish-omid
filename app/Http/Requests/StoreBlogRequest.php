@@ -25,7 +25,7 @@ class StoreBlogRequest extends FormRequest
             'title' => 'required|string|max:255',
             'summary' => 'required|string|max:500',
             'content' => 'required|string',
-            'duration_of_study',
+            'duration_of_study' => 'required|max:255',
         ];
     }
 

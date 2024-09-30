@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DiscountCode extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -19,7 +19,11 @@ class DiscountCode extends Model
         'expires_at',
     ];
 
-    protected $dates = ['start_at','expires_at'];
+    protected $casts = [
+        'start_at' => 'datetime',
+        'expires_at' => 'datetime',
+    ];
+    
 
     public function reservation()
     {
